@@ -1,5 +1,5 @@
 /* Importação da fonte Montserrat para os diferentes pesos */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Roboto:ital,wght@0,100..900;1,100..900&family=Sora:wght@100..800&display=swap');
 
 /* Variáveis de cores */
 :root {
@@ -7,12 +7,12 @@
     --color-beige: #B7A692;
     --color-white: #FFFFFF;
     --color-dark-gray: #332626;
-    --border-radius-global: 25px; /* Aumentado para mais arredondado */
+    --border-radius-global: 15px; /* Aumentado para mais arredondado */
     --transition-speed: 0.3s ease; /* Variável para velocidade de transição */
 }
 
 body {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
     background-color: var(--color-white); /* Fundo do site: branco */
@@ -104,7 +104,6 @@ body {
     position: relative;
     width: 30px;
     height: 24px;
-    /* remove display: flex aqui para que display: none funcione no desktop */
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
@@ -130,7 +129,6 @@ body {
     transform: translateY(-10px) rotate(-45deg);
 }
 
-
 /* Estilos para o Hero Section */
 .hero {
     position: relative;
@@ -141,9 +139,10 @@ body {
     justify-content: flex-start;
     align-items: center;
     text-align: left;
-    padding-top: 80px;
+    padding-top: 200px; /* <--- Ajuste este valor! */
     padding-left: 5%;
     color: var(--color-dark-gray);
+    background-image: url('capa.png'); /* Sua imagem de fundo padrão. Ajuste o caminho. */
 }
 
 .hero-content {
@@ -151,13 +150,15 @@ body {
     padding: 0;
     border-radius: 0;
     max-width: 600px;
+    margin-top: -180px;
 }
 
 .hero-content h1 {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'PT Serif', serif;
     font-weight: 300;
     font-size: 3.5em;
-    margin-bottom: 0.5em;
+    line-height: 1em;
+    margin-bottom: 0.2em;
     color: var(--color-dark-gray);
 }
 
@@ -165,8 +166,12 @@ body {
     font-style: italic;
 }
 
+.text-italic {
+    font-style: italic;
+}
+
 .hero-content p {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-weight: 400;
     font-size: 1.2em;
     color: var(--color-dark-gray);
@@ -177,9 +182,11 @@ body {
     padding: 4em 2em;
     text-align: center;
     background-color: var(--color-white);
+    margin-top: 0;
 }
 
 .services h2 {
+    font-family: 'Sora', sans-serif;
     color: var(--color-dark-gray);
     font-size: 2.5em;
     margin-bottom: 2em;
@@ -210,12 +217,14 @@ body {
 }
 
 .service-card h3 {
+    font-family: 'Sora', sans-serif; 
     color: var(--color-brown);
     font-size: 1.5em;
     margin-bottom: 1em;
 }
 
 .service-card p {
+    font-family: 'Roboto', sans-serif;
     color: var(--color-dark-gray);
     font-size: 1em;
 }
@@ -267,19 +276,45 @@ body {
 }
 
 /* Carrossel Container */
+/* NOVO: Wrapper para o carrossel e setas */
+.carousel-wrapper {
+    position: relative; /* Contexto de posicionamento para as setas */
+    max-width: 1200px; /* Mesma largura máxima do carousel-container */
+    margin: auto; /* Centraliza o wrapper */
+    display: flex; /* Para centralizar o carousel-container e as setas */
+    align-items: center; /* Alinha os itens verticalmente no centro */
+    justify-content: center; /* Centraliza horizontalmente o carousel-container */
+    padding: 0 50px; /* <--- ADICIONAR UM PADDING AQUI para criar espaço para as setas */
+    box-sizing: border-box; /* Inclui padding na largura */
+}
+
 .carousel-container {
-    position: relative;
-    max-width: 1200px;
-    margin: auto;
-    overflow: hidden;
+    /* position: relative; REMOVER: O wrapper já é o contexto relativo */
+    max-width: 100%; /* Ajustado para 100% da largura do wrapper */
+    flex-grow: 1; /* Permite que o container ocupe o espaço disponível entre as setas */
+    margin: auto; /* Mantenha para centralizar se não estiver em flex */
+
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+
     border: none;
     border-radius: 0;
     box-shadow: none;
-    padding: 0;
+    padding: 0; /* Mantenha sem padding aqui, ele está no .carousel-slide */
     transition: opacity var(--transition-speed), height var(--transition-speed);
     height: auto;
     opacity: 1;
     visibility: visible;
+    /* REMOVER: display: flex; align-items: center; (movido para .carousel-wrapper) */
+}
+
+/* Esconder a barra de rolagem para navegadores baseados em WebKit (Chrome, Safari) */
+.carousel-container::-webkit-scrollbar {
+    display: none;
 }
 
 .carousel-container.hidden {
@@ -292,13 +327,48 @@ body {
 
 /* Cada slide do carrossel */
 .carousel-slide {
-    display: none;
-    width: 100%;
-    justify-content: center;
+    display: flex;
+    width: max-content;
+    min-width: 100%;
+    justify-content: flex-start;
     gap: 2em;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     align-items: flex-start;
-    animation: fadeEffect 1.5s;
+
+    padding: 0 40px; /* <--- MANTÉM ESTE PADDING para o conteúdo interno */
+    box-sizing: border-box;
+}
+
+/* NAVEGAÇÃO DO CARROSSEL (SETAS) */
+.prev, .next {
+    cursor: pointer;
+    position: absolute; /* Agora é absoluto em relação ao .carousel-wrapper */
+    top: 50%;
+    transform: translateY(-50%);
+    width: auto;
+    padding: 16px;
+    color: var(--color-brown);
+    font-weight: bold;
+    font-size: 2.5em;
+    transition: 0.6s ease;
+    user-select: none;
+    background-color: rgba(255, 255, 255, 0.4);
+    z-index: 51;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%; /* Isso faz com que a seta tenha a altura do wrapper */
+    /* Remova o border-radius aqui se quiser que a área de fundo se estenda */
+}
+
+.next {
+    right: 0; /* Posiciona na borda direita do .carousel-wrapper */
+    border-radius: 3px 0 0 3px;
+}
+
+.prev {
+    left: 0; /* Posiciona na borda esquerda do .carousel-wrapper */
+    border-radius: 0 3px 3px 0;
 }
 
 @keyframes fadeEffect {
@@ -309,11 +379,14 @@ body {
 /* Estilo para cada item individual da marca dentro do carrossel E na grade */
 .carousel-item {
     flex: 0 0 auto;
-    width: 200px;
-    height: 290px;
-    min-width: 170px;
-    max-width: 220px;
-    
+    width: 280px;
+    height: 390px;
+    /* Remover min-width/max-width unset se não forem mais necessários */
+    min-width: unset; /* ou defina um valor */
+    max-width: unset; /* ou defina um valor */
+
+    scroll-snap-align: start; /* <--- IMPORTANTE: Alinha o início do item à borda de rolagem */
+
     padding: 0;
     text-align: center;
     background-color: var(--color-white);
@@ -351,11 +424,7 @@ body {
 
 /* Pontos de navegação do carrossel */
 .carousel-dots-container {
-    text-align:center;
-    margin-top: 1.5em;
-    transition: opacity var(--transition-speed);
-    opacity: 1;
-    visibility: visible;
+    display: none; /* <--- REMOVIDO: Pontos de navegação não fazem sentido para scroll fluido */
 }
 
 .carousel-dots-container.hidden {
@@ -400,6 +469,7 @@ body {
 
 /* Estilo para os botões "Ver Todas" e "Recolher" */
 #view-all-brands-btn, #hide-brands-btn {
+    display: none;
     margin-top: 2.5em;
     padding: 1em 2em;
     font-size: 1.1em;
@@ -439,14 +509,14 @@ body {
 }
 
 .final-phrase .light-text {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Sora', sans-serif;
     font-weight: 300;
     font-size: 1.8em;
     margin-bottom: 0.5em;
 }
 
 .final-phrase .blossom-text {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'PT Serif', serif;
     font-weight: 700;
     font-size: 2.2em;
 }
@@ -467,98 +537,105 @@ body {
 /* Responsividade Básica - ÚNICA MEDIA QUERY */
 @media (max-width: 768px) {
     .navbar-inner {
-        /* Para mobile: logo à esquerda, hambúrguer à direita, links e ícones escondidos */
-        flex-direction: row; /* Volta a ser linha para logo e hambúrguer */
-        justify-content: space-between; /* Espaço entre logo/hambúrguer */
+        flex-direction: row;
+        justify-content: space-between;
         align-items: center;
         padding: 0.8em 1.5em;
         max-width: 100%;
     }
 
     .navbar .logo img {
-        height: 35px; /* Ajuste o tamanho do logo para mobile */
+        height: 35px;
         margin-right: 0;
     }
 
     .nav-links {
-        /* Esconde os links no mobile por padrão */
         display: none;
         flex-direction: column;
         width: 100%;
         text-align: center;
-        background-color: rgba(255, 255, 255, 0.98); /* Fundo do menu aberto */
+        background-color: rgba(255, 255, 255, 0.98);
         position: absolute;
-        top: 100%; /* Posiciona abaixo da navbar */
+        top: 100%;
         left: 0;
         box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
         padding: 1em 0;
-        gap: 0.5em; /* Espaçamento entre os itens do menu */
-        z-index: 999; /* Abaixo do hambúrguer, mas acima do conteúdo */
+        gap: 0.5em;
+        z-index: 999;
     }
 
-    /* Mostra os links quando a classe 'open' é adicionada pelo JS */
     .nav-links.open {
-        display: flex; /* ATIVA A EXIBIÇÃO FLEX QUANDO O MENU ESTÁ ABERTO */
+        display: flex;
     }
 
     .nav-icons {
-        display: none; /* Esconde os ícones sociais em mobile por padrão */
-        /* Se quiser que eles apareçam dentro do menu mobile, adicione-os aqui */
-        /* Ex: .nav-links.open .nav-icons { display: flex; } */
+        display: none;
     }
 
-    /* MOSTRA O BOTÃO HAMBÚRGUER SOMENTE EM TELAS MENORES */
     .hamburger-menu {
-        display: flex; /* MOSTRA o botão hambúrguer em mobile */
+        display: flex;
     }
 
-    /* Outros ajustes de responsividade que você já tinha */
     .hero {
         padding-top: 250px;
         padding-left: 2em;
         justify-content: center;
         text-align: center;
-        background-position: 80%;
+        /* Caminho da imagem para mobile. Ajuste o caminho se necessário. */
+        background-image: url('img/capa2.png'); /* Usando a mesma imagem por enquanto, ajuste para uma específica de mobile se tiver */
+        background-position: center center;
+        background-size: cover;
     }
 
     .hero-content {
         max-width: 90%;
-        /* Ajustes para a caixa sombreada semi-transparente */
-        background-color: rgba(255, 255, 255, 0.6); /* Fundo branco com 60% de opacidade */
-        padding: 1.5em; /* Aumenta o padding para dar espaço dentro da caixa */
-        border-radius: var(--border-radius-global); /* Usa seu border-radius global para consistência */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Uma sombra suave para dar profundidade */
-        margin: 0 auto; /* Centraliza a caixa na tela se o max-width for menor que 100% */
+        background-color: rgba(255, 255, 255, 0.6);
+        padding: 1.5em;
+        border-radius: var(--border-radius-global);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin: 0 auto;
     }
 
     .hero-content h1 {
-    font-size: 2em;
-    
-}
-    
+        font-size: 2em;
+    }
 
     .hero-content p {
-    font-size: 0.9em;
-    
-}
+        font-size: 0.9em;
+    }
 
     .service-cards {
         flex-direction: column;
         align-items: center;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .service-card {
-        max-width: 90%;
+        max-width: 350px;
+        width: 90%;
+        margin: 0 auto;
+        box-sizing: border-box;
     }
 
-    .carousel-container, .all-projects-grid {
-        max-width: 95%;
-        padding: 0;
+    .carousel-wrapper {
+        padding: 0 20px; /* Reduz o padding do wrapper para mobile */
+    }
+
+    .carousel-container {
+        max-width: 100%; /* Ocupa 100% da largura disponível no wrapper */
+        padding: 0; /* Sem padding aqui */
+    }
+
+    .carousel-slide {
+        padding: 0 10px; /* Reduz o padding interno do slide para mobile */
+        gap: 1em; /* Ajusta o gap em mobile */
     }
 
     .carousel-item {
-        width: 150px;
-        height: 220px; /* Ajustado para ser retangular vertical em mobile também */
+        width: 200px;
+        height: 280px;
         min-width: unset;
         max-width: unset;
     }
