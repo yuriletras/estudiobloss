@@ -1,5 +1,6 @@
-/* Importação da fonte Montserrat para os diferentes pesos */
+/* Importação das fontes */
 @import url('https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Roboto:ital,wght@0,100..900;1,100..900&family=Sora:wght@100..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Display:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600;1,700&display=swap');
 
 /* Variáveis de cores */
 :root {
@@ -7,17 +8,32 @@
     --color-beige: #B7A692;
     --color-white: #FFFFFF;
     --color-dark-gray: #332626;
-    --border-radius-global: 15px; /* Aumentado para mais arredondado */
-    --transition-speed: 0.3s ease; /* Variável para velocidade de transição */
+    --border-radius-global: 15px;
+    --transition-speed: 0.3s ease;
+    --site-padding-desktop: 2em; /* Variável para o padding lateral padrão em desktop */
+    --site-padding-mobile: 1em; /* Variável para o padding lateral padrão em mobile */
+}
+
+/* ======================== */
+/* CONTAINER GLOBAL DE CONTEÚDO PARA PADRONIZAR LARGURA */
+/* ======================== */
+.site-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    /* AJUSTADO: Padding lateral para que o conteúdo se espalhe mais */
+    padding: 0 var(--site-padding-desktop);
+    box-sizing: border-box;
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Noto Serif Display', serif;
     margin: 0;
     padding: 0;
-    background-color: var(--color-white); /* Fundo do site: branco */
-    color: var(--color-brown); /* Texto principal: marrom */
+    background-color: var(--color-white);
+    color: var(--color-brown);
     line-height: 1.6;
+    /* ESSENCIAL: Padding-top para compensar a navbar fixa */
+    padding-top: 80px; /* Ajuste se sua navbar tiver altura diferente */
 }
 
 /* Estilos para a Barra de Navegação */
@@ -40,7 +56,8 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 4em;
+    /* AJUSTADO: Padding lateral para que a navbar se espalhe mais, igual ao site-container */
+    padding: 0 var(--site-padding-desktop);
     box-sizing: border-box;
 }
 
@@ -68,7 +85,7 @@ body {
     text-decoration: none;
     color: var(--color-dark-gray);
     font-weight: 500;
-    font-size: 0.9em;
+    font-size: 0.8em;
     transition: color var(--transition-speed);
 }
 
@@ -84,7 +101,7 @@ body {
 
 .nav-icons a {
     color: var(--color-dark-gray);
-    font-size: 1.1em;
+    font-size: 0.8em;
     text-decoration: none;
     transition: color var(--transition-speed);
 }
@@ -95,12 +112,12 @@ body {
 
 /* --- Estilos para o Botão Hambúrguer --- */
 .hamburger-menu {
-    display: none; /* ESCONDE POR PADRÃO EM TELAS MAIORES */
+    display: none;
     background: none;
     border: none;
     cursor: pointer;
     padding: 10px;
-    z-index: 1001; /* Garante que fique acima de outros elementos */
+    z-index: 1001;
     position: relative;
     width: 30px;
     height: 24px;
@@ -113,12 +130,11 @@ body {
     display: block;
     width: 100%;
     height: 3px;
-    background-color: var(--color-brown); /* Cor da barra */
+    background-color: var(--color-brown);
     border-radius: 2px;
     transition: all var(--transition-speed);
 }
 
-/* Estilos para quando o menu está aberto (opcional, para animação do X) */
 .hamburger-menu.active .bar:nth-child(1) {
     transform: translateY(10px) rotate(45deg);
 }
@@ -132,415 +148,80 @@ body {
 /* Estilos para o Hero Section */
 .hero {
     position: relative;
-    height: 100vh;
+    height: calc(100vh - 80px); /* Ajuste os 80px para o valor do padding-top do body */
     background-size: cover;
     background-position: center;
     display: flex;
-    justify-content: flex-start;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
     text-align: left;
-    padding-top: 200px; /* <--- Ajuste este valor! */
-    padding-left: 5%;
+    padding-top: 0; /* Remove padding-top fixo, o body já compensa a navbar */
+    padding-left: 0; /* Remove padding-left para permitir alinhamento à esquerda */
     color: var(--color-dark-gray);
-    background-image: url('capa.png'); /* Sua imagem de fundo padrão. Ajuste o caminho. */
+    background-image: url('img/capa.png');
+}
+
+.hero .site-container {
+    padding-right: var(--site-padding-desktop); /* Mantém o padding direito para equilíbrio */
 }
 
 .hero-content {
     background-color: transparent;
     padding: 0;
     border-radius: 0;
-    max-width: 600px;
-    margin-top: -180px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Alinha os filhos (h1 e p) à esquerda */
+    text-align: left; /* Garante que o texto dentro de h1 e p se alinhe à esquerda */
+    margin-left: 0; /* Remove qualquer margem esquerda padrão */
 }
 
 .hero-content h1 {
-    font-family: 'PT Serif', serif;
+    font-family: 'Noto Serif Display', serif;
     font-weight: 300;
-    font-size: 3.5em;
+    font-size: 3.5em; /* Restaurado para o tamanho original */
     line-height: 1em;
     margin-bottom: 0.2em;
     color: var(--color-dark-gray);
+    margin-left: 0;
+    margin-right: 0; /* Garante que não haja margem extra à direita */
 }
 
-.hero-content h1 .italic-text {
-    font-style: italic;
-}
-
+.hero-content h1 .italic-text,
 .text-italic {
     font-style: italic;
 }
 
 .hero-content p {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Noto Serif Display', serif;
     font-weight: 400;
-    font-size: 1.2em;
+    font-size: 1.2em; /* Restaurado para o tamanho original */
     color: var(--color-dark-gray);
-}
-
-/* Seção de Serviços */
-.services {
-    padding: 4em 2em;
-    text-align: center;
-    background-color: var(--color-white);
-    margin-top: 0;
-}
-
-.services h2 {
-    font-family: 'Sora', sans-serif;
-    color: var(--color-dark-gray);
-    font-size: 2.5em;
-    margin-bottom: 2em;
-}
-
-.service-cards {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 2em;
-}
-
-.service-card {
-    background-color: var(--color-white);
-    border: 1px solid var(--color-beige);
-    padding: 2em;
-    border-radius: var(--border-radius-global);
-    flex: 1;
-    min-width: 280px;
-    max-width: 350px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
-}
-
-.service-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-}
-
-.service-card h3 {
-    font-family: 'Sora', sans-serif; 
-    color: var(--color-brown);
-    font-size: 1.5em;
-    margin-bottom: 1em;
-}
-
-.service-card p {
-    font-family: 'Roboto', sans-serif;
-    color: var(--color-dark-gray);
-    font-size: 1em;
-}
-
-/* Chamada para o Portfólio */
-.portfolio-call-to-action {
-    background-color: var(--color-beige);
-    color: var(--color-brown);
-    padding: 3em 2em;
-    margin: 4em auto;
-    border-radius: var(--border-radius-global);
-    max-width: calc(100% - 8em);
-    text-align: center;
-    box-sizing: border-box;
-}
-
-.portfolio-call-to-action p {
-    font-size: 1.8em;
-    margin-bottom: 1em;
-}
-
-.btn-portfolio {
-    display: inline-block;
-    background-color: var(--color-brown);
-    color: var(--color-white);
-    padding: 0.8em 1.5em;
-    border-radius: var(--border-radius-global);
-    text-decoration: none;
-    font-weight: bold;
-    transition: background-color var(--transition-speed), transform var(--transition-speed);
-}
-
-.btn-portfolio:hover {
-    background-color: var(--color-dark-gray);
-    transform: translateY(-3px);
-}
-
-/* Seção Marcas (Container principal para carrossel e grade) */
-.brands-section {
-    padding: 4em 2em;
-    text-align: center;
-    background-color: var(--color-white);
-}
-
-.brands-section h2 {
-    color: var(--color-dark-gray);
-    font-size: 2.5em;
-    margin-bottom: 2em;
-}
-
-/* Carrossel Container */
-/* NOVO: Wrapper para o carrossel e setas */
-.carousel-wrapper {
-    position: relative; /* Contexto de posicionamento para as setas */
-    max-width: 1200px; /* Mesma largura máxima do carousel-container */
-    margin: auto; /* Centraliza o wrapper */
-    display: flex; /* Para centralizar o carousel-container e as setas */
-    align-items: center; /* Alinha os itens verticalmente no centro */
-    justify-content: center; /* Centraliza horizontalmente o carousel-container */
-    padding: 0 50px; /* <--- ADICIONAR UM PADDING AQUI para criar espaço para as setas */
-    box-sizing: border-box; /* Inclui padding na largura */
-}
-
-.carousel-container {
-    /* position: relative; REMOVER: O wrapper já é o contexto relativo */
-    max-width: 100%; /* Ajustado para 100% da largura do wrapper */
-    flex-grow: 1; /* Permite que o container ocupe o espaço disponível entre as setas */
-    margin: auto; /* Mantenha para centralizar se não estiver em flex */
-
-    overflow-x: auto;
-    overflow-y: hidden;
-    white-space: nowrap;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-
-    border: none;
-    border-radius: 0;
-    box-shadow: none;
-    padding: 0; /* Mantenha sem padding aqui, ele está no .carousel-slide */
-    transition: opacity var(--transition-speed), height var(--transition-speed);
-    height: auto;
-    opacity: 1;
-    visibility: visible;
-    /* REMOVER: display: flex; align-items: center; (movido para .carousel-wrapper) */
-}
-
-/* Esconder a barra de rolagem para navegadores baseados em WebKit (Chrome, Safari) */
-.carousel-container::-webkit-scrollbar {
-    display: none;
-}
-
-.carousel-container.hidden {
-    opacity: 0;
-    height: 0;
-    visibility: hidden;
-    padding: 0;
+    max-width: 600px; /* Mantém o parágrafo mais legível */
+    margin-left: 0;
+    margin-right: auto;
     margin-bottom: 0;
 }
 
-/* Cada slide do carrossel */
-.carousel-slide {
-    display: flex;
-    width: max-content;
-    min-width: 100%;
-    justify-content: flex-start;
-    gap: 2em;
-    flex-wrap: nowrap;
-    align-items: flex-start;
-
-    padding: 0 40px; /* <--- MANTÉM ESTE PADDING para o conteúdo interno */
-    box-sizing: border-box;
+/* Ajuste específico para desktop */
+@media (min-width: 769px) {
+    .hero .hero-content {
+        position: absolute;
+        left: 50px; /* Afastamento da borda */
+        transform: none;
+    }
 }
 
-/* NAVEGAÇÃO DO CARROSSEL (SETAS) */
-.prev, .next {
-    cursor: pointer;
-    position: absolute; /* Agora é absoluto em relação ao .carousel-wrapper */
-    top: 50%;
-    transform: translateY(-50%);
-    width: auto;
-    padding: 16px;
-    color: var(--color-brown);
-    font-weight: bold;
-    font-size: 2.5em;
-    transition: 0.6s ease;
-    user-select: none;
-    background-color: rgba(255, 255, 255, 0.4);
-    z-index: 51;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%; /* Isso faz com que a seta tenha a altura do wrapper */
-    /* Remova o border-radius aqui se quiser que a área de fundo se estenda */
-}
-
-.next {
-    right: 0; /* Posiciona na borda direita do .carousel-wrapper */
-    border-radius: 3px 0 0 3px;
-}
-
-.prev {
-    left: 0; /* Posiciona na borda esquerda do .carousel-wrapper */
-    border-radius: 0 3px 3px 0;
-}
-
-@keyframes fadeEffect {
-    from {opacity: 0;}
-    to {opacity: 1;}
-}
-
-/* Estilo para cada item individual da marca dentro do carrossel E na grade */
-.carousel-item {
-    flex: 0 0 auto;
-    width: 280px;
-    height: 390px;
-    /* Remover min-width/max-width unset se não forem mais necessários */
-    min-width: unset; /* ou defina um valor */
-    max-width: unset; /* ou defina um valor */
-
-    scroll-snap-align: start; /* <--- IMPORTANTE: Alinha o início do item à borda de rolagem */
-
-    padding: 0;
-    text-align: center;
-    background-color: var(--color-white);
-    border-radius: var(--border-radius-global);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
-}
-
-.carousel-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-}
-
-.carousel-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: var(--border-radius-global);
-    transition: transform 0.5s ease;
-}
-
-.carousel-item img:hover {
-    transform: scale(1.05);
-}
-
-/* Garante que o texto não apareça, mesmo que esteja no HTML */
-.carousel-item p {
-    display: none;
-}
-
-/* Pontos de navegação do carrossel */
-.carousel-dots-container {
-    display: none; /* <--- REMOVIDO: Pontos de navegação não fazem sentido para scroll fluido */
-}
-
-.carousel-dots-container.hidden {
-    opacity: 0;
-    visibility: hidden;
-    height: 0;
-    overflow: hidden;
-}
-
-/* Estilos para a Grade Completa de Marcas */
-.all-projects-grid {
-    display: flex; /* Mantenha flex para a grade */
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 2em; /* Espaçamento entre as caixas na grade */
-    max-width: 1200px;
-    margin: auto;
-    opacity: 0; /* Começa invisível */
-    height: 0; /* Começa sem altura */
-    visibility: hidden; /* Começa oculto */
-    overflow: hidden;
-    transition: opacity var(--transition-speed), height var(--transition-speed);
-}
-
-/* Garante que .hidden realmente esconde e .visible realmente mostra */
-.hidden {
-    display: none !important; /* Força o elemento a não ser exibido e não ocupar espaço */
-    opacity: 0 !important; /* Adicionado !important para garantir invisibilidade */
-    height: 0 !important; /* Adicionado !important para garantir altura zero */
-    visibility: hidden !important; /* Adicionado !important para garantir invisibilidade */
-    overflow: hidden !important; /* Adicionado !important para ocultar conteúdo extra */
-}
-
-/* Esta é a classe usada no JS para MOSTRAR a grade */
-.all-projects-grid.visible {
-    display: flex !important; /* Força a exibição como flex */
-    opacity: 1 !important; /* Força a visibilidade */
-    height: auto !important; /* Força a altura automática */
-    visibility: visible !important; /* Força a visibilidade */
-    margin-top: 2em;
-}
-
-/* Estilo para os botões "Ver Todas" e "Recolher" */
-#view-all-brands-btn, #hide-brands-btn {
-    display: none;
-    margin-top: 2.5em;
-    padding: 1em 2em;
-    font-size: 1.1em;
-}
-
-/* Chamada para Contato */
-.contact-call-to-action {
-    padding: 4em 2em;
-    text-align: center;
-    background-color: var(--color-white);
-}
-
-.contact-box {
-    width: fit-content;
-    margin: 0 auto;
-    padding: 2em;
-    border: 3px solid var(--color-beige);
-    border-radius: var(--border-radius-global);
-    transition: box-shadow var(--transition-speed);
-}
-
-.contact-box:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-}
-
-.contact-box p {
-    font-size: 1.2em;
-    margin-bottom: 0.5em;
-}
-
-/* Frase Final */
-.final-phrase {
-    padding: 4em 2em;
-    text-align: center;
-    background-color: var(--color-dark-gray);
-    color: var(--color-white);
-}
-
-.final-phrase .light-text {
-    font-family: 'Sora', sans-serif;
-    font-weight: 300;
-    font-size: 1.8em;
-    margin-bottom: 0.5em;
-}
-
-.final-phrase .blossom-text {
-    font-family: 'PT Serif', serif;
-    font-weight: 700;
-    font-size: 2.2em;
-}
-
-.final-phrase .blossom-italic {
-    font-style: italic;
-}
-
-/* Rodapé */
-.footer {
-    background-color: var(--color-brown);
-    color: var(--color-white);
-    text-align: center;
-    padding: 2em 0;
-    font-size: 0.9em;
-}
-
-/* Responsividade Básica - ÚNICA MEDIA QUERY */
+/* Responsividade para mobile com centralização refinada */
 @media (max-width: 768px) {
+    /* Navbar */
     .navbar-inner {
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        padding: 0.8em 1.5em;
+        padding: 0 var(--site-padding-mobile);
         max-width: 100%;
     }
 
@@ -576,34 +257,48 @@ body {
         display: flex;
     }
 
+    /* Hero Section em Mobile */
     .hero {
-        padding-top: 250px;
-        padding-left: 2em;
-        justify-content: center;
-        text-align: center;
-        /* Caminho da imagem para mobile. Ajuste o caminho se necessário. */
-        background-image: url('img/capa2.png'); /* Usando a mesma imagem por enquanto, ajuste para uma específica de mobile se tiver */
+        position: relative;
+        padding-top: 60px; /* Ajustado para compensar a navbar fixa */
+        padding-left: 0;
+        justify-content: flex-start;
+        text-align: left;
+        background-image: url('img/capa2.png') !important;
         background-position: center center;
         background-size: cover;
     }
 
     .hero-content {
+        position: absolute;
+        top: 60px;
+        left: 50%; /* Centraliza horizontalmente */
+        transform: translateX(-50%); /* Ajusta para o centro exato */
         max-width: 90%;
-        background-color: rgba(255, 255, 255, 0.6);
-        padding: 1.5em;
-        border-radius: var(--border-radius-global);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        margin: 0 auto;
+        padding: 0;
+        align-items: center; /* Centraliza os filhos horizontalmente */
+        text-align: center !important; /* Garante centralização dos textos */
     }
-
+    
     .hero-content h1 {
         font-size: 2em;
+        margin-top: 0;
+        margin-bottom: 0.2em;
+        line-height: 1;
     }
 
     .hero-content p {
         font-size: 0.9em;
+        margin: 0;
+        max-width: 100%;
     }
 
+    .hero-content .line-top,
+    .hero-content .line-bottom {
+        display: inline; /* Mantém as linhas próximas */
+    }
+
+    /* Seção de Serviços em Mobile */
     .service-cards {
         flex-direction: column;
         align-items: center;
@@ -619,18 +314,19 @@ body {
         box-sizing: border-box;
     }
 
+    /* Carrossel em Mobile */
     .carousel-wrapper {
-        padding: 0 20px; /* Reduz o padding do wrapper para mobile */
+        padding: 0 var(--site-padding-mobile);
     }
 
     .carousel-container {
-        max-width: 100%; /* Ocupa 100% da largura disponível no wrapper */
-        padding: 0; /* Sem padding aqui */
+        max-width: 100%;
+        padding: 0;
     }
 
     .carousel-slide {
-        padding: 0 10px; /* Reduz o padding interno do slide para mobile */
-        gap: 1em; /* Ajusta o gap em mobile */
+        padding: 0 10px;
+        gap: 1em;
     }
 
     .carousel-item {
@@ -638,10 +334,6 @@ body {
         height: 280px;
         min-width: unset;
         max-width: unset;
-    }
-
-    .carousel-slide {
-        gap: 1em;
     }
 
     .carousel-item img {
@@ -652,8 +344,9 @@ body {
         gap: 1.5em;
     }
 
+    /* Portfólio em Mobile */
     .portfolio-call-to-action {
-        max-width: calc(100% - 2em);
+        max-width: 100%;
         padding: 2em 1em;
         margin: 2em auto;
     }
@@ -664,4 +357,637 @@ body {
     .final-phrase .blossom-text {
         font-size: 1.1em;
     }
+
+    /* RESPONSIVIDADE PARA SEÇÃO SOBRE NÓS (Com foto lateral) */
+    .about-us-section {
+        padding: 4em 0;
+    }
+
+    .about-us-content-wrapper {
+        flex-direction: column;
+        gap: 2.5em;
+    }
+
+    .about-us-text-content {
+        padding: 0;
+        max-width: 100%;
+        margin: 0 auto;
+    }
+
+    .about-us-subtitle,
+    .about-us-title,
+    .about-us-paragraph {
+        text-align: center;
+    }
+
+    .about-us-title {
+        font-size: 2em;
+    }
+
+    .about-us-paragraph {
+        font-size: 0.95em;
+    }
+
+    .about-us-buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.8em;
+    }
+
+    .btn {
+        width: 100%;
+        max-width: 250px;
+    }
+
+    .about-us-image-box {
+        min-height: 350px;
+        max-width: 90%;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    /* RESPONSIVIDADE PARA A SEÇÃO DE CONTATO */
+    .contact-call-to-action {
+        padding: 4em 0;
+    }
+
+    .contact-box {
+        padding: 1.5em;
+    }
+
+    .contact-box p {
+        font-size: 1.1em;
+    }
+
+    .social-icons-contact {
+        gap: 1.2em;
+        margin-top: 1.5em;
+    }
+
+    .social-icons-contact a {
+        font-size: 2.2em;
+    }
+}
+
+/* Seção: Sobre Nós */
+.about-us-section {
+    padding: 6em 0;
+    background-color: var(--color-white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+}
+
+.about-us-content-wrapper { 
+    display: flex;
+    flex-direction: row; 
+    gap: 3em; 
+    width: 100%;
+    align-items: center; 
+    justify-content: center; 
+    flex-wrap: wrap; 
+}
+
+.about-us-text-content {
+    flex: 1;
+    min-width: 380px;
+    max-width: 600px; 
+    box-sizing: border-box;
+    padding: 0; 
+}
+
+.about-us-subtitle {
+    font-family: 'Noto Serif Display', serif;
+    font-size: 0.9em;
+    font-weight: 500;
+    color: var(--color-brown);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5em;
+    text-align: left; 
+}
+
+.about-us-title {
+    font-family: 'Noto Serif Display', serif;
+    font-weight: 400;
+    font-size: 3em;
+    line-height: 1.2;
+    color: var(--color-dark-gray);
+    margin-bottom: 1.5em;
+    text-align: left; 
+}
+
+.about-us-title .italic-text {
+    font-style: italic;
+    font-weight: 400;
+}
+
+.about-us-paragraph {
+    font-family: 'Noto Serif Display', serif;
+    font-size: 1.1em;
+    line-height: 1.7;
+    color: var(--color-dark-gray);
+    margin-bottom: 1em;
+    text-align: left; 
+}
+
+.about-us-paragraph:last-of-type {
+    margin-bottom: 2em;
+}
+
+.about-us-buttons {
+    display: flex;
+    gap: 1em;
+    margin-top: 1em;
+    flex-wrap: wrap;
+    justify-content: flex-start; 
+}
+
+.btn {
+    padding: 0.8em 2em;
+    border-radius: 5px;
+    text-decoration: none;
+    font-family: 'Noto Serif Display', serif;
+    font-weight: 600;
+    font-size: 0.95em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.btn-dark {
+    background-color: var(--color-dark-gray);
+    color: var(--color-white);
+    border: 2px solid var(--color-dark-gray);
+}
+
+.btn-dark:hover {
+    background-color: var(--color-brown);
+    border-color: var(--color-brown);
+}
+
+.btn-light-outline {
+    background-color: transparent;
+    color: var(--color-dark-gray);
+    border: 2px solid var(--color-dark-gray);
+}
+
+.btn-light-outline:hover {
+    background-color: var(--color-dark-gray);
+    color: var(--color-white);
+}
+
+.about-us-image-box {
+    flex: 1.2;
+    min-width: 400px; 
+    max-width: 650px; 
+    min-height: 670px; 
+    background-image: url('img/projetos/PROJETOS SITE-08.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: var(--border-radius-global); 
+    box-sizing: border-box;
+}
+
+/* Seção de Serviços */
+.services {
+    padding: 4em 0;
+    text-align: center;
+    background-color: var(--color-white);
+    margin-top: 0;
+}
+
+.services h2 {
+    font-family: 'Noto Serif Display', serif;
+    color: var(--color-dark-gray);
+    font-size: 2.5em;
+    margin-bottom: 2em;
+}
+
+.service-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2em;
+}
+
+.service-card {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-beige);
+    padding: 2em;
+    border-radius: var(--border-radius-global);
+    flex: 1;
+    min-width: 280px;
+    max-width: 350px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.service-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.service-card h3 {
+    font-family: 'Noto Serif Display', serif; 
+    color: var(--color-brown);
+    font-size: 1.5em;
+    margin-bottom: 1em;
+}
+
+.service-card p {
+    font-family: 'Noto Serif Display', serif;
+    color: var(--color-dark-gray);
+    font-size: 1em;
+}
+
+/* Chamada para o Portfólio */
+.portfolio-call-to-action {
+    background-color: var(--color-beige);
+    color: var(--color-brown);
+    padding: 3em 0;
+    margin: 4em auto;
+    border-radius: var(--border-radius-global);
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.portfolio-call-to-action p {
+    font-size: 1.8em;
+    margin-bottom: 1em;
+}
+
+.btn-portfolio {
+    display: inline-block;
+    background-color: var(--color-brown);
+    color: var(--color-white);
+    padding: 0.8em 1.5em;
+    border-radius: var(--border-radius-global);
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color var(--transition-speed), transform var(--transition-speed);
+}
+
+.btn-portfolio:hover {
+    background-color: var(--color-dark-gray);
+    transform: translateY(-3px);
+}
+
+/* Seção Marcas (Container principal para carrossel e grade) */
+.brands-section {
+    padding: 4em 0;
+    text-align: center;
+    background-color: var(--color-white);
+}
+
+.brands-section h2 {
+    color: var(--color-dark-gray);
+    font-size: 2.5em;
+    margin-bottom: 2em;
+}
+
+/* Carrossel Wrapper - AGE COMO UM CONTAINER AQUI */
+.carousel-wrapper {
+    position: relative; 
+    max-width: 1200px;
+    margin: auto; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    /* AJUSTADO: Padding lateral para que o carrossel se espalhe mais */
+    padding: 0 var(--site-padding-desktop);
+    box-sizing: border-box; 
+}
+
+.carousel-container {
+    max-width: 100%; 
+    flex-grow: 1; 
+    margin: auto; 
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0; 
+    transition: opacity var(--transition-speed), height var(--transition-speed);
+    height: auto;
+    opacity: 1;
+    visibility: visible;
+}
+
+.carousel-container::-webkit-scrollbar {
+    display: none;
+}
+
+.carousel-container.hidden {
+    opacity: 0;
+    height: 0;
+    visibility: hidden;
+    padding: 0;
+    margin-bottom: 0;
+}
+
+/* Cada slide do carrossel */
+.carousel-slide {
+    display: flex;
+    width: max-content;
+    min-width: 100%;
+    justify-content: flex-start;
+    gap: 2em;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+
+    padding: 0 40px; 
+    box-sizing: border-box;
+}
+
+/* NAVEGAÇÃO DO CARROSSEL (SETAS) */
+.prev, .next {
+    cursor: pointer;
+    position: absolute; 
+    top: 50%;
+    transform: translateY(-50%);
+    width: auto;
+    padding: 16px;
+    color: var(--color-brown);
+    font-weight: bold;
+    font-size: 2.5em;
+    transition: 0.6s ease;
+    user-select: none;
+    background-color: rgba(255, 255, 255, 0.4);
+    z-index: 51;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%; 
+}
+
+.next {
+    right: 0; 
+    border-radius: 3px 0 0 3px;
+}
+
+.prev {
+    left: 0; 
+    border-radius: 0 3px 3px 0;
+}
+
+@keyframes fadeEffect {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+/* Estilo para cada item individual da marca dentro do carrossel E na grade */
+.carousel-item {
+    flex: 0 0 auto;
+    width: 280px;
+    height: 390px;
+    min-width: unset; 
+    max-width: unset; 
+    scroll-snap-align: start; 
+    padding: 0;
+    text-align: center;
+    background-color: var(--color-white);
+    border-radius: var(--border-radius-global);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.carousel-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--border-radius-global);
+    transition: transform 0.5s ease;
+}
+
+.carousel-item img:hover {
+    transform: scale(1.05);
+}
+
+.carousel-item p {
+    display: none;
+}
+
+/* Pontos de navegação do carrossel */
+.carousel-dots-container {
+    display: none; 
+}
+
+.carousel-dots-container.hidden {
+    opacity: 0;
+    visibility: hidden;
+    height: 0;
+    overflow: hidden;
+}
+
+/* Estilos para a Grade Completa de Marcas */
+.all-projects-grid {
+    display: flex; 
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2em; 
+    max-width: 1200px;
+    margin: auto;
+    opacity: 0; 
+    height: 0; 
+    visibility: hidden; 
+    overflow: hidden;
+    transition: opacity var(--transition-speed), height var(--transition-speed);
+}
+
+.hidden {
+    display: none !important; 
+    opacity: 0 !important; 
+    height: 0 !important; 
+    visibility: hidden !important; 
+    overflow: hidden !important; 
+}
+
+.all-projects-grid.visible {
+    display: flex !important; 
+    opacity: 1 !important; 
+    height: auto !important; 
+    visibility: visible !important; 
+    margin-top: 2em;
+}
+
+#view-all-brands-btn, #hide-brands-btn {
+    display: none;
+    margin-top: 2.5em;
+    padding: 1em 2em;
+    font-size: 1.1em;
+}
+
+/* ======================== */
+/* NOVO: SEÇÃO DE CONTATO REVISADA */
+/* ======================== */
+.contact-section { /* Renomeado de contact-call-to-action */
+    padding: 6em 0; /* Padding vertical para a seção */
+    background-color: var(--color-white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+}
+
+.contact-content-wrapper {
+    display: flex;
+    flex-direction: row; /* Layout em linha para desktop */
+    gap: 3em; /* Espaçamento entre as colunas */
+    width: 100%; /* Ocupa a largura do site-container */
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap; /* Permite que as colunas quebrem em telas menores */
+}
+
+.contact-text-content {
+    flex: 1; /* Ocupa espaço flexível */
+    min-width: 380px; /* Largura mínima para o texto */
+    max-width: 600px; /* Largura máxima para o texto */
+    box-sizing: border-box;
+    padding: 0; /* O padding lateral já é dado pelo site-container */
+}
+
+.contact-subtitle {
+    font-family: 'Noto Serif Display', serif;
+    font-size: 0.9em;
+    font-weight: 500;
+    color: var(--color-brown);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5em;
+    text-align: left;
+}
+
+.contact-title {
+    font-family: 'Noto Serif Display', serif;
+    font-weight: 400;
+    font-size: 3em;
+    line-height: 1.2;
+    color: var(--color-dark-gray);
+    margin-bottom: 1.5em;
+    text-align: left;
+}
+
+.contact-paragraph {
+    font-family: 'Noto Serif Display', serif;
+    font-size: 1.1em;
+    line-height: 1.7;
+    color: var(--color-dark-gray);
+    margin-bottom: 1.5em; /* Aumentado um pouco para separar do botão */
+    text-align: left;
+}
+
+.contact-buttons {
+    display: flex;
+    gap: 1em;
+    margin-top: 1em;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+/* NOVO: Estilo para a caixa de redes sociais/imagem no contato */
+.contact-social-box {
+    flex: 1.2; /* Um pouco maior que a coluna de texto */
+    min-width: 380px; /* Largura mínima */
+    max-width: 550px; /* Largura máxima, ajuste conforme o conteúdo */
+    min-height: 350px; /* Altura mínima, para comportar os ícones */
+    background-color: var(--color-white); /* Fundo branco, se necessário */
+    border-radius: var(--border-radius-global);
+    border: 1px solid var(--color-beige); /* Borda de 1px igual aos outros */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); /* Sombra suave */
+    box-sizing: border-box;
+    padding: 2em; /* Padding interno */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza o conteúdo (texto e ícones) */
+    justify-content: center;
+    text-align: center;
+}
+
+.contact-social-box p {
+    font-family: 'Noto Serif Display', serif;
+    font-size: 1.2em;
+    color: var(--color-dark-gray);
+    margin-bottom: 1em;
+}
+
+/* NOVO: Ícones de redes sociais maiores para a seção de contato */
+.social-icons-contact-large {
+    display: flex;
+    justify-content: center;
+    gap: 1.8em;
+    margin-top: 1em;
+    margin-bottom: 0;
+}
+
+.social-icons-contact-large a {
+    color: var(--color-dark-gray);
+    font-size: 3.5em; /* Ícones maiores */
+    transition: color 0.3s ease, transform 0.3s ease;
+    display: inline-block;
+}
+
+.social-icons-contact-large a:hover {
+    color: var(--color-brown);
+    transform: translateY(-5px);
+}
+
+/* REMOVIDO/SUBSTITUÍDO: Estilos da antiga caixa de contato centralizada */
+.contact-call-to-action,
+.contact-box,
+.social-icons-contact {
+    /* Estas classes foram substituídas ou seus estilos incorporados nas novas regras.
+       Mantenho-as aqui como comentário para referência, mas elas não serão usadas. */
+    /* display: none; */ /* Pode ser útil para testes */
+}
+
+/* Frase Final */
+.final-phrase {
+    padding: 4em 0; 
+    text-align: center;
+    background-color: var(--color-dark-gray);
+    color: var(--color-white);
+}
+
+.final-phrase .light-text {
+    font-family: 'Noto Serif Display', serif;
+    font-weight: 300;
+    font-size: 1.8em;
+    margin-bottom: 0.5em;
+}
+
+.final-phrase .blossom-text {
+    font-family: 'Noto Serif Display', serif;
+    font-weight: 700;
+    font-size: 2.2em;
+}
+
+.final-phrase .blossom-italic {
+    font-style: italic;
+}
+
+/* Rodapé */
+.footer {
+    background-color: var(--color-beige);
+    color: var(--color-white);
+    text-align: center;
+    padding: 2em 0; 
+    font-size: 0.9em;
 }
