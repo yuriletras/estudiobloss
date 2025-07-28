@@ -213,6 +213,7 @@ body {
         position: absolute;
         left: 50px; /* Afastamento da borda */
         transform: none;
+
     }
 }
 
@@ -269,6 +270,7 @@ body {
         background-image: url('img/capa2.png') !important;
         background-position: center center;
         background-size: cover;
+        overflow-x: hidden;
     }
 
     .hero-content {
