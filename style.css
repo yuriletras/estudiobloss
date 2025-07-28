@@ -32,6 +32,7 @@ body {
     background-color: var(--color-white);
     color: var(--color-brown);
     line-height: 1.6;
+    overflow-x: hidden;
     /* ESSENCIAL: Padding-top para compensar a navbar fixa */
     padding-top: 80px; /* Ajuste se sua navbar tiver altura diferente */
 }
@@ -159,6 +160,7 @@ body {
     padding-top: 0; /* Remove padding-top fixo, o body já compensa a navbar */
     padding-left: 0; /* Remove padding-left para permitir alinhamento à esquerda */
     color: var(--color-dark-gray);
+    overflow: hidden;
     background-image: url('img/capa.png');
 }
 
