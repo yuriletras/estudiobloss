@@ -667,9 +667,11 @@ body {
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
-    scroll-snap-type: x mandatory;
+    /* scroll-snap-type: x mandatory; REMOVIDO */ 
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
+    /* Opcional: Para rolagem manual mais suave (se usar JavaScript para navegação) */
+    scroll-behavior: smooth; 
     border: none;
     border-radius: 0;
     box-shadow: none;
@@ -749,7 +751,7 @@ body {
     height: 390px;
     min-width: unset; 
     max-width: unset; 
-    scroll-snap-align: start; 
+    /* scroll-snap-align: start; REMOVIDO */
     padding: 0;
     text-align: center;
     background-color: var(--color-white);
@@ -811,6 +813,14 @@ body {
     transition: opacity var(--transition-speed), height var(--transition-speed);
 }
 
+/* Esta classe '.hidden' já existe no seu CSS. Garanto que a nova classe `.full-portfolio-section.hidden`
+   também fará uso dela se necessário, mas os estilos específicos para `full-portfolio-section`
+   já incluem `height: 0; opacity: 0; visibility: hidden; overflow: hidden;` para a transição.
+   A classe `display: none !important;` deve ser usada com cuidado, pois impede transições.
+   Para o `full-portfolio-section`, a abordagem de `height/opacity/visibility` é melhor.
+   Por isso, para este caso específico, a `.hidden` generalista pode ser omitida ou usada se a transição não for desejada.
+   Para as grades, ela é útil.
+*/
 .hidden {
     display: none !important; 
     opacity: 0 !important; 
@@ -954,7 +964,7 @@ body {
 .contact-box,
 .social-icons-contact {
     /* Estas classes foram substituídas ou seus estilos incorporados nas novas regras.
-       Mantenho-as aqui como comentário para referência, mas elas não serão usadas. */
+        Mantenho-as aqui como comentário para referência, mas elas não serão usadas. */
     /* display: none; */ /* Pode ser útil para testes */
 }
 
@@ -990,4 +1000,286 @@ body {
     text-align: center;
     padding: 2em 0; 
     font-size: 0.9em;
+}
+
+/* ======================== */
+/* NOVO: ESTILOS PARA A SEÇÃO DE PORTFÓLIO COMPLETO */
+/* ESTES ESTILOS FORAM ADICIONADOS NO FINAL DO SEU ARQUIVO */
+/* ======================== */
+
+/* Seção principal do portfólio completo (container que será ocultado/exibido) */
+.full-portfolio-section {
+    padding: 4em 0; /* Padding vertical para a seção */
+    background-color: var(--color-white);
+    text-align: center; /* Para centralizar o conteúdo flex dentro */
+    
+    /* Propriedades para esconder/mostrar com transição */
+    opacity: 0;
+    height: 0; /* Altura 0 para esconder o conteúdo */
+    overflow: hidden; /* Corta qualquer conteúdo que transborde */
+    visibility: hidden; /* Garante que elementos não sejam interativos */
+    transition: opacity var(--transition-speed), height var(--transition-speed), visibility var(--transition-speed);
+}
+
+.full-portfolio-section.visible {
+    opacity: 1;
+    height: auto; /* Permite que o conteúdo defina a altura */
+    visibility: visible;
+    overflow: visible; /* Permite que o conteúdo seja visível */
+}
+
+/* Contêiner dos itens de portfólio dentro da seção completa */
+.full-portfolio-items-container {
+    display: flex;
+    flex-direction: column; /* Itens empilhados verticalmente */
+    gap: 3.5em; /* Espaçamento entre cada projeto completo */
+    max-width: 1000px; /* Largura máxima para centralizar, ajuste conforme preferir */
+    margin: 2em auto; /* Centraliza horizontalmente e dá espaço acima/abaixo */
+}
+
+/* Estilo para CADA item completo do portfólio (foto + descrição) */
+.portfolio-full-item {
+    display: flex;
+    flex-direction: row; /* Imagem e texto lado a lado por padrão no desktop */
+    gap: 2.5em; /* Espaçamento entre imagem e bloco de descrição */
+    align-items: center; /* Alinha verticalmente imagem e texto no centro */
+    background-color: var(--color-white);
+    border: 1px solid var(--color-beige);
+    border-radius: var(--border-radius-global);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Sombra mais suave */
+    padding: 2.5em;
+    text-align: left; /* Garante que o texto se alinhe à esquerda dentro da descrição */
+}
+
+/* Para alternar a ordem da imagem e do texto */
+.portfolio-full-item.reverse-layout {
+    flex-direction: row-reverse; 
+}
+
+/* Contêiner da imagem do projeto */
+.portfolio-full-item-image {
+    flex: 1; /* Ocupa 1 parte do espaço disponível */
+    min-width: 300px; /* Largura mínima para a imagem em desktop */
+    max-width: 45%; /* Máximo de 45% da largura do item para a imagem */
+    overflow: hidden;
+    border-radius: var(--border-radius-global);
+    position: relative;
+    /* Usando padding-bottom para criar um aspecto ratio em vez de height fixa */
+    padding-bottom: 60%; /* Ex: 3:1 (largura:altura), ajuste conforme suas imagens */
+    height: 0; /* Necessário para o truque de padding-bottom */
+}
+
+.portfolio-full-item-image img {
+    position: absolute; /* Para preencher o padding-bottom container */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Garante que a imagem preencha o espaço sem distorcer */
+    display: block;
+    border-radius: var(--border-radius-global);
+    transition: transform 0.3s ease; /* Transição suave no hover */
+}
+
+.portfolio-full-item-image img:hover {
+    transform: scale(1.05); /* Efeito de zoom no hover */
+}
+
+/* Contêiner da descrição do projeto */
+.portfolio-full-item-description {
+    flex: 1.5; /* Ocupa 1.5 partes do espaço disponível para o texto */
+    min-width: 350px; /* Largura mínima para o texto em desktop */
+    padding: 0; /* Remove padding extra, já tem no item pai */
+}
+
+.portfolio-full-item-description h3 {
+    font-family: 'Noto Serif Display', serif;
+    font-size: 2em;
+    color: var(--color-brown);
+    margin-top: 0;
+    margin-bottom: 0.8em;
+}
+
+.portfolio-full-item-description p {
+    font-family: 'Roboto', sans-serif; /* Use uma fonte mais legível para descrições longas */
+    font-size: 1em;
+    color: var(--color-dark-gray);
+    margin-bottom: 1.5em;
+    line-height: 1.7;
+}
+
+.portfolio-full-item-description ul {
+    list-style: none; /* Remove bolinhas da lista */
+    padding: 0;
+    margin: 0;
+    font-family: 'Roboto', sans-serif; /* Use a mesma fonte para consistência */
+    font-size: 0.95em;
+    color: var(--color-dark-gray);
+    line-height: 1.8;
+}
+
+.portfolio-full-item-description ul li {
+    margin-bottom: 0.5em;
+}
+
+.portfolio-full-item-description .btn {
+    margin-top: 1.5em;
+}
+
+/* Estilos para o botão "Esconder Portfólio" */
+#hide-full-portfolio-btn {
+    margin-top: 3em; /* Espaço acima do botão */
+    display: inline-block; /* Garante que seja um botão */
+    /* A classe 'hidden' do JS irá controlar a visibilidade */
+}
+
+/* ======================== */
+/* RESPONSIVIDADE PARA A SEÇÃO DE PORTFÓLIO COMPLETO */
+/* ======================== */
+@media (max-width: 768px) {
+    .full-portfolio-section {
+        padding: 2em 0; /* Menos padding em mobile */
+    }
+
+    .full-portfolio-items-container {
+        gap: 2.5em; /* Menos espaçamento entre itens em mobile */
+        margin: 1.5em auto;
+    }
+
+    .portfolio-full-item {
+        flex-direction: column; /* Empilha imagem e texto em mobile */
+        text-align: center; /* Centraliza o texto em mobile */
+        padding: 1.5em;
+        gap: 1.5em; /* Espaçamento entre imagem e texto empilhados */
+    }
+
+    /* Garante que o layout inverso também empilhe em mobile */
+    .portfolio-full-item.reverse-layout {
+        flex-direction: column; 
+    }
+
+    .portfolio-full-item-image {
+        max-width: 100%; /* A imagem ocupa a largura total disponível */
+        min-width: unset; /* Remove a restrição de largura mínima para mobile */
+        width: 100%; /* Garante que o contêiner da imagem ocupe a largura completa */
+        
+        /* A proporção da imagem é controlada aqui. Ajuste este valor! */
+        /* Ex: 75% para uma proporção 4:3 (mais "quadrada") */
+        /* Ex: 56.25% para uma proporção 16:9 (mais "retangular") */
+        /* Ex: 100% para uma imagem "quadrada" */
+        padding-bottom: 75%; /* Valor recomendado para começar, ajuste conforme sua imagem */
+        
+        height: 0; /* ESSENCIAL quando usando padding-bottom para altura */
+        position: relative; /* Garante que a imagem absoluta dentro dele funcione */
+        overflow: hidden; /* Corta o que extrapola */
+        border-radius: var(--border-radius-global); /* Mantém os cantos arredondados */
+    }
+
+    .portfolio-full-item-description {
+        min-width: unset; /* Remove largura mínima para mobile */
+        max-width: 100%;
+    }
+
+    .portfolio-full-item-description h3 {
+        font-size: 1.6em; /* Tamanho da fonte menor para mobile */
+    }
+
+    .portfolio-full-item-description p,
+    .portfolio-full-item-description ul,
+    .portfolio-full-item-description li {
+        font-size: 0.9em; /* Tamanho da fonte menor para mobile */
+    }
+
+    .portfolio-full-item-description ul {
+        text-align: center; /* Centraliza a lista também */
+        padding-left: 0; /* Garante que não haja padding à esquerda */
+    }
+
+    #hide-full-portfolio-btn {
+        margin-top: 2em;
+        font-size: 1em;
+        padding: 0.6em 1.5em;
+    }
+}
+
+/* ======================== */
+/* NOVO: ESTILOS PARA O MODAL DE VISUALIZAÇÃO DE IMAGEM */
+/* ======================== */
+
+.image-modal {
+    display: none; /* Escondido por padrão */
+    position: fixed; /* Fixado para cobrir a tela inteira */
+    z-index: 2000; /* Um z-index bem alto para ficar acima de tudo */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Permite rolagem se a imagem for muito grande */
+    background-color: rgba(0, 0, 0, 0.9); /* Fundo preto semi-transparente */
+    justify-content: center; /* Centraliza o conteúdo horizontalmente */
+    align-items: center; /* Centraliza o conteúdo verticalmente */
+    transition: opacity 0.3s ease; /* Transição para o efeito de fade */
+    opacity: 0; /* Começa invisível para a transição */
+}
+
+.image-modal.open {
+    display: flex; /* Exibe o modal usando flexbox para centralizar */
+    opacity: 1; /* Torna visível */
+}
+
+.image-modal-content {
+    margin: auto;
+    display: block;
+    max-width: 90%; /* Largura máxima para a imagem */
+    max-height: 90vh; /* Altura máxima para a imagem (90% da altura da viewport) */
+    object-fit: contain; /* Garante que a imagem se ajuste sem cortar */
+    border-radius: var(--border-radius-global); /* Arredonda as bordas da imagem no modal */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Sombra para destacar a imagem */
+    animation: zoomIn 0.3s ease-out; /* Animação simples de zoom */
+}
+
+/* Botão de Fechar */
+.image-modal-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+    cursor: pointer;
+    z-index: 2001; /* Garante que esteja acima da imagem */
+}
+
+.image-modal-close-btn:hover,
+.image-modal-close-btn:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Animação de zoom para a imagem */
+@keyframes zoomIn {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Responsividade para o Modal */
+@media (max-width: 768px) {
+    .image-modal-close-btn {
+        font-size: 30px;
+        top: 10px;
+        right: 20px;
+    }
+
+    .image-modal-content {
+        max-width: 95%; /* Ajuste para telas menores */
+        max-height: 85vh; /* Ajuste para telas menores */
+    }
 }
