@@ -196,6 +196,15 @@ body {
     font-style: italic;
 }
 
+.hero-content h1 .line-top {
+    display: block; /* Essencial para que o span se comporte como um bloco e ocupe sua própria linha */
+    /* Ajuste uma dessas propriedades para controlar o espaço ABAIXO de "Marcas nascem" */
+    margin-bottom: -0.0em; /* Experimente valores negativos para aproximar as linhas. Ex: -0.1em, -0.3em */
+    /* OU */
+    /* line-height: 0.8em; /* Ajuste para controlar o espaçamento DA LINHA. Valores abaixo de 1 aproximam. */
+    /* Recomendo usar margin-bottom para controle mais direto do espaçamento ENTRE os spans. */
+}
+
 .hero-content p {
     font-family: 'Noto Serif Display', serif;
     font-weight: 400;
@@ -848,11 +857,9 @@ body {
     font-size: 1.1em;
 }
 
-/* ======================== */
-/* NOVO: SEÇÃO DE CONTATO REVISADA */
-/* ======================== */
-.contact-section { /* Renomeado de contact-call-to-action */
-    padding: 6em 0; /* Padding vertical para a seção */
+/* Seção de Contato */
+.contact-section {
+    padding: 6em 0;
     background-color: var(--color-white);
     display: flex;
     justify-content: center;
@@ -860,25 +867,36 @@ body {
     min-height: 60vh;
 }
 
-.contact-content-wrapper {
+.contact-section .site-container {
+    padding: 0 var(--site-padding-desktop); /* 2em em desktop */
+    max-width: 1200px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.contact-section .content-wrapper {
     display: flex;
-    flex-direction: row; /* Layout em linha para desktop */
-    gap: 3em; /* Espaçamento entre as colunas */
-    width: 100%; /* Ocupa a largura do site-container */
+    flex-direction: row;
+    gap: 2em;
+    width: 100%;
+    max-width: 1200px; /* Mesma largura do .site-container */
     align-items: center;
     justify-content: center;
-    flex-wrap: wrap; /* Permite que as colunas quebrem em telas menores */
-}
-
-.contact-text-content {
-    flex: 1; /* Ocupa espaço flexível */
-    min-width: 380px; /* Largura mínima para o texto */
-    max-width: 600px; /* Largura máxima para o texto */
+    flex-wrap: wrap;
     box-sizing: border-box;
-    padding: 0; /* O padding lateral já é dado pelo site-container */
+    padding: 0; /* Sem padding extra */
 }
 
-.contact-subtitle {
+.text-content {
+    flex: 1;
+    min-width: 400px;
+    max-width: 700px;
+    box-sizing: border-box;
+    padding: 0 1em;
+    text-align: left;
+}
+
+.section-subtitle {
     font-family: 'Noto Serif Display', serif;
     font-size: 0.9em;
     font-weight: 500;
@@ -889,7 +907,7 @@ body {
     text-align: left;
 }
 
-.contact-title {
+.section-title {
     font-family: 'Noto Serif Display', serif;
     font-weight: 400;
     font-size: 3em;
@@ -899,51 +917,48 @@ body {
     text-align: left;
 }
 
-.contact-paragraph {
+.section-paragraph {
     font-family: 'Noto Serif Display', serif;
     font-size: 1.1em;
     line-height: 1.7;
     color: var(--color-dark-gray);
-    margin-bottom: 1.5em; /* Aumentado um pouco para separar do botão */
+    margin-bottom: 1.5em;
     text-align: left;
 }
 
-.contact-buttons {
+.section-buttons {
     display: flex;
     gap: 1em;
-    margin-top: 1em;
     flex-wrap: wrap;
     justify-content: flex-start;
 }
 
-/* NOVO: Estilo para a caixa de redes sociais/imagem no contato */
-.contact-social-box {
-    flex: 1.2; /* Um pouco maior que a coluna de texto */
-    min-width: 380px; /* Largura mínima */
-    max-width: 550px; /* Largura máxima, ajuste conforme o conteúdo */
-    min-height: 350px; /* Altura mínima, para comportar os ícones */
-    background-color: var(--color-white); /* Fundo branco, se necessário */
+.social-box {
+    flex: 1;
+    min-width: 400px;
+    max-width: 500px;
+    min-height: 300px;
+    background-color: var(--color-white);
     border-radius: var(--border-radius-global);
-    border: 1px solid var(--color-beige); /* Borda de 1px igual aos outros */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); /* Sombra suave */
+    border: 1px solid var(--color-beige);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
     box-sizing: border-box;
-    padding: 2em; /* Padding interno */
+    padding: 1em;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centraliza o conteúdo (texto e ícones) */
+    align-items: center;
     justify-content: center;
     text-align: center;
 }
 
-.contact-social-box p {
+.social-box p {
     font-family: 'Noto Serif Display', serif;
     font-size: 1.2em;
     color: var(--color-dark-gray);
     margin-bottom: 1em;
 }
 
-/* NOVO: Ícones de redes sociais maiores para a seção de contato */
-.social-icons-contact-large {
+.social-icons {
     display: flex;
     justify-content: center;
     gap: 1.8em;
@@ -951,25 +966,61 @@ body {
     margin-bottom: 0;
 }
 
-.social-icons-contact-large a {
+.social-icons a {
     color: var(--color-dark-gray);
-    font-size: 3.5em; /* Ícones maiores */
-    transition: color 0.3s ease, transform 0.3s ease;
+    font-size: 2.5em; /* Reduzido para evitar overflow */
+    transition: color var(--transition-speed), transform var(--transition-speed);
     display: inline-block;
 }
 
-.social-icons-contact-large a:hover {
+.social-icons a:hover {
     color: var(--color-brown);
     transform: translateY(-5px);
 }
 
-/* REMOVIDO/SUBSTITUÍDO: Estilos da antiga caixa de contato centralizada */
-.contact-call-to-action,
-.contact-box,
-.social-icons-contact {
-    /* Estas classes foram substituídas ou seus estilos incorporados nas novas regras.
-        Mantenho-as aqui como comentário para referência, mas elas não serão usadas. */
-    /* display: none; */ /* Pode ser útil para testes */
+/* Responsividade para a Seção de Contato */
+@media (max-width: 768px) {
+    .contact-section {
+        padding: 4em 0;
+    }
+
+    .contact-section .site-container {
+        padding: 0 var(--site-padding-mobile); /* 1em em mobile */
+    }
+
+    .contact-section .content-wrapper {
+        flex-direction: column;
+        gap: 1.5em;
+        padding: 0;
+    }
+
+    .text-content {
+        min-width: unset;
+        max-width: 100%;
+        padding: 0 1em;
+        text-align: center;
+    }
+
+    .section-subtitle,
+    .section-title,
+    .section-paragraph {
+        text-align: center;
+    }
+
+    .section-buttons {
+        justify-content: center;
+    }
+
+    .social-box {
+        min-width: unset;
+        max-width: 100%;
+        padding: 1em;
+        min-height: 250px;
+    }
+
+    .social-icons a {
+        font-size: 2em; /* Reduzido para mobile */
+    }
 }
 
 /* Frase Final */
