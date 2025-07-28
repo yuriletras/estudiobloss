@@ -1054,7 +1054,16 @@ body {
     color: var(--color-white);
     text-align: center;
     padding: 2em 0; 
-    font-size: 0.9em;
+    font-size: 0.8em;
+}
+
+.footer p .developer-logo {
+    height: 1em; /* Experimente valores menores como 0.8em, 1em ou 16px, 20px */
+    width: auto; /* Mantém a proporção da imagem */
+    vertical-align: middle; /* Ajuda a alinhar verticalmente com o texto "Desenvolvido por..." */
+    display: inline-block; /* Ou block, dependendo se você quer que a imagem esteja na mesma linha ou abaixo do texto */
+    margin-top: 0.2em; /* Exemplo de margem se a imagem estiver abaixo do texto */
+    /* ... */
 }
 
 /* ======================== */
