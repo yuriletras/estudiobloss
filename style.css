@@ -12,11 +12,23 @@
     --transition-speed: 0.3s ease;
     --site-padding-desktop: 2em; /* Variável para o padding lateral padrão em desktop */
     --site-padding-mobile: 1em; /* Variável para o padding lateral padrão em mobile */
-}
+    --cor-fundo-clara-alternada: #B7A692; /* Um cinza muito claro, quase branco. Ajuste para sua paleta. */
+    --cor-fundo-clara-alternada-2: #EEF4F4; /* Outra opção, se quiser mais de uma alternativa */}
 
 /* ======================== */
 /* CONTAINER GLOBAL DE CONTEÚDO PARA PADRONIZAR LARGURA */
 /* ======================== */
+
+/* Estilo para seções com background alternado */
+.alternate-bg {
+    background-color: var(--cor-fundo-clara-alternada); /* Ou outra variável que você definiu */
+}
+
+/* Opcional: Se quiser uma transição suave ao rolar */
+.alternate-bg {
+    transition: background-color 0.5s ease-in-out;
+}
+
 .site-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -508,6 +520,7 @@ body {
     }
 
     .service-card {
+        background-color: var(--color-beige);
         max-width: 350px;
         width: 90%;
         margin: 0 auto;
@@ -705,54 +718,70 @@ body {
 
 /* Seção de Serviços */
 .services {
-    padding: 4em 0;
+    padding: 4em 0; /* Mantido o padding da seção principal */
     text-align: center;
-    background-color: var(--color-white);
     margin-top: 0;
+    background-color: #dbdbdb; /* AQUI! Esta linha muda a cor de fundo de TODA a seção */
 }
 
+/* Os estilos para h2 dentro de .services */
 .services h2 {
     font-family: 'Noto Serif Display', serif;
     color: var(--color-dark-gray);
     font-size: 2.5em;
-    margin-bottom: 2em;
+    margin-bottom: 2em; /* Pode ajustar este valor se o título estiver muito colado aos cartões */
+}
+
+.site-container {
+    font-family: 'Noto Serif Display', serif; 
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--site-padding-desktop);
+    box-sizing: border-box;
+    /* Certifique-se de que NÃO HÁ background-color: var(--color-white); AQUI ou em outra parte do site-container */
+    /* Ou, se houver, certifique-se de que o .services tenha uma especificidade maior ou use !important (não recomendado, mas possível) */
 }
 
 .service-cards {
+    /* Remova qualquer background-color daqui se houver */
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 2em;
+    padding: 1em 1em;
+    border-radius: var(--border-radius-global);
+    box-sizing: border-box;
 }
 
 .service-card {
     background-color: var(--color-white);
-    border: 1px solid var(--color-beige);
-    padding: 2em;
+    /* border: 1px solid var(--color-beige); */ /* COMENTADO OU REMOVIDO: Remove a borda */
+    padding: 1.5em; /* Mantenha seu padding ajustado */
     border-radius: var(--border-radius-global);
     flex: 1;
-    min-width: 280px;
-    max-width: 350px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    min-width: 250px;
+    max-width: 300px;
+    /* Adicionando uma sombra sutil e profissional */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); /* Sombra inicial (mantida do seu código) */
     transition: transform var(--transition-speed), box-shadow var(--transition-speed);
 }
 
 .service-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    transform: translateY(-8px); /* Efeito de elevação ao passar o mouse */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Sombra um pouco mais pronunciada ao passar o mouse */
 }
 
 .service-card h3 {
     font-family: 'Noto Serif Display', serif; 
     color: var(--color-brown);
-    font-size: 1.5em;
+    font-size: 1.2em;
     margin-bottom: 1em;
 }
 
 .service-card p {
-    font-family: 'Noto Serif Display', serif;
+    font-family: 'Roboto', serif;
     color: var(--color-dark-gray);
-    font-size: 1em;
+    font-size: 0.9em;
 }
 
 /* Chamada para o Portfólio */
