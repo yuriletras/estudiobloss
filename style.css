@@ -46,7 +46,7 @@ body {
     line-height: 1.6;
     overflow-x: hidden;
     /* ESSENCIAL: Padding-top para compensar a navbar fixa */
-    padding-top: 80px; /* Ajuste se sua navbar tiver altura diferente */
+    padding-top: 60px; /* Ajuste se sua navbar tiver altura diferente */
 }
 
 /* Estilos para a Barra de Navegação */
@@ -75,7 +75,7 @@ body {
 }
 
 .navbar .logo img {
-    height: 45px;
+    height: 25px;
     margin-right: 2em;
 }
 
@@ -173,7 +173,7 @@ body {
 /* Estilos para o Hero Section */
 .hero {
     position: relative;
-    height: calc(100vh - 80px); /* Ajuste os 80px para o valor do padding-top do body */
+    height: calc(110vh - 80px); /* Ajuste os 80px para o valor do padding-top do body */
     background-size: cover;
     background-position: center;
     display: flex;
@@ -265,7 +265,7 @@ body {
     }
 
     .navbar .logo img {
-        height: 35px;
+        height: 25px;
         margin-right: 0;
     }
 
