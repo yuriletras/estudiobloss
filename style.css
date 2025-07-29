@@ -67,6 +67,18 @@ body {
     margin-right: 2em;
 }
 
+.nav-mobile-extras {
+    display: none;
+}
+
+/* Garante que os ícones de desktop apareçam corretamente */
+.nav-icons.desktop-only-icons {
+    display: flex; /* ou como você os tinha originalmente */
+    align-items: center;
+    gap: 15px;
+    /* Outros estilos para a versão desktop, ex: font-size, color */
+}
+
 .nav-links {
     list-style: none;
     margin: 0;
@@ -226,7 +238,9 @@ body {
     }
 }
 
-/* Responsividade para mobile com centralização refinada */
+/* ----------------------------------------------- */
+/* MEDIA QUERY PARA MOBILE navbar (max-width: 768px) */
+/* ----------------------------------------------- */
 @media (max-width: 768px) {
     /* Navbar */
     .navbar-inner {
@@ -235,6 +249,7 @@ body {
         align-items: center;
         padding: 0 var(--site-padding-mobile);
         max-width: 100%;
+        padding-right: 20px; /* Ajuste conforme necessário */
     }
 
     .navbar .logo img {
@@ -243,7 +258,7 @@ body {
     }
 
     .nav-links {
-        display: none;
+        display: none; /* ESCONDE os links no mobile por padrão */
         flex-direction: column;
         width: 100%;
         text-align: center;
@@ -258,15 +273,115 @@ body {
     }
 
     .nav-links.open {
-        display: flex;
+        display: flex; /* MOSTRA os links QUANDO o menu hambúrguer é clicado */
     }
 
-    .nav-icons {
+    /* Oculta os ícones e botão de idioma ORIGINAIS (desktop) no mobile */
+    .nav-icons,
+    .desktop-only-icons {
         display: none;
     }
 
     .hamburger-menu {
-        display: flex;
+        display: flex; /* MOSTRA o botão hambúrguer no mobile */
+        /* Estilos básicos para o botão hambúrguer */
+        flex-direction: column;
+        justify-content: space-around;
+        width: 30px;
+        height: 25px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        z-index: 1000; /* Garante que esteja acima de tudo */
+    }
+
+    .hamburger-menu .bar {
+        width: 100%;
+        height: 3px;
+        background-color: #333; /* Ou sua cor principal */
+        border-radius: 5px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    /* Estilos para animar o hambúrguer quando ativo (ex: vira um X) */
+    .hamburger-menu.active .bar:nth-child(2) {
+        opacity: 0; /* Esconde a barra do meio */
+    }
+    .hamburger-menu.active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg); /* Gira e move a barra de cima */
+    }
+    .hamburger-menu.active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg); /* Gira e move a barra de baixo */
+    }
+
+    /* Estilos para os novos elementos extras (redes sociais e tradução) DENTRO do menu mobile */
+    /* Este LI encapsula os elementos extras no HTML */
+    .nav-links .nav-mobile-extras { 
+        display: none; /* Por padrão, oculto, mesmo dentro de .nav-links */
+        flex-direction: column; /* Para empilhar ícones sociais e botão de idioma */
+        align-items: center;
+        gap: 1.5em; /* Espaçamento entre o bloco de social e o botão de idioma */
+        padding-top: 1em;
+        border-top: 1px solid #eee; /* Linha separadora, opcional */
+        margin-top: 1em;
+        width: 100%; /* Para centralizar o conteúdo */
+    }
+
+    /* APENAS QUANDO O MENU ESTIVER ABERTO, MOSTRA O nav-mobile-extras */
+    .nav-links.open .nav-mobile-extras {
+        display: flex; /* AGORA é mostrado quando o nav-links está 'open' */
+    }
+
+    /* Estilos para o div que contém os ícones sociais dentro de nav-mobile-extras */
+    .nav-links.open .nav-mobile-extras .social-icons { 
+        display: flex; /* Mostra os ícones sociais */
+        gap: 1.5em; /* Espaçamento entre os ícones de redes sociais */
+    }
+    
+    /* Estilos para os links dos ícones sociais */
+    .nav-links.open .nav-mobile-extras .social-icons a {
+        font-size: 1.8em; /* Ajuste o tamanho dos ícones */
+        color: var(--cor-primaria); /* Defina a cor */
+        transition: color 0.3s ease;
+    }
+    .nav-links.open .nav-mobile-extras .social-icons a:hover {
+        color: var(--cor-secundaria); /* Defina a cor do hover */
+    }
+
+    /* Estilos para o botão de idioma dentro do menu mobile */
+    .nav-links.open .nav-mobile-extras #language-toggle-mobile { 
+        /* Estilize este botão como os links de navegação, por exemplo */
+        font-size: 1.1em; /* Ajuste o tamanho da fonte */
+        color: var(--cor-texto-claro); /* Defina a cor */
+        display: flex; /* Para alinhar texto e ícone de seta */
+        align-items: center;
+        justify-content: center; /* Centraliza horizontalmente */
+        text-decoration: none; /* Remove sublinhado padrão do link */
+        transition: color 0.3s ease;
+    }
+    .nav-links.open .nav-mobile-extras #language-toggle-mobile:hover {
+        color: var(--cor-secundaria); /* Cor do hover */
+    }
+    .nav-links.open .nav-mobile-extras #language-toggle-mobile i {
+        font-size: 0.8em; /* Ajuste o tamanho da seta */
+        margin-left: 5px; /* Espaço entre o texto do idioma e a seta */
+    }
+    
+    /* Opcional: para garantir que os links de navegação do menu fiquem bem formatados */
+    .nav-links li {
+        width: 100%;
+    }
+    .nav-links li a {
+        display: block; /* Para que o padding e a área de clique funcionem bem */
+        padding: 0.5em 0; /* Padding para cada item do menu */
+        color: var(--cor-texto-principal); /* Cor dos links do menu */
+        text-decoration: none;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .nav-links li a:hover {
+        background-color: var(--cor-fundo-hover, #f0f0f0); /* Cor de fundo no hover */
+        color: var(--cor-destaque, #000); /* Cor do texto no hover */
     }
 
     /* Hero Section em Mobile */
@@ -310,6 +425,78 @@ body {
     .hero-content .line-bottom {
         display: inline; /* Mantém as linhas próximas */
     }
+
+     /* --- Seção "Sobre Nós" --- */
+
+    .about-us-section {
+        /* Ajuste o padding geral da seção no mobile */
+        padding: 40px var(--site-padding-mobile); 
+    }
+
+    .about-us-content-wrapper {
+        flex-direction: column; /* Para empilhar o conteúdo de texto e a caixa de imagem no mobile */
+        align-items: center; /* Centraliza os itens filhos (texto e imagem) horizontalmente */
+        gap: 30px; /* Espaço entre o bloco de texto e a caixa de imagem */
+        width: 100%; /* Garante que o wrapper ocupe a largura total disponível */
+    }
+
+    .about-us-text-content {
+        text-align: center; /* CENTRALIZA todo o texto dentro deste contêiner */
+        width: 100%; /* Garante que o bloco de texto ocupe a largura total disponível */
+        max-width: 600px; /* Opcional: limita a largura máxima do texto para não ficar muito largo em tablets */
+        margin: 0 auto; /* Centraliza o bloco de texto em si, se tiver um max-width */
+    }
+
+    /* Centraliza títulos e parágrafos específicos dentro do about-us-text-content */
+    .about-us-text-content .about-us-subtitle,
+    .about-us-text-content .about-us-title,
+    .about-us-text-content .about-us-paragraph {
+        text-align: center; /* Garante que todos os elementos de texto sejam centralizados */
+    }
+
+    /* Estilo para os botões dentro do about-us-text-content */
+    .about-us-buttons {
+        display: flex; /* Para manter os botões na mesma linha, se desejar */
+        flex-direction: column; /* Para empilhar os botões no mobile, um abaixo do outro */
+        gap: 10px; /* Espaço entre os botões empilhados */
+        align-items: center; /* Centraliza os botões quando empilhados */
+        margin-top: 20px; /* Espaço entre o último parágrafo e os botões */
+    }
+    
+    .about-us-buttons .btn {
+        width: 100%; /* Faz com que os botões ocupem a largura total do seu contêiner */
+        max-width: 250px; /* Limita a largura máxima dos botões para não ficarem gigantes */
+    }
+
+    /* Ajuste da caixa da imagem */
+    .about-us-image-box {
+        flex: unset;
+        width: 100%; /* A caixa da imagem ocupa 90% da largura do contêiner pai */
+        max-width: 250px; /* Opcional: Define uma largura máxima para a caixa da imagem */
+        height: 50px; /* Defina uma altura fixa para a caixa no mobile, ajuste conforme a imagem */
+        margin: 0 auto; /* Centraliza a caixa da imagem */
+        
+        /* Se a imagem é um background-image, use estas propriedades: */
+        background-size: contain; /* CRÍTICO: Garante que a imagem inteira seja visível, sem ser cortada, mesmo que deixe espaço vazio (letterboxing). */
+        background-position: center; /* Centraliza a imagem dentro da caixa */
+        background-repeat: no-repeat; /* Evita que a imagem se repita */
+        background-image: url('img/projetos/PROJETOS SITE-08.jpg');
+
+        /* Se você for adicionar uma tag <img> dentro de about-us-image-box via JS ou HTML: */
+        display: flex; /* Para usar justify-content e align-items para centralizar a <img> */
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Se você tem uma tag <img> DENTRO de .about-us-image-box (não como background) */
+    .about-us-image-box img {
+        width: 100%; /* A imagem preenche a largura do seu contêiner (.about-us-image-box) */
+        height: auto; /* Garante que a altura da imagem se ajuste automaticamente, evitando corte e mantendo a proporção */
+        object-fit: contain; /* CRÍTICO: Garante que a imagem inteira seja visível. */
+        display: block; /* Remove possíveis espaços extras de imagens inline */
+        max-height: 250px; /* Limita a altura máxima da imagem para não esticar muito */
+    }
+
 
     /* Seção de Serviços em Mobile */
     .service-cards {
@@ -371,54 +558,7 @@ body {
         font-size: 1.1em;
     }
 
-    /* RESPONSIVIDADE PARA SEÇÃO SOBRE NÓS (Com foto lateral) */
-    .about-us-section {
-        padding: 4em 0;
-    }
-
-    .about-us-content-wrapper {
-        flex-direction: column;
-        gap: 2.5em;
-    }
-
-    .about-us-text-content {
-        padding: 0;
-        max-width: 100%;
-        margin: 0 auto;
-    }
-
-    .about-us-subtitle,
-    .about-us-title,
-    .about-us-paragraph {
-        text-align: center;
-    }
-
-    .about-us-title {
-        font-size: 2em;
-    }
-
-    .about-us-paragraph {
-        font-size: 0.95em;
-    }
-
-    .about-us-buttons {
-        flex-direction: column;
-        align-items: center;
-        gap: 0.8em;
-    }
-
-    .btn {
-        width: 100%;
-        max-width: 250px;
-    }
-
-    .about-us-image-box {
-        min-height: 350px;
-        max-width: 90%;
-        width: 100%;
-        margin: 0 auto;
-    }
-
+    
     /* RESPONSIVIDADE PARA A SEÇÃO DE CONTATO */
     .contact-call-to-action {
         padding: 4em 0;
