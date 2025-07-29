@@ -10,33 +10,13 @@
     --color-dark-gray: #332626;
     --border-radius-global: 15px;
     --transition-speed: 0.3s ease;
-    --site-padding-desktop: 2em; /* Variável para o padding lateral padrão em desktop */
-    --site-padding-mobile: 1em; /* Variável para o padding lateral padrão em mobile */
-    --cor-fundo-clara-alternada: #B7A692; /* Um cinza muito claro, quase branco. Ajuste para sua paleta. */
-    --cor-fundo-clara-alternada-2: #EEF4F4; /* Outra opção, se quiser mais de uma alternativa */}
-
-/* ======================== */
-/* CONTAINER GLOBAL DE CONTEÚDO PARA PADRONIZAR LARGURA */
-/* ======================== */
-
-/* Estilo para seções com background alternado */
-.alternate-bg {
-    background-color: var(--cor-fundo-clara-alternada); /* Ou outra variável que você definiu */
+    --site-padding-desktop: 2em;
+    --site-padding-mobile: 1em;
+    --cor-fundo-clara-alternada: #B7A692;
+    --cor-fundo-clara-alternada-2: #EEF4F4;
 }
 
-/* Opcional: Se quiser uma transição suave ao rolar */
-.alternate-bg {
-    transition: background-color 0.5s ease-in-out;
-}
-
-.site-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    /* AJUSTADO: Padding lateral para que o conteúdo se espalhe mais */
-    padding: 0 var(--site-padding-desktop);
-    box-sizing: border-box;
-}
-
+/* Estilo global */
 body {
     font-family: 'Noto Serif Display', serif;
     margin: 0;
@@ -45,11 +25,24 @@ body {
     color: var(--color-brown);
     line-height: 1.6;
     overflow-x: hidden;
-    /* ESSENCIAL: Padding-top para compensar a navbar fixa */
-    padding-top: 60px; /* Ajuste se sua navbar tiver altura diferente */
+    padding-top: 60px; /* Compensar navbar fixa */
 }
 
-/* Estilos para a Barra de Navegação */
+/* Container global */
+.site-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--site-padding-desktop);
+    box-sizing: border-box;
+}
+
+/* Estilo para seções com background alternado */
+.alternate-bg {
+    background-color: var(--cor-fundo-clara-alternada);
+    transition: background-color 0.5s ease-in-out;
+}
+
+/* Navbar */
 .navbar {
     position: fixed;
     top: 0;
@@ -69,7 +62,6 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* AJUSTADO: Padding lateral para que a navbar se espalhe mais, igual ao site-container */
     padding: 0 var(--site-padding-desktop);
     box-sizing: border-box;
 }
@@ -77,18 +69,6 @@ body {
 .navbar .logo img {
     height: 25px;
     margin-right: 2em;
-}
-
-.nav-mobile-extras {
-    display: none;
-}
-
-/* Garante que os ícones de desktop apareçam corretamente */
-.nav-icons.desktop-only-icons {
-    display: flex; /* ou como você os tinha originalmente */
-    align-items: center;
-    gap: 15px;
-    /* Outros estilos para a versão desktop, ex: font-size, color */
 }
 
 .nav-links {
@@ -135,7 +115,6 @@ body {
     color: var(--color-brown);
 }
 
-/* --- Estilos para o Botão Hambúrguer --- */
 .hamburger-menu {
     display: none;
     background: none;
@@ -143,16 +122,13 @@ body {
     cursor: pointer;
     padding: 10px;
     z-index: 1001;
-    position: relative;
     width: 30px;
     height: 24px;
     flex-direction: column;
     justify-content: space-around;
-    align-items: center;
 }
 
 .hamburger-menu .bar {
-    display: block;
     width: 100%;
     height: 3px;
     background-color: var(--color-brown);
@@ -163,464 +139,94 @@ body {
 .hamburger-menu.active .bar:nth-child(1) {
     transform: translateY(10px) rotate(45deg);
 }
+
 .hamburger-menu.active .bar:nth-child(2) {
     opacity: 0;
 }
+
 .hamburger-menu.active .bar:nth-child(3) {
     transform: translateY(-10px) rotate(-45deg);
 }
 
-/* Estilos para o Hero Section */
+/* Hero Section */
 .hero {
-    position: relative;
-    height: calc(110vh - 80px); /* Ajuste os 80px para o valor do padding-top do body */
+    /* ... suas propriedades existentes (height, background, etc.) ... */
+    display: flex;
+    flex-direction: column; /* Isso faz com que os itens internos (site-container) se empilhem verticalmente */
+    justify-content: center; /* Centraliza o site-container verticalmente dentro do hero */
+    align-items: flex-start; /* Alinha o site-container (e seu conteúdo) à ESQUERDA */
+    /* Remova qualquer padding lateral direto no .hero que possa estar empurrando */
+    background-image: url('img/capa.png'); /* A imagem de fundo deve ser definida AQUI no CSS */
     background-size: cover;
     background-position: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    text-align: left;
-    padding-top: 0; /* Remove padding-top fixo, o body já compensa a navbar */
-    padding-left: 0; /* Remove padding-left para permitir alinhamento à esquerda */
-    color: var(--color-dark-gray);
-    overflow: hidden;
-    background-image: url('img/capa.png');
+    height: calc(100vh - 60px);
 }
 
+/* No .hero .site-container (o container que envolve o hero-content) */
 .hero .site-container {
-    padding-right: var(--site-padding-desktop); /* Mantém o padding direito para equilíbrio */
+    /* O padding: 0 var(--site-padding-desktop); já dará o recuo lateral. */
+    /* Certifique-se de que NÃO há margin: 0 auto; específico AQUI, se o objetivo é alinhar à esquerda. */
+    max-width: 1200px; /* Sua largura máxima */
+    width: 100%; /* Para que o max-width funcione */
+    box-sizing: border-box;
 }
 
+/* No .hero-content (o texto em si) */
 .hero-content {
-    background-color: transparent;
-    padding: 0;
-    border-radius: 0;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start; /* Alinha os filhos (h1 e p) à esquerda */
-    text-align: left; /* Garante que o texto dentro de h1 e p se alinhe à esquerda */
-    margin-left: 0; /* Remove qualquer margem esquerda padrão */
+    max-width: 600px;
+    text-align: left; /* Alinha o texto dentro do div */
+    margin: 0; /* Garante que não há centralização de margens no próprio texto */
 }
 
+/* Mantenha o restante do seu CSS para .hero-content h1 e p */
 .hero-content h1 {
     font-family: 'Noto Serif Display', serif;
     font-weight: 300;
-    font-size: 3.5em; /* Restaurado para o tamanho original */
-    line-height: 1em;
+    font-size: 3.5em;
+    line-height: 1.1;
     margin-bottom: 0.2em;
     color: var(--color-dark-gray);
-    margin-left: 0;
-    margin-right: 0; /* Garante que não haja margem extra à direita */
-}
-
-.hero-content h1 .italic-text,
-.text-italic {
-    font-style: italic;
 }
 
 .hero-content h1 .line-top {
-    display: block; /* Essencial para que o span se comporte como um bloco e ocupe sua própria linha */
-    /* Ajuste uma dessas propriedades para controlar o espaço ABAIXO de "Marcas nascem" */
-    margin-bottom: -0.0em; /* Experimente valores negativos para aproximar as linhas. Ex: -0.1em, -0.3em */
-    /* OU */
-    /* line-height: 0.8em; /* Ajuste para controlar o espaçamento DA LINHA. Valores abaixo de 1 aproximam. */
-    /* Recomendo usar margin-bottom para controle mais direto do espaçamento ENTRE os spans. */
+    display: block;
+    margin-bottom: 0.1em;
+}
+
+.hero-content h1 .text-italic,
+.hero-content h1 .italic-text {
+    font-style: italic;
 }
 
 .hero-content p {
     font-family: 'Noto Serif Display', serif;
     font-weight: 400;
-    font-size: 1.2em; /* Restaurado para o tamanho original */
+    font-size: 1.2em;
     color: var(--color-dark-gray);
-    max-width: 600px; /* Mantém o parágrafo mais legível */
-    margin-left: 0;
-    margin-right: auto;
-    margin-bottom: 0;
+    max-width: 600px;
+    margin: 0;
 }
 
-/* Ajuste específico para desktop */
-@media (min-width: 769px) {
-    .hero .hero-content {
-        position: absolute;
-        left: 50px; /* Afastamento da borda */
-        transform: none;
-
-    }
-}
-
-/* ----------------------------------------------- */
-/* MEDIA QUERY PARA MOBILE navbar (max-width: 768px) */
-/* ----------------------------------------------- */
-@media (max-width: 768px) {
-    /* Navbar */
-    .navbar-inner {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 var(--site-padding-mobile);
-        max-width: 100%;
-        padding-right: 20px; /* Ajuste conforme necessário */
-    }
-
-    .navbar .logo img {
-        height: 25px;
-        margin-right: 0;
-    }
-
-    .nav-links {
-        display: none; /* ESCONDE os links no mobile por padrão */
-        flex-direction: column;
-        width: 100%;
-        text-align: center;
-        background-color: rgba(255, 255, 255, 0.98);
-        position: absolute;
-        top: 100%;
-        left: 0;
-        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-        padding: 1em 0;
-        gap: 0.5em;
-        z-index: 999;
-    }
-
-    .nav-links.open {
-        display: flex; /* MOSTRA os links QUANDO o menu hambúrguer é clicado */
-    }
-
-    /* Oculta os ícones e botão de idioma ORIGINAIS (desktop) no mobile */
-    .nav-icons,
-    .desktop-only-icons {
-        display: none;
-    }
-
-    .hamburger-menu {
-        display: flex; /* MOSTRA o botão hambúrguer no mobile */
-        /* Estilos básicos para o botão hambúrguer */
-        flex-direction: column;
-        justify-content: space-around;
-        width: 30px;
-        height: 25px;
-        background: transparent;
-        border: none;
-        cursor: pointer;
-        padding: 0;
-        z-index: 1000; /* Garante que esteja acima de tudo */
-    }
-
-    .hamburger-menu .bar {
-        width: 100%;
-        height: 3px;
-        background-color: #333; /* Ou sua cor principal */
-        border-radius: 5px;
-        transition: all 0.3s ease-in-out;
-    }
-
-    /* Estilos para animar o hambúrguer quando ativo (ex: vira um X) */
-    .hamburger-menu.active .bar:nth-child(2) {
-        opacity: 0; /* Esconde a barra do meio */
-    }
-    .hamburger-menu.active .bar:nth-child(1) {
-        transform: translateY(8px) rotate(45deg); /* Gira e move a barra de cima */
-    }
-    .hamburger-menu.active .bar:nth-child(3) {
-        transform: translateY(-8px) rotate(-45deg); /* Gira e move a barra de baixo */
-    }
-
-    /* Estilos para os novos elementos extras (redes sociais e tradução) DENTRO do menu mobile */
-    /* Este LI encapsula os elementos extras no HTML */
-    .nav-links .nav-mobile-extras { 
-        display: none; /* Por padrão, oculto, mesmo dentro de .nav-links */
-        flex-direction: column; /* Para empilhar ícones sociais e botão de idioma */
-        align-items: center;
-        gap: 1.5em; /* Espaçamento entre o bloco de social e o botão de idioma */
-        padding-top: 1em;
-        border-top: 1px solid #eee; /* Linha separadora, opcional */
-        margin-top: 1em;
-        width: 100%; /* Para centralizar o conteúdo */
-    }
-
-    /* APENAS QUANDO O MENU ESTIVER ABERTO, MOSTRA O nav-mobile-extras */
-    .nav-links.open .nav-mobile-extras {
-        display: flex; /* AGORA é mostrado quando o nav-links está 'open' */
-    }
-
-    /* Estilos para o div que contém os ícones sociais dentro de nav-mobile-extras */
-    .nav-links.open .nav-mobile-extras .social-icons { 
-        display: flex; /* Mostra os ícones sociais */
-        gap: 1.5em; /* Espaçamento entre os ícones de redes sociais */
-    }
-    
-    /* Estilos para os links dos ícones sociais */
-    .nav-links.open .nav-mobile-extras .social-icons a {
-        font-size: 1.8em; /* Ajuste o tamanho dos ícones */
-        color: var(--cor-primaria); /* Defina a cor */
-        transition: color 0.3s ease;
-    }
-    .nav-links.open .nav-mobile-extras .social-icons a:hover {
-        color: var(--cor-secundaria); /* Defina a cor do hover */
-    }
-
-    /* Estilos para o botão de idioma dentro do menu mobile */
-    .nav-links.open .nav-mobile-extras #language-toggle-mobile { 
-        /* Estilize este botão como os links de navegação, por exemplo */
-        font-size: 1.1em; /* Ajuste o tamanho da fonte */
-        color: var(--cor-texto-claro); /* Defina a cor */
-        display: flex; /* Para alinhar texto e ícone de seta */
-        align-items: center;
-        justify-content: center; /* Centraliza horizontalmente */
-        text-decoration: none; /* Remove sublinhado padrão do link */
-        transition: color 0.3s ease;
-    }
-    .nav-links.open .nav-mobile-extras #language-toggle-mobile:hover {
-        color: var(--cor-secundaria); /* Cor do hover */
-    }
-    .nav-links.open .nav-mobile-extras #language-toggle-mobile i {
-        font-size: 0.8em; /* Ajuste o tamanho da seta */
-        margin-left: 5px; /* Espaço entre o texto do idioma e a seta */
-    }
-    
-    /* Opcional: para garantir que os links de navegação do menu fiquem bem formatados */
-    .nav-links li {
-        width: 100%;
-    }
-    .nav-links li a {
-        display: block; /* Para que o padding e a área de clique funcionem bem */
-        padding: 0.5em 0; /* Padding para cada item do menu */
-        color: var(--cor-texto-principal); /* Cor dos links do menu */
-        text-decoration: none;
-        transition: background-color 0.3s ease, color 0.3s ease;
-    }
-    .nav-links li a:hover {
-        background-color: var(--cor-fundo-hover, #f0f0f0); /* Cor de fundo no hover */
-        color: var(--cor-destaque, #000); /* Cor do texto no hover */
-    }
-
-    /* Hero Section em Mobile */
-    .hero {
-        position: relative;
-        padding-top: 60px; /* Ajustado para compensar a navbar fixa */
-        padding-left: 0;
-        justify-content: flex-start;
-        text-align: left;
-        background-image: url('img/capa2.png') !important;
-        background-position: center center;
-        background-size: cover;
-        overflow-x: hidden;
-    }
-
-    .hero-content {
-        position: absolute;
-        top: 60px;
-        left: 50%; /* Centraliza horizontalmente */
-        transform: translateX(-50%); /* Ajusta para o centro exato */
-        max-width: 90%;
-        padding: 0;
-        align-items: center; /* Centraliza os filhos horizontalmente */
-        text-align: center !important; /* Garante centralização dos textos */
-    }
-    
-    .hero-content h1 {
-        font-size: 2em;
-        margin-top: 0;
-        margin-bottom: 0.2em;
-        line-height: 1;
-    }
-
-    .hero-content p {
-        font-size: 0.9em;
-        margin: 0;
-        max-width: 100%;
-    }
-
-    .hero-content .line-top,
-    .hero-content .line-bottom {
-        display: inline; /* Mantém as linhas próximas */
-    }
-
-     /* --- Seção "Sobre Nós" --- */
-
-    .about-us-section {
-        /* Ajuste o padding geral da seção no mobile */
-        padding: 40px var(--site-padding-mobile); 
-    }
-
-    .about-us-content-wrapper {
-        flex-direction: column; /* Para empilhar o conteúdo de texto e a caixa de imagem no mobile */
-        align-items: center; /* Centraliza os itens filhos (texto e imagem) horizontalmente */
-        gap: 30px; /* Espaço entre o bloco de texto e a caixa de imagem */
-        width: 100%; /* Garante que o wrapper ocupe a largura total disponível */
-    }
-
-    .about-us-text-content {
-        text-align: center; /* CENTRALIZA todo o texto dentro deste contêiner */
-        width: 100%; /* Garante que o bloco de texto ocupe a largura total disponível */
-        max-width: 600px; /* Opcional: limita a largura máxima do texto para não ficar muito largo em tablets */
-        margin: 0 auto; /* Centraliza o bloco de texto em si, se tiver um max-width */
-    }
-
-    /* Centraliza títulos e parágrafos específicos dentro do about-us-text-content */
-    .about-us-text-content .about-us-subtitle,
-    .about-us-text-content .about-us-title,
-    .about-us-text-content .about-us-paragraph {
-        text-align: center; /* Garante que todos os elementos de texto sejam centralizados */
-    }
-
-    /* Estilo para os botões dentro do about-us-text-content */
-    .about-us-buttons {
-        display: flex; /* Para manter os botões na mesma linha, se desejar */
-        flex-direction: column; /* Para empilhar os botões no mobile, um abaixo do outro */
-        gap: 10px; /* Espaço entre os botões empilhados */
-        align-items: center; /* Centraliza os botões quando empilhados */
-        margin-top: 20px; /* Espaço entre o último parágrafo e os botões */
-    }
-    
-    .about-us-buttons .btn {
-        width: 100%; /* Faz com que os botões ocupem a largura total do seu contêiner */
-        max-width: 250px; /* Limita a largura máxima dos botões para não ficarem gigantes */
-    }
-
-    /* Ajuste da caixa da imagem */
-    .about-us-image-box {
-        flex: unset;
-        width: 100%; /* A caixa da imagem ocupa 90% da largura do contêiner pai */
-        max-width: 250px; /* Opcional: Define uma largura máxima para a caixa da imagem */
-        height: 50px; /* Defina uma altura fixa para a caixa no mobile, ajuste conforme a imagem */
-        margin: 0 auto; /* Centraliza a caixa da imagem */
-        
-        /* Se a imagem é um background-image, use estas propriedades: */
-        background-size: contain; /* CRÍTICO: Garante que a imagem inteira seja visível, sem ser cortada, mesmo que deixe espaço vazio (letterboxing). */
-        background-position: center; /* Centraliza a imagem dentro da caixa */
-        background-repeat: no-repeat; /* Evita que a imagem se repita */
-        background-image: url('img/projetos/PROJETOS SITE-08.jpg');
-
-        /* Se você for adicionar uma tag <img> dentro de about-us-image-box via JS ou HTML: */
-        display: flex; /* Para usar justify-content e align-items para centralizar a <img> */
-        justify-content: center;
-        align-items: center;
-    }
-
-    /* Se você tem uma tag <img> DENTRO de .about-us-image-box (não como background) */
-    .about-us-image-box img {
-        width: 100%; /* A imagem preenche a largura do seu contêiner (.about-us-image-box) */
-        height: auto; /* Garante que a altura da imagem se ajuste automaticamente, evitando corte e mantendo a proporção */
-        object-fit: contain; /* CRÍTICO: Garante que a imagem inteira seja visível. */
-        display: block; /* Remove possíveis espaços extras de imagens inline */
-        max-height: 250px; /* Limita a altura máxima da imagem para não esticar muito */
-    }
-
-
-    /* Seção de Serviços em Mobile */
-    .service-cards {
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        max-width: 100%;
-        box-sizing: border-box;
-    }
-
-    .service-card {
-        background-color: var(--color-beige);
-        max-width: 350px;
-        width: 90%;
-        margin: 0 auto;
-        box-sizing: border-box;
-    }
-
-    /* Carrossel em Mobile */
-    .carousel-wrapper {
-        padding: 0 var(--site-padding-mobile);
-    }
-
-    .carousel-container {
-        max-width: 100%;
-        padding: 0;
-    }
-
-    .carousel-slide {
-        padding: 0 10px;
-        gap: 1em;
-    }
-
-    .carousel-item {
-        width: 200px;
-        height: 280px;
-        min-width: unset;
-        max-width: unset;
-    }
-
-    .carousel-item img {
-        height: 100%;
-    }
-
-    .all-projects-grid {
-        gap: 1.5em;
-    }
-
-    /* Portfólio em Mobile */
-    .portfolio-call-to-action {
-        max-width: 100%;
-        padding: 2em 1em;
-        margin: 2em auto;
-    }
-
-    .portfolio-call-to-action p,
-    .contact-box p,
-    .final-phrase .light-text,
-    .final-phrase .blossom-text {
-        font-size: 1.1em;
-    }
-
-    
-    /* RESPONSIVIDADE PARA A SEÇÃO DE CONTATO */
-    .contact-call-to-action {
-        padding: 4em 0;
-    }
-
-    .contact-box {
-        padding: 1.5em;
-    }
-
-    .contact-box p {
-        font-size: 1.1em;
-    }
-
-    .social-icons-contact {
-        gap: 1.2em;
-        margin-top: 1.5em;
-    }
-
-    .social-icons-contact a {
-        font-size: 2.2em;
-    }
-}
-
-/* Seção: Sobre Nós */
+/* About Us Section */
 .about-us-section {
-    padding: 6em 0;
+    padding: 4em 0;
     background-color: var(--color-white);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 60vh;
 }
 
-.about-us-content-wrapper { 
+.about-us-content-wrapper {
     display: flex;
-    flex-direction: row; 
-    gap: 3em; 
-    width: 100%;
-    align-items: center; 
-    justify-content: center; 
-    flex-wrap: wrap; 
+    flex-direction: row;
+    gap: 2em;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .about-us-text-content {
     flex: 1;
-    min-width: 380px;
-    max-width: 600px; 
-    box-sizing: border-box;
-    padding: 0; 
+    min-width: 300px;
+    max-width: 600px;
+    text-align: left;
 }
 
 .about-us-subtitle {
@@ -631,22 +237,19 @@ body {
     text-transform: uppercase;
     letter-spacing: 0.1em;
     margin-bottom: 0.5em;
-    text-align: left; 
 }
 
 .about-us-title {
     font-family: 'Noto Serif Display', serif;
     font-weight: 400;
-    font-size: 3em;
+    font-size: 2.5em;
     line-height: 1.2;
     color: var(--color-dark-gray);
-    margin-bottom: 1.5em;
-    text-align: left; 
+    margin-bottom: 1em;
 }
 
 .about-us-title .italic-text {
     font-style: italic;
-    font-weight: 400;
 }
 
 .about-us-paragraph {
@@ -655,30 +258,24 @@ body {
     line-height: 1.7;
     color: var(--color-dark-gray);
     margin-bottom: 1em;
-    text-align: left; 
-}
-
-.about-us-paragraph:last-of-type {
-    margin-bottom: 2em;
 }
 
 .about-us-buttons {
     display: flex;
     gap: 1em;
-    margin-top: 1em;
     flex-wrap: wrap;
-    justify-content: flex-start; 
+    justify-content: flex-start;
 }
 
 .btn {
-    padding: 0.8em 2em;
+    padding: 0.5em 0.5em;
     border-radius: 5px;
     text-decoration: none;
     font-family: 'Noto Serif Display', serif;
     font-weight: 600;
     font-size: 0.95em;
     cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    transition: background-color var(--transition-speed), color var(--transition-speed), border-color var(--transition-speed);
 }
 
 .btn-dark {
@@ -704,95 +301,159 @@ body {
 }
 
 .about-us-image-box {
-    flex: 1.2;
-    min-width: 400px; 
-    max-width: 650px; 
-    min-height: 670px; 
-    background-image: url('img/projetos/PROJETOS SITE-08.jpg'); 
+    flex: 1;
+    min-width: 300px;
+    max-width: 650px;
+    height: 400px;
+    background-image: url('img/projetos/PROJETOS SITE-08.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    border-radius: var(--border-radius-global); 
-    box-sizing: border-box;
+    border-radius: var(--border-radius-global);
 }
 
-/* Seção de Serviços */
+/* Services Section */
 .services {
-    padding: 4em 0; /* Mantido o padding da seção principal */
+    padding: 4em 0;
     text-align: center;
-    margin-top: 0;
-    background-color: #dbdbdb; /* AQUI! Esta linha muda a cor de fundo de TODA a seção */
+    background-color: #dbdbdb;
 }
 
-/* Os estilos para h2 dentro de .services */
 .services h2 {
     font-family: 'Noto Serif Display', serif;
     color: var(--color-dark-gray);
     font-size: 2.5em;
-    margin-bottom: 2em; /* Pode ajustar este valor se o título estiver muito colado aos cartões */
-}
-
-.site-container {
-    font-family: 'Noto Serif Display', serif; 
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 var(--site-padding-desktop);
-    box-sizing: border-box;
-    /* Certifique-se de que NÃO HÁ background-color: var(--color-white); AQUI ou em outra parte do site-container */
-    /* Ou, se houver, certifique-se de que o .services tenha uma especificidade maior ou use !important (não recomendado, mas possível) */
+    margin-bottom: 1.5em;
 }
 
 .service-cards {
-    /* Remova qualquer background-color daqui se houver */
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 2em;
-    padding: 1em 1em;
-    border-radius: var(--border-radius-global);
-    box-sizing: border-box;
 }
 
 .service-card {
     background-color: var(--color-white);
-    /* border: 1px solid var(--color-beige); */ /* COMENTADO OU REMOVIDO: Remove a borda */
-    padding: 1.5em; /* Mantenha seu padding ajustado */
+    padding: 1.5em;
     border-radius: var(--border-radius-global);
     flex: 1;
     min-width: 250px;
     max-width: 300px;
-    /* Adicionando uma sombra sutil e profissional */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); /* Sombra inicial (mantida do seu código) */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
     transition: transform var(--transition-speed), box-shadow var(--transition-speed);
 }
 
 .service-card:hover {
-    transform: translateY(-8px); /* Efeito de elevação ao passar o mouse */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Sombra um pouco mais pronunciada ao passar o mouse */
+    transform: translateY(-8px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
 .service-card h3 {
-    font-family: 'Noto Serif Display', serif; 
+    font-family: 'Noto Serif Display', serif;
     color: var(--color-brown);
     font-size: 1.2em;
     margin-bottom: 1em;
 }
 
 .service-card p {
-    font-family: 'Roboto', serif;
+    font-family: 'Roboto', sans-serif;
     color: var(--color-dark-gray);
     font-size: 0.9em;
 }
 
-/* Chamada para o Portfólio */
+/* Brands Section */
+.brands-section {
+    padding: 4em 0;
+    text-align: center;
+}
+
+.brands-section h2 {
+    color: var(--color-dark-gray);
+    font-size: 2.5em;
+    margin-bottom: 1.5em;
+}
+
+.carousel-wrapper {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--site-padding-desktop);
+}
+
+.carousel-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+}
+
+.carousel-container::-webkit-scrollbar {
+    display: none;
+}
+
+.carousel-slide {
+    display: flex;
+    gap: 1.5em;
+    padding: 0 20px;
+}
+
+.carousel-item {
+    flex: 0 0 auto;
+    width: 280px;
+    height: 390px;
+    background-color: var(--color-white);
+    border-radius: var(--border-radius-global);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.carousel-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--border-radius-global);
+    transition: transform 0.5s ease;
+}
+
+.carousel-item img:hover {
+    transform: scale(1.05);
+}
+
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 16px;
+    color: var(--color-brown);
+    font-weight: bold;
+    font-size: 2.5em;
+    background-color: rgba(255, 255, 255, 0.4);
+    z-index: 51;
+}
+
+.next {
+    right: 0;
+}
+
+.prev {
+    left: 0;
+}
+
+/* Portfolio Call to Action */
 .portfolio-call-to-action {
     background-color: var(--color-beige);
     color: var(--color-brown);
     padding: 3em 0;
-    margin: 4em auto;
-    border-radius: var(--border-radius-global);
     text-align: center;
-    box-sizing: border-box;
 }
 
 .portfolio-call-to-action p {
@@ -816,252 +477,125 @@ body {
     transform: translateY(-3px);
 }
 
-/* Seção Marcas (Container principal para carrossel e grade) */
-.brands-section {
+/* Full Portfolio Section */
+.full-portfolio-section {
     padding: 4em 0;
     text-align: center;
-    background-color: var(--color-white);
-}
-
-.brands-section h2 {
-    color: var(--color-dark-gray);
-    font-size: 2.5em;
-    margin-bottom: 2em;
-}
-
-/* Carrossel Wrapper - AGE COMO UM CONTAINER AQUI */
-.carousel-wrapper {
-    position: relative; 
-    max-width: 1200px;
-    margin: auto; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    /* AJUSTADO: Padding lateral para que o carrossel se espalhe mais */
-    padding: 0 var(--site-padding-desktop);
-    box-sizing: border-box; 
-}
-
-.carousel-container {
-    max-width: 100%; 
-    flex-grow: 1; 
-    margin: auto; 
-    overflow-x: auto;
-    overflow-y: hidden;
-    white-space: nowrap;
-    /* scroll-snap-type: x mandatory; REMOVIDO */ 
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    /* Opcional: Para rolagem manual mais suave (se usar JavaScript para navegação) */
-    scroll-behavior: smooth; 
-    border: none;
-    border-radius: 0;
-    box-shadow: none;
-    padding: 0; 
-    transition: opacity var(--transition-speed), height var(--transition-speed);
-    height: auto;
-    opacity: 1;
-    visibility: visible;
-}
-
-.carousel-container::-webkit-scrollbar {
-    display: none;
-}
-
-.carousel-container.hidden {
     opacity: 0;
     height: 0;
-    visibility: hidden;
-    padding: 0;
-    margin-bottom: 0;
-}
-
-/* Cada slide do carrossel */
-.carousel-slide {
-    display: flex;
-    width: max-content;
-    min-width: 100%;
-    justify-content: flex-start;
-    gap: 2em;
-    flex-wrap: nowrap;
-    align-items: flex-start;
-
-    padding: 0 40px; 
-    box-sizing: border-box;
-}
-
-/* NAVEGAÇÃO DO CARROSSEL (SETAS) */
-.prev, .next {
-    cursor: pointer;
-    position: absolute; 
-    top: 50%;
-    transform: translateY(-50%);
-    width: auto;
-    padding: 16px;
-    color: var(--color-brown);
-    font-weight: bold;
-    font-size: 2.5em;
-    transition: 0.6s ease;
-    user-select: none;
-    background-color: rgba(255, 255, 255, 0.4);
-    z-index: 51;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%; 
-}
-
-.next {
-    right: 0; 
-    border-radius: 3px 0 0 3px;
-}
-
-.prev {
-    left: 0; 
-    border-radius: 0 3px 3px 0;
-}
-
-@keyframes fadeEffect {
-    from {opacity: 0;}
-    to {opacity: 1;}
-}
-
-/* Estilo para cada item individual da marca dentro do carrossel E na grade */
-.carousel-item {
-    flex: 0 0 auto;
-    width: 280px;
-    height: 390px;
-    min-width: unset; 
-    max-width: unset; 
-    /* scroll-snap-align: start; REMOVIDO */
-    padding: 0;
-    text-align: center;
-    background-color: var(--color-white);
-    border-radius: var(--border-radius-global);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
     overflow: hidden;
+    visibility: hidden;
+    transition: opacity var(--transition-speed), height var(--transition-speed), visibility var(--transition-speed);
+}
+
+.full-portfolio-section.visible {
+    opacity: 1;
+    height: auto;
+    visibility: visible;
+    overflow: visible;
+}
+
+.full-portfolio-items-container {
     display: flex;
     flex-direction: column;
+    gap: 2.5em;
+    max-width: 1000px;
+    margin: 2em auto;
+}
+
+.portfolio-full-item {
+    display: flex;
+    flex-direction: row;
+    gap: 2em;
     align-items: center;
-    justify-content: center;
-    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+    background-color: var(--color-white);
+    border: 1px solid var(--color-beige);
+    border-radius: var(--border-radius-global);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    padding: 2em;
 }
 
-.carousel-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+.portfolio-full-item.reverse-layout {
+    flex-direction: row-reverse;
 }
 
-.carousel-item img {
+.portfolio-full-item-image {
+    flex: 1;
+    min-width: 300px;
+    max-width: 45%;
+    padding-bottom: 60%;
+    height: 0;
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--border-radius-global);
+}
+
+.portfolio-full-item-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: var(--border-radius-global);
-    transition: transform 0.5s ease;
+    transition: transform 0.3s ease;
 }
 
-.carousel-item img:hover {
+.portfolio-full-item-image img:hover {
     transform: scale(1.05);
 }
 
-.carousel-item p {
-    display: none;
+.portfolio-full-item-description {
+    flex: 1.5;
+    min-width: 300px;
 }
 
-/* Pontos de navegação do carrossel */
-.carousel-dots-container {
-    display: none; 
+.portfolio-full-item-description h3 {
+    font-family: 'Noto Serif Display', serif;
+    font-size: 2em;
+    color: var(--color-brown);
+    margin-bottom: 0.8em;
 }
 
-.carousel-dots-container.hidden {
-    opacity: 0;
-    visibility: hidden;
-    height: 0;
-    overflow: hidden;
+.portfolio-full-item-description p {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1em;
+    color: var(--color-dark-gray);
+    margin-bottom: 1.5em;
+    line-height: 1.7;
 }
 
-/* Estilos para a Grade Completa de Marcas */
-.all-projects-grid {
-    display: flex; 
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 2em; 
-    max-width: 1200px;
-    margin: auto;
-    opacity: 0; 
-    height: 0; 
-    visibility: hidden; 
-    overflow: hidden;
-    transition: opacity var(--transition-speed), height var(--transition-speed);
+.portfolio-full-item-description ul {
+    list-style: none;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.95em;
+    color: var(--color-dark-gray);
+    line-height: 1.8;
 }
 
-/* Esta classe '.hidden' já existe no seu CSS. Garanto que a nova classe `.full-portfolio-section.hidden`
-   também fará uso dela se necessário, mas os estilos específicos para `full-portfolio-section`
-   já incluem `height: 0; opacity: 0; visibility: hidden; overflow: hidden;` para a transição.
-   A classe `display: none !important;` deve ser usada com cuidado, pois impede transições.
-   Para o `full-portfolio-section`, a abordagem de `height/opacity/visibility` é melhor.
-   Por isso, para este caso específico, a `.hidden` generalista pode ser omitida ou usada se a transição não for desejada.
-   Para as grades, ela é útil.
-*/
-.hidden {
-    display: none !important; 
-    opacity: 0 !important; 
-    height: 0 !important; 
-    visibility: hidden !important; 
-    overflow: hidden !important; 
-}
-
-.all-projects-grid.visible {
-    display: flex !important; 
-    opacity: 1 !important; 
-    height: auto !important; 
-    visibility: visible !important; 
+#hide-full-portfolio-btn {
     margin-top: 2em;
 }
 
-#view-all-brands-btn, #hide-brands-btn {
-    display: none;
-    margin-top: 2.5em;
-    padding: 1em 2em;
-    font-size: 1.1em;
-}
-
-/* Seção de Contato */
+/* Contact Section */
 .contact-section {
-    padding: 6em 0;
-    background-color: var(--color-white);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 60vh;
-}
-
-.contact-section .site-container {
-    padding: 0 var(--site-padding-desktop); /* 2em em desktop */
-    max-width: 1200px;
-    margin: 0 auto;
-    box-sizing: border-box;
+    padding: 4em 0;
 }
 
 .contact-section .content-wrapper {
     display: flex;
     flex-direction: row;
     gap: 2em;
-    width: 100%;
-    max-width: 1200px; /* Mesma largura do .site-container */
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-    box-sizing: border-box;
-    padding: 0; /* Sem padding extra */
 }
 
 .text-content {
     flex: 1;
-    min-width: 400px;
+    min-width: 300px;
     max-width: 700px;
-    box-sizing: border-box;
-    padding: 0 1em;
     text-align: left;
 }
 
@@ -1073,17 +607,15 @@ body {
     text-transform: uppercase;
     letter-spacing: 0.1em;
     margin-bottom: 0.5em;
-    text-align: left;
 }
 
 .section-title {
     font-family: 'Noto Serif Display', serif;
     font-weight: 400;
-    font-size: 3em;
+    font-size: 2.5em;
     line-height: 1.2;
     color: var(--color-dark-gray);
-    margin-bottom: 1.5em;
-    text-align: left;
+    margin-bottom: 1em;
 }
 
 .section-paragraph {
@@ -1092,7 +624,6 @@ body {
     line-height: 1.7;
     color: var(--color-dark-gray);
     margin-bottom: 1.5em;
-    text-align: left;
 }
 
 .section-buttons {
@@ -1104,20 +635,17 @@ body {
 
 .social-box {
     flex: 1;
-    min-width: 400px;
+    min-width: 300px;
     max-width: 500px;
-    min-height: 300px;
+    min-height: 250px;
     background-color: var(--color-white);
-    border-radius: var(--border-radius-global);
     border: 1px solid var(--color-beige);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-    box-sizing: border-box;
+    border-radius: var(--border-radius-global);
     padding: 1em;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    text-align: center;
 }
 
 .social-box p {
@@ -1131,15 +659,12 @@ body {
     display: flex;
     justify-content: center;
     gap: 1.8em;
-    margin-top: 1em;
-    margin-bottom: 0;
 }
 
 .social-icons a {
     color: var(--color-dark-gray);
-    font-size: 2.5em; /* Reduzido para evitar overflow */
+    font-size: 2.5em;
     transition: color var(--transition-speed), transform var(--transition-speed);
-    display: inline-block;
 }
 
 .social-icons a:hover {
@@ -1147,54 +672,9 @@ body {
     transform: translateY(-5px);
 }
 
-/* Responsividade para a Seção de Contato */
-@media (max-width: 768px) {
-    .contact-section {
-        padding: 4em 0;
-    }
-
-    .contact-section .site-container {
-        padding: 0 var(--site-padding-mobile); /* 1em em mobile */
-    }
-
-    .contact-section .content-wrapper {
-        flex-direction: column;
-        gap: 1.5em;
-        padding: 0;
-    }
-
-    .text-content {
-        min-width: unset;
-        max-width: 100%;
-        padding: 0 1em;
-        text-align: center;
-    }
-
-    .section-subtitle,
-    .section-title,
-    .section-paragraph {
-        text-align: center;
-    }
-
-    .section-buttons {
-        justify-content: center;
-    }
-
-    .social-box {
-        min-width: unset;
-        max-width: 100%;
-        padding: 1em;
-        min-height: 250px;
-    }
-
-    .social-icons a {
-        font-size: 2em; /* Reduzido para mobile */
-    }
-}
-
-/* Frase Final */
+/* Final Phrase */
 .final-phrase {
-    padding: 4em 0; 
+    padding: 4em 0;
     text-align: center;
     background-color: var(--color-dark-gray);
     color: var(--color-white);
@@ -1217,261 +697,51 @@ body {
     font-style: italic;
 }
 
-/* Rodapé */
+/* Footer */
 .footer {
     background-color: var(--color-beige);
     color: var(--color-white);
     text-align: center;
-    padding: 2em 0; 
+    padding: 2em 0;
     font-size: 0.8em;
 }
 
-.footer p .developer-logo {
-    height: 1em; /* Experimente valores menores como 0.8em, 1em ou 16px, 20px */
-    width: auto; /* Mantém a proporção da imagem */
-    vertical-align: middle; /* Ajuda a alinhar verticalmente com o texto "Desenvolvido por..." */
-    display: inline-block; /* Ou block, dependendo se você quer que a imagem esteja na mesma linha ou abaixo do texto */
-    margin-top: 0.2em; /* Exemplo de margem se a imagem estiver abaixo do texto */
-    /* ... */
+.footer .developer-logo {
+    height: 1em;
+    width: auto;
+    vertical-align: middle;
 }
 
-/* ======================== */
-/* NOVO: ESTILOS PARA A SEÇÃO DE PORTFÓLIO COMPLETO */
-/* ESTES ESTILOS FORAM ADICIONADOS NO FINAL DO SEU ARQUIVO */
-/* ======================== */
-
-/* Seção principal do portfólio completo (container que será ocultado/exibido) */
-.full-portfolio-section {
-    padding: 4em 0; /* Padding vertical para a seção */
-    background-color: var(--color-white);
-    text-align: center; /* Para centralizar o conteúdo flex dentro */
-    
-    /* Propriedades para esconder/mostrar com transição */
-    opacity: 0;
-    height: 0; /* Altura 0 para esconder o conteúdo */
-    overflow: hidden; /* Corta qualquer conteúdo que transborde */
-    visibility: hidden; /* Garante que elementos não sejam interativos */
-    transition: opacity var(--transition-speed), height var(--transition-speed), visibility var(--transition-speed);
-}
-
-.full-portfolio-section.visible {
-    opacity: 1;
-    height: auto; /* Permite que o conteúdo defina a altura */
-    visibility: visible;
-    overflow: visible; /* Permite que o conteúdo seja visível */
-}
-
-/* Contêiner dos itens de portfólio dentro da seção completa */
-.full-portfolio-items-container {
-    display: flex;
-    flex-direction: column; /* Itens empilhados verticalmente */
-    gap: 3.5em; /* Espaçamento entre cada projeto completo */
-    max-width: 1000px; /* Largura máxima para centralizar, ajuste conforme preferir */
-    margin: 2em auto; /* Centraliza horizontalmente e dá espaço acima/abaixo */
-}
-
-/* Estilo para CADA item completo do portfólio (foto + descrição) */
-.portfolio-full-item {
-    display: flex;
-    flex-direction: row; /* Imagem e texto lado a lado por padrão no desktop */
-    gap: 2.5em; /* Espaçamento entre imagem e bloco de descrição */
-    align-items: center; /* Alinha verticalmente imagem e texto no centro */
-    background-color: var(--color-white);
-    border: 1px solid var(--color-beige);
-    border-radius: var(--border-radius-global);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Sombra mais suave */
-    padding: 2.5em;
-    text-align: left; /* Garante que o texto se alinhe à esquerda dentro da descrição */
-}
-
-/* Para alternar a ordem da imagem e do texto */
-.portfolio-full-item.reverse-layout {
-    flex-direction: row-reverse; 
-}
-
-/* Contêiner da imagem do projeto */
-.portfolio-full-item-image {
-    flex: 1; /* Ocupa 1 parte do espaço disponível */
-    min-width: 300px; /* Largura mínima para a imagem em desktop */
-    max-width: 45%; /* Máximo de 45% da largura do item para a imagem */
-    overflow: hidden;
-    border-radius: var(--border-radius-global);
-    position: relative;
-    /* Usando padding-bottom para criar um aspecto ratio em vez de height fixa */
-    padding-bottom: 60%; /* Ex: 3:1 (largura:altura), ajuste conforme suas imagens */
-    height: 0; /* Necessário para o truque de padding-bottom */
-}
-
-.portfolio-full-item-image img {
-    position: absolute; /* Para preencher o padding-bottom container */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Garante que a imagem preencha o espaço sem distorcer */
-    display: block;
-    border-radius: var(--border-radius-global);
-    transition: transform 0.3s ease; /* Transição suave no hover */
-}
-
-.portfolio-full-item-image img:hover {
-    transform: scale(1.05); /* Efeito de zoom no hover */
-}
-
-/* Contêiner da descrição do projeto */
-.portfolio-full-item-description {
-    flex: 1.5; /* Ocupa 1.5 partes do espaço disponível para o texto */
-    min-width: 350px; /* Largura mínima para o texto em desktop */
-    padding: 0; /* Remove padding extra, já tem no item pai */
-}
-
-.portfolio-full-item-description h3 {
-    font-family: 'Noto Serif Display', serif;
-    font-size: 2em;
-    color: var(--color-brown);
-    margin-top: 0;
-    margin-bottom: 0.8em;
-}
-
-.portfolio-full-item-description p {
-    font-family: 'Roboto', sans-serif; /* Use uma fonte mais legível para descrições longas */
-    font-size: 1em;
-    color: var(--color-dark-gray);
-    margin-bottom: 1.5em;
-    line-height: 1.7;
-}
-
-.portfolio-full-item-description ul {
-    list-style: none; /* Remove bolinhas da lista */
-    padding: 0;
-    margin: 0;
-    font-family: 'Roboto', sans-serif; /* Use a mesma fonte para consistência */
-    font-size: 0.95em;
-    color: var(--color-dark-gray);
-    line-height: 1.8;
-}
-
-.portfolio-full-item-description ul li {
-    margin-bottom: 0.5em;
-}
-
-.portfolio-full-item-description .btn {
-    margin-top: 1.5em;
-}
-
-/* Estilos para o botão "Esconder Portfólio" */
-#hide-full-portfolio-btn {
-    margin-top: 3em; /* Espaço acima do botão */
-    display: inline-block; /* Garante que seja um botão */
-    /* A classe 'hidden' do JS irá controlar a visibilidade */
-}
-
-/* ======================== */
-/* RESPONSIVIDADE PARA A SEÇÃO DE PORTFÓLIO COMPLETO */
-/* ======================== */
-@media (max-width: 768px) {
-    .full-portfolio-section {
-        padding: 2em 0; /* Menos padding em mobile */
-    }
-
-    .full-portfolio-items-container {
-        gap: 2.5em; /* Menos espaçamento entre itens em mobile */
-        margin: 1.5em auto;
-    }
-
-    .portfolio-full-item {
-        flex-direction: column; /* Empilha imagem e texto em mobile */
-        text-align: center; /* Centraliza o texto em mobile */
-        padding: 1.5em;
-        gap: 1.5em; /* Espaçamento entre imagem e texto empilhados */
-    }
-
-    /* Garante que o layout inverso também empilhe em mobile */
-    .portfolio-full-item.reverse-layout {
-        flex-direction: column; 
-    }
-
-    .portfolio-full-item-image {
-        max-width: 100%; /* A imagem ocupa a largura total disponível */
-        min-width: unset; /* Remove a restrição de largura mínima para mobile */
-        width: 100%; /* Garante que o contêiner da imagem ocupe a largura completa */
-        
-        /* A proporção da imagem é controlada aqui. Ajuste este valor! */
-        /* Ex: 75% para uma proporção 4:3 (mais "quadrada") */
-        /* Ex: 56.25% para uma proporção 16:9 (mais "retangular") */
-        /* Ex: 100% para uma imagem "quadrada" */
-        padding-bottom: 75%; /* Valor recomendado para começar, ajuste conforme sua imagem */
-        
-        height: 0; /* ESSENCIAL quando usando padding-bottom para altura */
-        position: relative; /* Garante que a imagem absoluta dentro dele funcione */
-        overflow: hidden; /* Corta o que extrapola */
-        border-radius: var(--border-radius-global); /* Mantém os cantos arredondados */
-    }
-
-    .portfolio-full-item-description {
-        min-width: unset; /* Remove largura mínima para mobile */
-        max-width: 100%;
-    }
-
-    .portfolio-full-item-description h3 {
-        font-size: 1.6em; /* Tamanho da fonte menor para mobile */
-    }
-
-    .portfolio-full-item-description p,
-    .portfolio-full-item-description ul,
-    .portfolio-full-item-description li {
-        font-size: 0.9em; /* Tamanho da fonte menor para mobile */
-    }
-
-    .portfolio-full-item-description ul {
-        text-align: center; /* Centraliza a lista também */
-        padding-left: 0; /* Garante que não haja padding à esquerda */
-    }
-
-    #hide-full-portfolio-btn {
-        margin-top: 2em;
-        font-size: 1em;
-        padding: 0.6em 1.5em;
-    }
-}
-
-/* ======================== */
-/* NOVO: ESTILOS PARA O MODAL DE VISUALIZAÇÃO DE IMAGEM */
-/* ======================== */
-
+/* Image Modal */
 .image-modal {
-    display: none; /* Escondido por padrão */
-    position: fixed; /* Fixado para cobrir a tela inteira */
-    z-index: 2000; /* Um z-index bem alto para ficar acima de tudo */
+    display: none;
+    position: fixed;
+    z-index: 2000;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: auto; /* Permite rolagem se a imagem for muito grande */
-    background-color: rgba(0, 0, 0, 0.9); /* Fundo preto semi-transparente */
-    justify-content: center; /* Centraliza o conteúdo horizontalmente */
-    align-items: center; /* Centraliza o conteúdo verticalmente */
-    transition: opacity 0.3s ease; /* Transição para o efeito de fade */
-    opacity: 0; /* Começa invisível para a transição */
+    background-color: rgba(0, 0, 0, 0.9);
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 .image-modal.open {
-    display: flex; /* Exibe o modal usando flexbox para centralizar */
-    opacity: 1; /* Torna visível */
+    display: flex;
+    opacity: 1;
 }
 
 .image-modal-content {
-    margin: auto;
-    display: block;
-    max-width: 90%; /* Largura máxima para a imagem */
-    max-height: 90vh; /* Altura máxima para a imagem (90% da altura da viewport) */
-    object-fit: contain; /* Garante que a imagem se ajuste sem cortar */
-    border-radius: var(--border-radius-global); /* Arredonda as bordas da imagem no modal */
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Sombra para destacar a imagem */
-    animation: zoomIn 0.3s ease-out; /* Animação simples de zoom */
+    max-width: 90%;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: var(--border-radius-global);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    animation: zoomIn 0.3s ease-out;
 }
 
-/* Botão de Fechar */
 .image-modal-close-btn {
     position: absolute;
     top: 15px;
@@ -1479,40 +749,291 @@ body {
     color: #f1f1f1;
     font-size: 40px;
     font-weight: bold;
-    transition: 0.3s;
     cursor: pointer;
-    z-index: 2001; /* Garante que esteja acima da imagem */
+    z-index: 2001;
 }
 
-.image-modal-close-btn:hover,
-.image-modal-close-btn:focus {
+.image-modal-close-btn:hover {
     color: #bbb;
-    text-decoration: none;
-    cursor: pointer;
 }
 
-/* Animação de zoom para a imagem */
 @keyframes zoomIn {
-    from {
-        transform: scale(0.8);
-        opacity: 0;
-    }
-    to {
-        transform: scale(1);
-        opacity: 1;
-    }
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
 }
 
-/* Responsividade para o Modal */
+/* Media Queries */
 @media (max-width: 768px) {
+    .site-container {
+        padding: 0 var(--site-padding-mobile);
+    }
+
+    .navbar-inner {
+        padding: 0 var(--site-padding-mobile);
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.98);
+        position: absolute;
+        top: 100%;
+        left: 0;
+        padding: 1em 0;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        z-index: 999;
+    }
+
+    .nav-links.open {
+        display: flex;
+    }
+
+    .nav-links li {
+        width: 100%;
+        text-align: center;
+    }
+
+    .nav-links li a {
+        display: block;
+        padding: 0.5em 0;
+    }
+
+    .nav-mobile-extras {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5em;
+        padding-top: 1em;
+        border-top: 1px solid #eee;
+        margin-top: 1em;
+    }
+
+    .nav-mobile-extras .social-icons {
+        display: flex;
+        gap: 1.5em;
+    }
+
+    .nav-mobile-extras a {
+        font-size: 1.8em;
+        color: var(--color-dark-gray);
+    }
+
+    .nav-mobile-extras a:hover {
+        color: var(--color-brown);
+    }
+
+    .desktop-only-icons {
+        display: none;
+    }
+
+    .hamburger-menu {
+        display: flex;
+    }
+
+    body {
+        padding-top: 60px; /* Ajuste este valor para a altura exata da sua navbar mobile */
+    }
+
+    .hero {
+        /* Mantenha a altura que você definiu, mas certifique-se de que 60px é a altura da navbar */
+        height: calc(80vh - 60px); /* 80vh para que a seção não ocupe 100% da tela, o que é bom para mobile */
+        background-image: url('img/capa2.png') !important;
+        background-size: cover;
+        background-position: center;
+        display: flex; /* Mantenha o flex para alinhar o hero-content */
+        flex-direction: column; /* Para alinhar o conteúdo verticalmente */
+        justify-content: flex-start; /* <<< CHAVE AQUI: Alinha o conteúdo (hero-content) ao TOPO do hero */
+        align-items: center; /* Centraliza o conteúdo (hero-content) horizontalmente */
+        text-align: center; /* Garante que o texto DENTRO do hero-content seja centralizado */
+        padding-top: 0; /* Mantenha 0, o body já compensa a navbar */
+    }
+
+    .hero-content {
+        text-align: center;
+        max-width: 90%;
+        margin: 0 auto; /* Para centralizar o block-level element */
+        padding-top: 50px; /* <<< AJUSTE AQUI: Adiciona espaço do topo do .hero-content. Ajuste o valor conforme necessário. */
+        /* Se precisar de mais espaço na parte inferior, pode adicionar padding-bottom */
+        padding-bottom: 20px; /* Exemplo: um pouco de padding na parte de baixo */
+        width: 100%; /* Garante que max-width funcione como esperado */
+        box-sizing: border-box; /* Garante que padding não adicione largura extra */
+    }
+
+    .hero-content h1 {
+        font-size: 2em;
+        margin-bottom: 0.5em; /* Garante um pequeno espaço entre h1 e p */
+    }
+
+    .hero-content p {
+        font-size: 0.9em;
+        margin-top: 0; /* Remove margem superior padrão do p */
+    }
+
+    .about-us-section {
+        padding: 2em 0;
+    }
+
+    .about-us-content-wrapper {
+        flex-direction: column;
+        gap: 1.5em;
+    }
+
+    .about-us-text-content {
+        text-align: center;
+        max-width: 100%;
+    }
+
+ .about-us-image-box {
+        max-width: 100%;
+        height: auto;
+        min-height: 150px;
+        background-size: cover;
+    }
+
+    .about-us-content-wrapper {
+        align-items: center;
+        padding: 0 1em; /* Ajusta padding interno em mobile */
+    }
+
+    .about-us-buttons {
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .about-us-buttons .btn {
+        width: 100%;
+        max-width: 250px;
+    }
+
+    .btn,
+    .btn-dark,
+    .btn-light-outline {
+        padding: 0.5em 0.5em; /* Mantém o padding reduzido em mobile */
+        width: 100%;
+        max-width: 250px; /* Mantém ou ajusta a largura máxima */
+    }
+
+    .site-container {
+        padding: 0 1em;
+        width: 100%;
+        max-width: 100%; /* Remove largura fixa, se existir */
+        margin: 0 auto; /* Centraliza o contêiner */
+        box-sizing: border-box;
+    }
+
+    .services {
+        padding: 2em 0;
+    }
+
+    .service-cards {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .service-card {
+        width: 90%;
+        max-width: 350px;
+    }
+
+    .carousel-wrapper {
+        padding: 0 var(--site-padding-mobile);
+    }
+
+    .carousel-slide {
+        gap: 1em;
+        padding: 0 10px;
+    }
+
+    .carousel-item {
+        width: 200px;
+        height: 280px;
+    }
+
+    .portfolio-call-to-action {
+        padding: 2em 0;
+    }
+
+    .portfolio-call-to-action p {
+        font-size: 1.1em;
+    }
+
+    .full-portfolio-section {
+        padding: 2em 0;
+    }
+
+    .portfolio-full-item {
+        flex-direction: column;
+        gap: 1.5em;
+        padding: 1.5em;
+    }
+
+    .portfolio-full-item.reverse-layout {
+        flex-direction: column;
+    }
+
+    .portfolio-full-item-image {
+        max-width: 100%;
+        min-width: unset;
+        padding-bottom: 75%;
+    }
+
+    .portfolio-full-item-description {
+        min-width: unset;
+        max-width: 100%;
+        text-align: center;
+    }
+
+    .portfolio-full-item-description h3 {
+        font-size: 1.6em;
+    }
+
+    .portfolio-full-item-description p,
+    .portfolio-full-item-description ul {
+        font-size: 0.9em;
+    }
+
+    .contact-section {
+        padding: 2em 0;
+    }
+
+    .contact-section .content-wrapper {
+        flex-direction: column;
+        gap: 1.5em;
+    }
+
+    .text-content {
+        text-align: center;
+        max-width: 100%;
+    }
+
+    .section-buttons {
+        justify-content: center;
+    }
+
+    .social-box {
+        max-width: 100%;
+        min-height: 200px;
+    }
+
+    .social-icons a {
+        font-size: 2em;
+    }
+
+    .final-phrase .light-text,
+    .final-phrase .blossom-text {
+        font-size: 1.1em;
+    }
+
+    .image-modal-content {
+        max-width: 95%;
+        max-height: 85vh;
+    }
+
     .image-modal-close-btn {
         font-size: 30px;
         top: 10px;
         right: 20px;
-    }
-
-    .image-modal-content {
-        max-width: 95%; /* Ajuste para telas menores */
-        max-height: 85vh; /* Ajuste para telas menores */
     }
 }

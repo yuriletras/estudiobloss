@@ -1,32 +1,26 @@
-// Variáveis globais para o carrossel (já existentes no seu código)
-let autoSlideTimeout; // Variável para armazenar o timeout do autoplay
-let carouselItems; // Variável para armazenar todos os itens do carrossel
-let brandsCarouselContainer; // O contêiner que terá o scroll (o #brands-carousel-container)
+// Variáveis globais para o carrossel
+let autoSlideTimeout = null; // Inicializado como null para evitar erros
+let carouselItems = null; // Itens do carrossel
+let brandsCarouselContainer = null; // Contêiner do carrossel
 
 // Objeto com todas as traduções do site
-// **PREENCHA ESTE OBJETO COM TODAS AS SUAS TRADUÇÕES REAIS**
-// MANTIDO DO SEU CÓDIGO
 const translations = {
-    'pt': { // Mudei 'pt-BR' para 'pt' conforme seu objeto atual
+    'pt': {
         'page-title': 'estúdio bloss',
-        // Navbar
         'nav-about-us': 'SOBRE NÓS',
         'nav-services': 'SERVIÇOS',
         'nav-brands': 'MARCAS',
         'nav-portfolio': 'PORTFÓLIO',
         'nav-contact': 'CONTATO',
-        // Hero Section
         'hero-title-line1': 'Marcas <span class="text-italic">nascem</span>',
         'hero-title-line2': 'todos os dias.',
         'hero-paragraph': 'Mas crescer com essência, propósito e identidade é pra quem decide florescer de verdade.',
-        // About Us Section
         'about-us-subtitle': 'SOBRE NÓS',
         'about-us-title': 'Identidade visual marcante e design <span class="italic-text">refinado</span> que refletem a essência da sua marca.',
         'about-us-p1': 'Desenvolvemos logotipos, paletas de cores, tipografia e elementos gráficos que representam a essência da marca.',
         'about-us-p2': 'Trabalhar conosco significa profissionalismo, segurança e qualidade. Estamos prontos para dar vida ao seu projeto.',
         'talk-to-us-btn': 'FALE CONOSCO',
         'send-email-btn': 'ENVIAR E-MAIL',
-        // Services Section
         'services-title': 'Nossos Serviços',
         'service-1-h3': 'Identidade Visual de Marcas',
         'service-1-p': 'logotipo, paleta de cores, tipografia, manual de marca — tudo construído com base no DNA do seu negócio.',
@@ -34,19 +28,16 @@ const translations = {
         'service-2-p': 'Posts, templates e destaques que traduzem a essência da sua marca e fortalecem sua presença digital.',
         'service-3-h3': 'Consultoria Estratégica para Instagram',
         'service-3-p': 'Análise, posicionamento e direcionamento prático para empreendedores que querem crescer com propósito nas redes.',
-        // Brands Section
         'brands-title': 'Marcas que floresceram conosco',
-        // Portfolio Call To Action
         'portfolio-call-paragraph': 'Cada projeto é uma história única — e a próxima pode ser a sua.',
         'view-portfolio-btn': '→ Ver portfólio completo',
-        // Full Portfolio Section
         'project-rebranding-title': 'Projeto: Rebranding Café Renascer',
         'project-rebranding-desc': 'Descrição detalhada do projeto de rebranding para a marca fictícia "Café Renascer". Nosso trabalho envolveu a criação de uma nova identidade visual do zero, desde o logotipo até as paletas de cores, tipografia e diretrizes de aplicação para mídias digitais e impressas. O objetivo foi modernizar a imagem da marca, transmitindo sua essência artesanal e premium. Este projeto demonstrou como um design estratégico pode revitalizar a presença de uma empresa no mercado, atraindo um novo público e solidificando sua posição.',
         'project-rebranding-services': '**Serviços:** Criação de Logotipo, Design de Identidade Visual, Manual de Marca, Embalagens.',
         'project-rebranding-client': '**Cliente:** Café Renascer',
         'project-rebranding-year': '**Ano:** 2023',
         'project-campaign-title': 'Criação de Campanha Digital para Bloom Fitness',
-        'project-campaign-desc': 'Desenvolvimento e execução de uma campanha de marketing digital completa para o lançamento do novo serviço "Bloom Fitness". Isso incluiu estratégia de conteúdo, design de peças visuais para redes sociais (Instagram, Facebook), criação de anúncios pagos (Google Ads, Meta Ads) e monitoramento contínuo de performance. A campanha resultou em um aumento significativo no engajamento (35% de crescimento) e nas conversões de leads online (15% de aumento em matrículas).',
+        'project-campaign-desc': 'Desenvolvimento e execução de uma campanha de marketing digital completa para o lançamento do novo serviço "Bloom Fitness". Isso incluiu estratégia de conteúdo, design de piezas visuais para redes sociais (Instagram, Facebook), criação de anúncios pagos (Google Ads, Meta Ads) e monitoramento contínuo de performance. A campanha resultou em um aumento significativo no engajamento (35% de crescimento) e nas conversões de leads online (15% de aumento em matrículas).',
         'project-campaign-services': '**Serviços:** Marketing Digital, Design para Redes Sociais, Gestão de Tráfego Pago, Análise de Dados.',
         'project-campaign-client': '**Cliente:** Bloom Fitness',
         'project-campaign-year': '**Ano:** 2024',
@@ -91,40 +82,33 @@ const translations = {
         'project-video-client': '**Cliente:** Soluções Sustentáveis LTDA',
         'project-video-year': '**Ano:** 2024',
         'hide-portfolio-btn': '← Esconder Portfólio',
-        // Contact Section
         'contact-subtitle': 'Vamos conversar',
-        'contact-title': 'Você Chegou Até Aqui <span class="italic-text">Por Um Motivo</span>?',
+        'contact-title': 'Você Chegou Até Aqui <span class="italic-text">Por Um Motivo</span>!',
         'contact-paragraph': 'Se sua marca está pronta para crescer com autenticidade, eu posso te ajudar a transformá-la em uma história de sucesso. Vamos construir algo incrível juntos!',
         'talk-to-us-btn-contact': 'FALE CONOSCO',
         'send-email-btn-contact': 'ENVIAR E-MAIL',
         'social-find-us': 'Nos encontre nas redes:',
-        // Final Phrase Section
         'final-phrase-light': 'O mundo precisa sentir o que só a sua marca tem.',
         'final-phrase-blossom': 'It’s time to <span class="blossom-italic">bloss</span>om.',
-        // Footer
         'copyright-text': '&copy; 2025 estúdio bloss. Todos os direitos reservados.',
         'developed-by-text': 'Desenvolvido por <img src="img/ybarbosa.png" alt="Descrição da imagem do desenvolvedor" class="developer-logo">',
     },
     'en': {
         'page-title': 'blossom studio',
-        // Navbar
         'nav-about-us': 'ABOUT US',
         'nav-services': 'SERVICES',
         'nav-brands': 'BRANDS',
         'nav-portfolio': 'PORTFOLIO',
         'nav-contact': 'CONTACT',
-        // Hero Section
         'hero-title-line1': 'Brands <span class="text-italic">are born</span>',
         'hero-title-line2': 'every day.',
         'hero-paragraph': 'But growing with essence, purpose, and identity is for those who truly decide to blossom.',
-        // About Us Section
         'about-us-subtitle': 'ABOUT US',
         'about-us-title': 'Striking visual identity and <span class="italic-text">refined</span> design that reflect the essence of your brand.',
         'about-us-p1': 'We develop logos, color palettes, typography, and graphic elements that represent the brand\'s essence.',
         'about-us-p2': 'Working with us means professionalism, security, and quality. We are ready to bring your project to life.',
         'talk-to-us-btn': 'TALK TO US',
         'send-email-btn': 'SEND EMAIL',
-        // Services Section
         'services-title': 'Our Services',
         'service-1-h3': 'Brand Visual Identity',
         'service-1-p': 'logo, color palette, typography, brand manual — all built based on your business\'s DNA.',
@@ -132,12 +116,9 @@ const translations = {
         'service-2-p': 'Posts, templates, and highlights that translate your brand\'s essence and strengthen your digital presence.',
         'service-3-h3': 'Strategic Instagram Consulting',
         'service-3-p': 'Analysis, positioning, and practical guidance for entrepreneurs who want to grow with purpose on social media.',
-        // Brands Section
         'brands-title': 'Brands that blossomed with us',
-        // Portfolio Call To Action
         'portfolio-call-paragraph': 'Every project is a unique story — and the next one could be yours.',
         'view-portfolio-btn': '→ View full portfolio',
-        // Full Portfolio Section
         'project-rebranding-title': 'Project: Café Renascer Rebranding',
         'project-rebranding-desc': 'Detailed description of the rebranding project for the fictional brand "Café Renascer." Our work involved creating a new visual identity from scratch, from the logo to color palettes, typography, and application guidelines for digital and print media. The goal was to modernize the brand\'s image, conveying its artisanal and premium essence. This project demonstrated how strategic design can revitalize a company\'s market presence, attracting new audiences and solidifying its position.',
         'project-rebranding-services': '**Services:** Logo Creation, Visual Identity Design, Brand Manual, Packaging.',
@@ -152,7 +133,7 @@ const translations = {
         'project-website-desc': 'Creation of a responsive and optimized institutional website for OdontoCare Clinic. The project focused on an intuitive user experience, easy online scheduling, and clear presentation of services. We implemented a modern design, integration with a scheduling system, and basic SEO to improve the clinic\'s online visibility.',
         'project-website-services': '**Services:** Web Design, Front-end Development, UX/UI Design, SEO.',
         'project-website-client': '**Client:** OdontoCare Clinic',
-        'project-website-year': '**Ano:** 2023',
+        'project-website-year': '**Year:** 2023',
         'project-packaging-title': 'Packaging Design for "Terra Viva" Organic Foods',
         'project-packaging-desc': 'Creation of a complete line of eco-friendly and attractive packaging for the organic food brand "Terra Viva." The challenge was to communicate freshness, naturalness, and sustainability through design, using recyclable materials and a clean aesthetic. The result was an increase in sales and brand recognition in the natural products segment.',
         'project-packaging-services': '**Services:** Packaging Design, Illustration, Branding.',
@@ -162,70 +143,69 @@ const translations = {
         'project-app-desc': 'Interface (UI/UX) design for the "CityGuide" mobile application, an interactive tourist guide. The focus was on usability, navigability, and aesthetics, creating intuitive screens for searching locations, reviews, and routes. The developed prototype allowed for testing and validating the user experience before final development.',
         'project-app-services': '**Services:** UI/UX Design, Prototyping, Wireframing.',
         'project-app-client': '**Client:** CityGuide StartUp',
-        'project-app-year': '**Ano:** 2023',
+        'project-app-year': '**Year:** 2023',
         'project-graphic-title': 'Graphic Material Creation for "InovaTech Summit" Corporate Event',
         'project-graphic-desc': 'Development of all graphic material for the "InovaTech Summit" event, including banners, badges, folders, presentations, and social media posts. The goal was to create a cohesive and professional visual identity that conveyed the innovation and technology of the event.',
         'project-graphic-services': '**Services:** Graphic Design, Layout, Banner Creation, Event Arts.',
         'project-graphic-client': '**Client:** InovaTech Solutions',
-        'project-graphic-year': '**Ano:** 2024',
+        'project-graphic-year': '**Year:** 2024',
         'project-ecommerce-title': 'E-commerce Development for "Mãos Que Criam" Handicraft Store',
         'project-ecommerce-desc': 'Construction of a complete online store for "Mãos Que Criam," a handicraft store. The project included platform customization, responsive design, payment method integration, and product catalog optimization. The online store allowed the client to expand their business throughout Brazil.',
         'project-ecommerce-services': '**Services:** E-commerce Development, Web Design, Product Optimization.',
         'project-ecommerce-client': '**Client:** Mãos Que Criam Artesanato',
-        'project-ecommerce-year': '**Ano:** 2023',
+        'project-ecommerce-year': '**Year:** 2023',
         'project-social-media-title': 'Strategy and Content for "Pet Feliz PetShop" Social Media',
         'project-social-media-desc': 'Content strategy creation and social media management for "Pet Feliz PetShop." We developed an editorial calendar, created engaging visual posts and captions, and monitored interactions to increase the online community and traffic to both the physical and online stores.',
         'project-social-media-services': '**Services:** Social Media Management, Content Creation, Social Media Design.',
         'project-social-media-client': '**Client:** Pet Feliz PetShop',
-        'project-social-media-year': '**Ano:** 2024',
+        'project-social-media-year': '**Year:** 2024',
         'project-illustration-title': 'Creation of Custom Illustrations for "Luna\'s Adventure" Children\'s Book',
         'project-illustration-desc': 'Development of vibrant and captivating illustrations for the children\'s book "Luna\'s Adventure." Each illustration was created to complement the narrative and engage the young audience, bringing characters and story settings to life.',
         'project-illustration-services': '**Services:** Digital Illustration, Design Editorial, Character Creation.',
         'project-illustration-client': '**Client:** Editora Fantasia',
-        'project-illustration-year': '**Ano:** 2023',
+        'project-illustration-year': '**Year:** 2023',
         'project-video-title': 'Institutional Video Production for "Sustainable Solutions LTD"',
         'project-video-desc': 'Production of a 2-minute institutional video for the company "Sustainable Solutions LTD." The video highlighted the company\'s mission, values, and positive environmental impacts, using animations, testimonials, and high-quality footage to convey its message.',
         'project-video-services': '**Services:** Scriptwriting, Video Editing, Motion Graphics, Sound Design.',
         'project-video-client': '**Client:** Sustainable Solutions LTD',
-        'project-video-year': '**Ano:** 2024',
+        'project-video-year': '**Year:** 2024',
         'hide-portfolio-btn': '← Hide Portfolio',
-        // Contact Section
         'contact-subtitle': 'Let\'s talk',
         'contact-title': 'You Got Here <span class="italic-text">For A Reason</span>?',
         'contact-paragraph': 'If your brand is ready to grow with authenticity, I can help you transform it into a success story. Let\'s build something amazing together!',
         'talk-to-us-btn-contact': 'TALK TO US',
         'send-email-btn-contact': 'SEND EMAIL',
         'social-find-us': 'Find us on social media:',
-        // Final Phrase Section
         'final-phrase-light': 'The world needs to feel what only your brand has.',
         'final-phrase-blossom': 'It’s time to <span class="blossom-italic">bloss</span>om.',
-        // Footer
         'copyright-text': '&copy; 2025 blossom studio. All rights reserved.',
         'developed-by-text': 'Developed by <img src="img/ybarbosa.png" alt="Developer logo" class="developer-logo">',
     }
 };
 
-// Função para rolar o carrossel (mantida do seu código)
+// Função para rolar o carrossel
 function scrollCarousel(direction) {
-    const scrollTarget = brandsCarouselContainer;
+    if (!brandsCarouselContainer || !carouselItems || carouselItems.length === 0) {
+        console.warn("Carrossel não inicializado: contêiner ou itens não encontrados.");
+        return;
+    }
 
+    const scrollTarget = brandsCarouselContainer;
     const brandsSection = document.getElementById('marcas');
     const portfolioCallSection = document.getElementById('portfolio-call');
 
-    if (brandsSection && brandsSection.classList.contains('hidden') ||
-        portfolioCallSection && portfolioCallSection.classList.contains('hidden')) {
+    if (!brandsSection || !portfolioCallSection) {
+        console.warn("Seção 'marcas' ou 'portfolio-call' não encontrada.");
         return;
     }
 
-    if (!scrollTarget) {
-        console.error("Contêiner do carrossel ou slide interno não encontrado para rolagem.");
+    if (brandsSection.classList.contains('hidden') || portfolioCallSection.classList.contains('hidden')) {
         return;
     }
 
-    const itemWidth = carouselItems[0].offsetWidth;
-    const computedStyle = window.getComputedStyle(carouselItems[0].parentNode);
+    const itemWidth = carouselItems[0]?.offsetWidth || 0;
+    const computedStyle = window.getComputedStyle(carouselItems[0]?.parentNode || document.body);
     const gap = parseFloat(computedStyle.getPropertyValue('gap') || '0px');
-
     const itemFullWidth = itemWidth + gap;
     const scrollAmount = itemFullWidth;
 
@@ -236,7 +216,6 @@ function scrollCarousel(direction) {
                 scrollTarget.scrollTo({ left: 0, behavior: 'smooth' });
             }, 600);
         }
-
     } else {
         scrollTarget.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
         if (scrollTarget.scrollLeft - scrollAmount <= itemFullWidth / 2) {
@@ -247,109 +226,99 @@ function scrollCarousel(direction) {
     }
 }
 
-// Função para iniciar o autoplay (mantida do seu código)
+// Função para iniciar o autoplay do carrossel
 function startAutoSlide() {
-    clearTimeout(autoSlideTimeout);
+    if (autoSlideTimeout) {
+        clearTimeout(autoSlideTimeout);
+    }
     autoSlideTimeout = setTimeout(() => {
         scrollCarousel(1);
         startAutoSlide();
     }, 5000);
 }
 
-// Função para aplicar as traduções com base no idioma selecionado
-// **ATUALIZADA PARA LIDAR COM MÚLTIPLOS BOTÕES DE TRADUÇÃO E O HTML DA IMAGEM**
+// Função para aplicar as traduções
 function setLanguage(lang) {
-    // Atualiza o atributo lang da tag <html> para acessibilidade
-    document.documentElement.lang = lang; 
+    if (!translations[lang]) {
+        console.warn(`Idioma ${lang} não encontrado. Usando padrão 'pt'.`);
+        lang = 'pt';
+    }
 
-    // Atualiza o texto de TODOS os botões de tradução (desktop e mobile)
-    const languageToggles = document.querySelectorAll('[id^="language-toggle"]'); 
+    document.documentElement.lang = lang;
+
+    const languageToggles = document.querySelectorAll('[id^="language-toggle"]');
     languageToggles.forEach(btn => {
-        // Pega o texto do dataset (data-lang-btn-pt ou data-lang-btn-en)
-        const newButtonText = btn.getAttribute(`data-lang-btn-${lang}`);
-        // Limpa o conteúdo atual (para remover ícones anteriores)
-        btn.innerHTML = `${newButtonText} `;
-        // Adiciona o ícone de seta para baixo novamente
-        const icon = document.createElement('i');
-        icon.className = 'fas fa-chevron-down';
-        btn.appendChild(icon);
+        const newButtonText = btn.getAttribute(`data-lang-btn-${lang}`) || lang.toUpperCase();
+        btn.innerHTML = `${newButtonText} <i class="fas fa-chevron-down"></i>`;
     });
-    
-    // Atualiza o título da página
+
     const pageTitleElement = document.querySelector('title');
-    if (pageTitleElement) {
+    if (pageTitleElement && translations[lang]['page-title']) {
         pageTitleElement.textContent = translations[lang]['page-title'];
     }
 
-    // Percorre todos os elementos com o atributo data-translate e aplica a tradução
     document.querySelectorAll('[data-translate]').forEach(element => {
         const key = element.getAttribute('data-translate');
-        if (translations[lang] && translations[lang][key]) {
-            // Usa innerHTML para permitir tags HTML como <span> ou <img> dentro das traduções
+        if (translations[lang][key]) {
             element.innerHTML = translations[lang][key];
+        } else {
+            console.warn(`Chave de tradução '${key}' não encontrada para idioma '${lang}'.`);
         }
     });
 
-    // Salva a preferência de idioma no localStorage
     localStorage.setItem('lang', lang);
 }
 
-
-// Quando o DOM estiver completamente carregado
-document.addEventListener('DOMContentLoaded', (event) => {
-
-    // --- 1. Lógica para a Tradução ---
-    // Tenta carregar o idioma do localStorage, senão padrão 'pt'
-    let currentLang = localStorage.getItem('lang') || 'pt'; 
-
-    // Aplica as traduções iniciais ao carregar a página
+// Evento de carregamento do DOM
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Inicializa idioma
+    let currentLang = localStorage.getItem('lang') || 'pt';
     setLanguage(currentLang);
 
-    // Adiciona o evento de clique a TODOS os botões de idioma (desktop e mobile)
-    const languageToggles = document.querySelectorAll('[id^="language-toggle"]'); 
+    // 2. Configura botões de idioma
+    const languageToggles = document.querySelectorAll('[id^="language-toggle"]');
+    if (languageToggles.length === 0) {
+        console.warn("Nenhum botão de idioma encontrado (IDs devem começar com 'language-toggle').");
+    }
     languageToggles.forEach(toggle => {
         toggle.addEventListener('click', (e) => {
-            e.preventDefault(); // Impede o comportamento padrão do link
-            // Alterna o idioma atual
-            const newLang = (currentLang === 'pt' || currentLang === 'pt-BR') ? 'en' : 'pt';
-            setLanguage(newLang); // Chama a função para aplicar as novas traduções
-            currentLang = newLang; // Atualiza a variável global currentLang
+            e.preventDefault();
+            currentLang = currentLang === 'pt' ? 'en' : 'pt';
+            setLanguage(currentLang);
         });
     });
 
-
-    // --- 2. Lógica do Menu Hambúrguer (Integrada e ajustada) ---
+    // 3. Configura menu hamburger
     const hamburgerMenu = document.getElementById('hamburger-menu');
-    // Usando o ID que sugeri para o nav-links para maior especificidade e clareza
-    const navLinks = document.getElementById('nav-links-menu'); 
-
+    const navLinks = document.getElementById('nav-links-menu');
     if (hamburgerMenu && navLinks) {
         hamburgerMenu.addEventListener('click', () => {
-            hamburgerMenu.classList.toggle('active'); // Para animação do X
-            navLinks.classList.toggle('open'); // Para mostrar/esconder o menu mobile
+            hamburgerMenu.classList.toggle('active');
+            navLinks.classList.toggle('open');
         });
 
-        // Fechar o menu ao clicar em um link (opcional, mas boa UX)
-        navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                // Se o link clicado não for um dos botões de tradução no mobile, fecha o menu
-                if (link.id !== 'language-toggle-mobile') {
+        const navLinksItems = navLinks.querySelectorAll('a');
+        if (navLinksItems.length === 0) {
+            console.warn("Nenhum link encontrado dentro de 'nav-links-menu'.");
+        }
+        navLinksItems.forEach(link => {
+            if (link.id !== 'language-toggle-mobile') {
+                link.addEventListener('click', () => {
                     navLinks.classList.remove('open');
                     hamburgerMenu.classList.remove('active');
-                }
-            });
+                });
+            }
         });
     } else {
-        console.warn("Elementos do menu hambúrguer ou nav-links não encontrados. Verifique seu HTML para '#hamburger-menu' e '#nav-links-menu'.");
+        console.warn("Elementos 'hamburger-menu' ou 'nav-links-menu' não encontrados.");
     }
 
-    // --- 3. Lógica do Carrossel de Marcas/Projetos ---
-    // (Mantida e ligeiramente ajustada para o novo contexto de visibilidade)
+    // 4. Configura carrossel
     brandsCarouselContainer = document.getElementById('brands-carousel-container');
     carouselItems = document.querySelectorAll('#brands-carousel-container .carousel-item');
 
     if (brandsCarouselContainer && carouselItems.length > 0) {
-        startAutoSlide(); // Inicia o autoplay
+        startAutoSlide();
 
         const prevButton = document.querySelector('.brands-section .prev');
         const nextButton = document.querySelector('.brands-section .next');
@@ -360,114 +329,115 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 scrollCarousel(-1);
                 startAutoSlide();
             });
+        } else {
+            console.warn("Botão 'prev' do carrossel não encontrado.");
         }
+
         if (nextButton) {
             nextButton.addEventListener('click', () => {
                 clearTimeout(autoSlideTimeout);
                 scrollCarousel(1);
                 startAutoSlide();
             });
+        } else {
+            console.warn("Botão 'next' do carrossel não encontrado.");
         }
     } else {
-        console.warn("Elementos do carrossel de marcas não encontrados. Verifique seu HTML para '#brands-carousel-container' e seus '.carousel-item'.");
+        console.warn("Carrossel não inicializado: 'brands-carousel-container' ou '.carousel-item' não encontrados.");
     }
 
-    // --- 4. Lógica de Exibição/Ocultação da Seção de Portfólio Completo ---
+    // 5. Configura exibição/esconder portfólio
     const viewFullPortfolioBtn = document.getElementById('view-full-portfolio-btn');
     const hideFullPortfolioBtn = document.getElementById('hide-full-portfolio-btn');
     const fullPortfolioSection = document.getElementById('full-portfolio-section');
     const portfolioCallSection = document.getElementById('portfolio-call');
+    const brandsSection = document.getElementById('marcas');
 
-    if (viewFullPortfolioBtn && hideFullPortfolioBtn && fullPortfolioSection && portfolioCallSection) {
-        hideFullPortfolioBtn.classList.add('hidden'); // Garante que o botão de esconder está oculto no início
+    if (viewFullPortfolioBtn && hideFullPortfolioBtn && fullPortfolioSection && portfolioCallSection && brandsSection) {
+        hideFullPortfolioBtn.classList.add('hidden');
 
-        viewFullPortfolioBtn.addEventListener('click', function(event) {
+        viewFullPortfolioBtn.addEventListener('click', (event) => {
             event.preventDefault();
-            
             fullPortfolioSection.classList.remove('hidden');
-            fullPortfolioSection.classList.add('visible'); // Para transição CSS, se aplicável
-            
-            const brandsSection = document.getElementById('marcas');
-            if (brandsSection) brandsSection.classList.add('hidden');
-            if (portfolioCallSection) portfolioCallSection.classList.add('hidden');
-
-            this.classList.add('hidden');
+            fullPortfolioSection.classList.add('visible');
+            brandsSection.classList.add('hidden');
+            portfolioCallSection.classList.add('hidden');
+            viewFullPortfolioBtn.classList.add('hidden');
             hideFullPortfolioBtn.classList.remove('hidden');
-
             setTimeout(() => {
                 fullPortfolioSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 300); 
+            }, 300);
         });
 
-        hideFullPortfolioBtn.addEventListener('click', function(event) {
+        hideFullPortfolioBtn.addEventListener('click', (event) => {
             event.preventDefault();
-
             fullPortfolioSection.classList.remove('visible');
             fullPortfolioSection.classList.add('hidden');
-
-            const brandsSection = document.getElementById('marcas');
-            if (brandsSection) brandsSection.classList.remove('hidden');
-            if (portfolioCallSection) portfolioCallSection.classList.remove('hidden');
-
-            this.classList.add('hidden');
+            brandsSection.classList.remove('hidden');
+            portfolioCallSection.classList.remove('hidden');
+            hideFullPortfolioBtn.classList.add('hidden');
             viewFullPortfolioBtn.classList.remove('hidden');
-
-            if (portfolioCallSection) {
+            setTimeout(() => {
                 portfolioCallSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
+            }, 300);
         });
     } else {
-        console.warn("Elementos do portfólio completo ou botões de controle não encontrados. Verifique seus IDs.");
+        console.warn("Elementos do portfólio ('view-full-portfolio-btn', 'hide-full-portfolio-btn', 'full-portfolio-section', 'portfolio-call', 'marcas') não encontrados.");
     }
 
-    // --- 5. Lógica de Rolagem Suave para Âncoras (mantida e ajustada) ---
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            const linkId = this.getAttribute('id');
-            // Impede a rolagem suave padrão para os botões do portfólio, pois eles têm sua própria lógica
+    // 6. Configura rolagem suave para âncoras
+    const anchors = document.querySelectorAll('a[href^="#"]');
+    if (anchors.length === 0) {
+        console.warn("Nenhuma âncora com href começando com '#' encontrada.");
+    }
+    anchors.forEach(anchor => {
+        anchor.addEventListener('click', (e) => {
+            const linkId = anchor.getAttribute('id');
             if (linkId === 'view-full-portfolio-btn' || linkId === 'hide-full-portfolio-btn') {
-                return; 
+                return;
             }
-
-            e.preventDefault(); 
-
-            const targetId = this.getAttribute('href');
-            if (targetId && document.querySelector(targetId)) {
-                document.querySelector(targetId).scrollIntoView({
-                    behavior: 'smooth'
-                });
+            e.preventDefault();
+            const targetId = anchor.getAttribute('href');
+            const target = document.querySelector(targetId);
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                console.warn(`Elemento com ID '${targetId}' não encontrado para rolagem suave.`);
             }
         });
     });
 
-    // --- 6. Lógica do Modal de Visualização de Imagem (mantida) ---
+    // 7. Configura modal de imagem
     const imageModal = document.getElementById('image-modal');
     const modalImage = document.getElementById('modal-image');
     const closeBtn = document.querySelector('.image-modal-close-btn');
-
     const portfolioFullImages = document.querySelectorAll('.portfolio-full-item-image img, .carousel-item img');
 
-    portfolioFullImages.forEach(image => {
-        image.addEventListener('click', function() {
-            modalImage.src = this.src;
-            imageModal.classList.add('open');
-            document.body.style.overflow = 'hidden';
+    if (imageModal && modalImage && closeBtn && portfolioFullImages.length > 0) {
+        portfolioFullImages.forEach(image => {
+            image.addEventListener('click', () => {
+                if (image.src) {
+                    modalImage.src = image.src;
+                    imageModal.classList.add('open');
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    console.warn("Imagem sem 'src' válida ao tentar abrir modal.");
+                }
+            });
         });
-    });
 
-    if (closeBtn) {
-        closeBtn.addEventListener('click', function() {
+        closeBtn.addEventListener('click', () => {
             imageModal.classList.remove('open');
             document.body.style.overflow = 'auto';
         });
-    }
 
-    if (imageModal) {
-        imageModal.addEventListener('click', function(event) {
+        imageModal.addEventListener('click', (event) => {
             if (event.target === imageModal) {
                 imageModal.classList.remove('open');
                 document.body.style.overflow = 'auto';
             }
         });
+    } else {
+        console.warn("Elementos do modal ('image-modal', 'modal-image', 'image-modal-close-btn') ou imagens do portfólio/carrossel não encontrados.");
     }
-}); // FIM do document.addEventListener('DOMContentLoaded')
+});
