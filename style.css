@@ -2,6 +2,143 @@
 @import url('https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Roboto:ital,wght@0,100..900;1,100..900&family=Sora:wght@100..800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Display:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600;1,700&display=swap');
 
+/* --- Fontes Personalizadas para Editor'sNote --- */
+
+/* Hairline (100) */
+@font-face {
+    font-family: 'EditorsNote';
+    src: url('fonts/Editor\'sNote-Hairline.otf') format('opentype'),
+         url('fonts/Editor\'sNote-Hairline.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+
+/* Hairline Italic (100 Italic) */
+@font-face {
+    font-family: 'EditorsNote';
+    src: url('fonts/Editor\'sNote-HairlineItalic.otf') format('opentype'),
+         url('fonts/Editor\'sNote-HairlineItalic.ttf') format('truetype');
+    font-weight: 100;
+    font-style: italic;
+}
+
+/* Thin (200) */
+@font-face {
+    font-family: 'EditorsNote';
+    src: url('fonts/Editor\'sNote-Thin.otf') format('opentype'),
+         url('fonts/Editor\'sNote-Thin.ttf') format('truetype');
+    font-weight: 200;
+    font-style: normal;
+}
+
+/* Thin Italic (200 Italic) */
+@font-face {
+    font-family: 'EditorsNote';
+    src: url('fonts/Editor\'sNote-ThinItalic.otf') format('opentype'),
+         url('fonts/Editor\'sNote-ThinItalic.ttf') format('truetype');
+    font-weight: 200;
+    font-style: italic;
+}
+
+/* Extralight (200) */
+@font-face {
+    font-family: 'EditorsNote';
+    src: url('fonts/Editor\'sNote-Extralight.otf') format('opentype'),
+         url('fonts/Editor\'sNote-Extralight.ttf') format('truetype');
+    font-weight: 200;
+    font-style: normal;
+}
+
+/* Extralight Italic (200 Italic) */
+@font-face {
+    font-family: 'EditorsNote';
+    src: url('fonts/Editor\'sNote-ExtralightItalic.otf') format('opentype'),
+         url('fonts/Editor\'sNote-ExtralightItalic.ttf') format('truetype');
+    font-weight: 200;
+    font-style: italic;
+}
+
+/* Light (300) */
+@font-face {
+    font-family: 'EditorsNote';
+    src: url('fonts/Editor\'sNote-Light.otf') format('opentype'),
+         url('fonts/Editor\'sNote-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+/* Light Italic (300 Italic) */
+@font-face {
+    font-family: 'EditorsNote';
+    src: url('fonts/Editor\'sNote-LightItalic.otf') format('opentype'),
+         url('fonts/Editor\'sNote-LightItalic.ttf') format('truetype');
+    font-weight: 300;
+    font-style: italic;
+}
+
+/* Regular (400) */
+@font-face {
+    font-family: 'EditorsNote';
+    src: url('fonts/Editor\'sNote-Regular.otf') format('opentype'),
+         url('fonts/Editor\'sNote-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* Medium (500) */
+@font-face {
+    font-family: 'EditorsNote';
+    src: url('fonts/Editor\'sNote-Medium.otf') format('opentype'),
+         url('fonts/Editor\'sNote-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+/* Medium Italic (500 Italic) */
+@font-face {
+    font-family: 'EditorsNote';
+    src: url('fonts/Editor\'sNote-MediumItalic.otf') format('opentype'),
+         url('fonts/Editor\'sNote-MediumItalic.ttf') format('truetype');
+    font-weight: 500;
+    font-style: italic;
+}
+
+/* Semibold (600) */
+@font-face {
+    font-family: 'EditorsNote';
+    src: url('fonts/Editor\'sNote-Semibold.otf') format('opentype'),
+         url('fonts/Editor\'sNote-Semibold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+/* Semibold Italic (600 Italic) */
+@font-face {
+    font-family: 'EditorsNote';
+    src: url('fonts/Editor\'sNote-SemiboldItalic.otf') format('opentype'),
+         url('fonts/Editor\'sNote-SemiboldItalic.ttf') format('truetype');
+    font-weight: 600;
+    font-style: italic;
+}
+
+/* Bold (700) */
+@font-face {
+    font-family: 'EditorsNote';
+    src: url('fonts/Editor\'sNote-Bold.otf') format('opentype'),
+         url('fonts/Editor\'sNote-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+/* Bold Italic (700 Italic) */
+@font-face {
+    font-family: 'EditorsNote';
+    src: url('fonts/Editor\'sNote-BoldItalic.otf') format('opentype'),
+         url('fonts/Editor\'sNote-BoldItalic.ttf') format('truetype');
+    font-weight: 700;
+    font-style: italic;
+}
+
 /* Variáveis de cores */
 :root {
     --color-brown: #421F10;
@@ -18,14 +155,14 @@
 
 /* Estilo global */
 body {
-    font-family: 'Noto Serif Display', serif;
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
     background-color: var(--color-white);
     color: var(--color-brown);
     line-height: 1.6;
     overflow-x: hidden;
-    padding-top: 60px; /* Compensar navbar fixa */
+    padding-top: 60px;
 }
 
 /* Container global */
@@ -150,38 +287,31 @@ body {
 
 /* Hero Section */
 .hero {
-    /* ... suas propriedades existentes (height, background, etc.) ... */
     display: flex;
-    flex-direction: column; /* Isso faz com que os itens internos (site-container) se empilhem verticalmente */
-    justify-content: center; /* Centraliza o site-container verticalmente dentro do hero */
-    align-items: flex-start; /* Alinha o site-container (e seu conteúdo) à ESQUERDA */
-    /* Remova qualquer padding lateral direto no .hero que possa estar empurrando */
-    background-image: url('img/capa.png'); /* A imagem de fundo deve ser definida AQUI no CSS */
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    background-image: url('img/capa.png');
     background-size: cover;
     background-position: center;
     height: calc(100vh - 60px);
 }
 
-/* No .hero .site-container (o container que envolve o hero-content) */
 .hero .site-container {
-    /* O padding: 0 var(--site-padding-desktop); já dará o recuo lateral. */
-    /* Certifique-se de que NÃO há margin: 0 auto; específico AQUI, se o objetivo é alinhar à esquerda. */
-    max-width: 1200px; /* Sua largura máxima */
-    width: 100%; /* Para que o max-width funcione */
+    max-width: 1200px;
+    width: 100%;
     box-sizing: border-box;
 }
 
-/* No .hero-content (o texto em si) */
 .hero-content {
     max-width: 600px;
-    text-align: left; /* Alinha o texto dentro do div */
-    margin: 0; /* Garante que não há centralização de margens no próprio texto */
+    text-align: left;
+    margin: 0;
 }
 
-/* Mantenha o restante do seu CSS para .hero-content h1 e p */
 .hero-content h1 {
-    font-family: 'Noto Serif Display', serif;
-    font-weight: 300;
+    font-family: 'EditorsNote', serif;
+    font-weight: 200;
     font-size: 3.5em;
     line-height: 1.1;
     margin-bottom: 0.2em;
@@ -195,11 +325,13 @@ body {
 
 .hero-content h1 .text-italic,
 .hero-content h1 .italic-text {
+    font-family: 'EditorsNote', serif;
+    font-weight: 200;
     font-style: italic;
 }
 
 .hero-content p {
-    font-family: 'Noto Serif Display', serif;
+    font-family: 'Roboto', sans-serif;
     font-weight: 400;
     font-size: 1.2em;
     color: var(--color-dark-gray);
@@ -230,7 +362,7 @@ body {
 }
 
 .about-us-subtitle {
-    font-family: 'Noto Serif Display', serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 0.9em;
     font-weight: 500;
     color: var(--color-brown);
@@ -240,8 +372,8 @@ body {
 }
 
 .about-us-title {
-    font-family: 'Noto Serif Display', serif;
-    font-weight: 400;
+    font-family: 'EditorsNote', serif;
+    font-weight: 200;
     font-size: 2.5em;
     line-height: 1.2;
     color: var(--color-dark-gray);
@@ -249,11 +381,13 @@ body {
 }
 
 .about-us-title .italic-text {
+    font-family: 'EditorsNote', serif;
+    font-weight: 200;
     font-style: italic;
 }
 
 .about-us-paragraph {
-    font-family: 'Noto Serif Display', serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 1.1em;
     line-height: 1.7;
     color: var(--color-dark-gray);
@@ -271,7 +405,7 @@ body {
     padding: 0.5em 0.5em;
     border-radius: 5px;
     text-decoration: none;
-    font-family: 'Noto Serif Display', serif;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     font-size: 0.95em;
     cursor: pointer;
@@ -320,10 +454,18 @@ body {
 }
 
 .services h2 {
-    font-family: 'Noto Serif Display', serif;
-    color: var(--color-dark-gray);
+    font-family: 'EditorsNote', serif;
+    font-weight: 200;
+    font-style: italic;
     font-size: 2.5em;
+    line-height: 1.1;
     margin-bottom: 1.5em;
+    color: var(--color-dark-gray);
+}
+
+.services h2 .line-top {
+    display: block;
+    margin-bottom: 0.1em;
 }
 
 .service-cards {
@@ -350,16 +492,19 @@ body {
 }
 
 .service-card h3 {
-    font-family: 'Noto Serif Display', serif;
-    color: var(--color-brown);
-    font-size: 1.2em;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    text-transform: uppercase;
+    font-size: 1.1em;
     margin-bottom: 1em;
+    color: var(--color-brown);
 }
 
 .service-card p {
     font-family: 'Roboto', sans-serif;
-    color: var(--color-dark-gray);
+    font-weight: 400;
     font-size: 0.9em;
+    color: var(--color-dark-gray);
 }
 
 /* Brands Section */
@@ -369,9 +514,17 @@ body {
 }
 
 .brands-section h2 {
-    color: var(--color-dark-gray);
+    font-family: 'EditorsNote', serif;
+    font-weight: 200;
     font-size: 2.5em;
     margin-bottom: 1.5em;
+    color: var(--color-dark-gray);
+}
+
+.brands-section h2 .italic-text {
+    font-family: 'EditorsNote', serif;
+    font-weight: 200;
+    font-style: italic;
 }
 
 .carousel-wrapper {
@@ -457,6 +610,8 @@ body {
 }
 
 .portfolio-call-to-action p {
+    font-family: 'EditorsNote', serif;
+    font-weight: 200;
     font-size: 1.8em;
     margin-bottom: 1em;
 }
@@ -468,7 +623,8 @@ body {
     padding: 0.8em 1.5em;
     border-radius: var(--border-radius-global);
     text-decoration: none;
-    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
     transition: background-color var(--transition-speed), transform var(--transition-speed);
 }
 
@@ -551,7 +707,8 @@ body {
 }
 
 .portfolio-full-item-description h3 {
-    font-family: 'Noto Serif Display', serif;
+    font-family: 'EditorsNote', serif;
+    font-weight: 200;
     font-size: 2em;
     color: var(--color-brown);
     margin-bottom: 0.8em;
@@ -559,6 +716,7 @@ body {
 
 .portfolio-full-item-description p {
     font-family: 'Roboto', sans-serif;
+    font-weight: 400;
     font-size: 1em;
     color: var(--color-dark-gray);
     margin-bottom: 1.5em;
@@ -569,6 +727,7 @@ body {
     list-style: none;
     padding: 0;
     font-family: 'Roboto', sans-serif;
+    font-weight: 400;
     font-size: 0.95em;
     color: var(--color-dark-gray);
     line-height: 1.8;
@@ -600,26 +759,33 @@ body {
 }
 
 .section-subtitle {
-    font-family: 'Noto Serif Display', serif;
-    font-size: 0.9em;
-    font-weight: 500;
-    color: var(--color-brown);
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 0.8em;
     text-transform: uppercase;
+    color: var(--color-brown);
     letter-spacing: 0.1em;
     margin-bottom: 0.5em;
 }
 
 .section-title {
-    font-family: 'Noto Serif Display', serif;
-    font-weight: 400;
+    font-family: 'EditorsNote', serif;
+    font-weight: 200;
     font-size: 2.5em;
     line-height: 1.2;
     color: var(--color-dark-gray);
     margin-bottom: 1em;
 }
 
+.section-title .italic-text {
+    font-family: 'EditorsNote', serif;
+    font-weight: 300;
+    font-style: normal;
+}
+
 .section-paragraph {
-    font-family: 'Noto Serif Display', serif;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
     font-size: 1.1em;
     line-height: 1.7;
     color: var(--color-dark-gray);
@@ -649,7 +815,8 @@ body {
 }
 
 .social-box p {
-    font-family: 'Noto Serif Display', serif;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
     font-size: 1.2em;
     color: var(--color-dark-gray);
     margin-bottom: 1em;
@@ -681,15 +848,15 @@ body {
 }
 
 .final-phrase .light-text {
-    font-family: 'Noto Serif Display', serif;
-    font-weight: 300;
+    font-family: 'EditorsNote', serif;
+    font-weight: 200;
     font-size: 1.8em;
     margin-bottom: 0.5em;
 }
 
 .final-phrase .blossom-text {
-    font-family: 'Noto Serif Display', serif;
-    font-weight: 700;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
     font-size: 2.2em;
 }
 
@@ -832,42 +999,40 @@ body {
     }
 
     body {
-        padding-top: 60px; /* Ajuste este valor para a altura exata da sua navbar mobile */
+        padding-top: 60px;
     }
 
     .hero {
-        /* Mantenha a altura que você definiu, mas certifique-se de que 60px é a altura da navbar */
-        height: calc(80vh - 60px); /* 80vh para que a seção não ocupe 100% da tela, o que é bom para mobile */
+        height: calc(80vh - 60px);
         background-image: url('img/capa2.png') !important;
         background-size: cover;
         background-position: center;
-        display: flex; /* Mantenha o flex para alinhar o hero-content */
-        flex-direction: column; /* Para alinhar o conteúdo verticalmente */
-        justify-content: flex-start; /* <<< CHAVE AQUI: Alinha o conteúdo (hero-content) ao TOPO do hero */
-        align-items: center; /* Centraliza o conteúdo (hero-content) horizontalmente */
-        text-align: center; /* Garante que o texto DENTRO do hero-content seja centralizado */
-        padding-top: 0; /* Mantenha 0, o body já compensa a navbar */
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        text-align: center;
+        padding-top: 0;
     }
 
     .hero-content {
         text-align: center;
         max-width: 90%;
-        margin: 0 auto; /* Para centralizar o block-level element */
-        padding-top: 50px; /* <<< AJUSTE AQUI: Adiciona espaço do topo do .hero-content. Ajuste o valor conforme necessário. */
-        /* Se precisar de mais espaço na parte inferior, pode adicionar padding-bottom */
-        padding-bottom: 20px; /* Exemplo: um pouco de padding na parte de baixo */
-        width: 100%; /* Garante que max-width funcione como esperado */
-        box-sizing: border-box; /* Garante que padding não adicione largura extra */
+        margin: 0 auto;
+        padding-top: 50px;
+        padding-bottom: 20px;
+        width: 100%;
+        box-sizing: border-box;
     }
 
     .hero-content h1 {
         font-size: 2em;
-        margin-bottom: 0.5em; /* Garante um pequeno espaço entre h1 e p */
+        margin-bottom: 0.5em;
     }
 
     .hero-content p {
         font-size: 0.9em;
-        margin-top: 0; /* Remove margem superior padrão do p */
+        margin-top: 0;
     }
 
     .about-us-section {
@@ -884,7 +1049,7 @@ body {
         max-width: 100%;
     }
 
- .about-us-image-box {
+    .about-us-image-box {
         max-width: 100%;
         height: auto;
         min-height: 150px;
@@ -893,7 +1058,7 @@ body {
 
     .about-us-content-wrapper {
         align-items: center;
-        padding: 0 1em; /* Ajusta padding interno em mobile */
+        padding: 0 1em;
     }
 
     .about-us-buttons {
@@ -910,17 +1075,9 @@ body {
     .btn,
     .btn-dark,
     .btn-light-outline {
-        padding: 0.5em 0.5em; /* Mantém o padding reduzido em mobile */
+        padding: 0.5em 0.5em;
         width: 100%;
-        max-width: 250px; /* Mantém ou ajusta a largura máxima */
-    }
-
-    .site-container {
-        padding: 0 1em;
-        width: 100%;
-        max-width: 100%; /* Remove largura fixa, se existir */
-        margin: 0 auto; /* Centraliza o contêiner */
-        box-sizing: border-box;
+        max-width: 250px;
     }
 
     .services {
@@ -935,6 +1092,10 @@ body {
     .service-card {
         width: 90%;
         max-width: 350px;
+    }
+
+    .service-card h3 {
+        font-size: 1.1em;
     }
 
     .carousel-wrapper {
