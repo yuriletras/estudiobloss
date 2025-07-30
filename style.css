@@ -448,6 +448,7 @@ body {
     background-position: center;
     border-radius: 5px; /* Ajustado para 5px, igual aos botões */
     overflow: hidden; /* Garante que o background respeite o border-radius */
+    border-radius:5px;
 }
 
 /* Services Section */
@@ -1044,20 +1045,20 @@ body {
         margin: 0;
     }
 
-    .about-us-section {
-        padding: 1.5rem 0;
+   .about-us-section {
+        padding: 40px 20px; 
+   }
+
+ .about-us-content-wrapper {
+        flex-direction: column; /* Empilha o texto e a imagem um abaixo do outro */
+        gap: 30px; /* Espaçamento entre o bloco de texto e a imagem */
+        align-items: center; /* Centraliza os itens empilhados */
     }
 
-    .about-us-content-wrapper {
-        flex-direction: column;
-        gap: 0.75rem;
-        align-items: center;
-        padding: 0 1rem;
-    }
-
-    .about-us-text-content {
-        text-align: center;
-        max-width: 100%;
+ .about-us-text-content {
+        text-align: center; /* Centraliza o texto dentro do bloco */
+        padding: 0; /* Remova qualquer padding lateral que possa estar apertando o texto */
+        max-width: 100%; /* Garante que o bloco de texto ocupe a largura total disponível */
     }
 
     .about-us-subtitle {
@@ -1130,17 +1131,14 @@ body {
         flex-direction: column;
         align-items: stretch;
         justify-content: center;
-        gap: 0.75rem;
+        gap: 20px;
     }
 
-    .service-card {
-        width: 100%;
-        max-width: 300px;
-        padding: 0.75rem;
-        min-height: 150px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
+  .service-card {
+        width: 90%; /* Ocupa 90% da largura do container em mobile */
+        max-width: 400px; /* Garante que não fique muito largo em tablets menores */
+        margin: 0 auto; /* Centraliza o cartão horizontalmente */
+        flex: none; /* Remove a flexibilidade definida para desktop */
     }
 
     .service-card h3 {
