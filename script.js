@@ -409,35 +409,56 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 7. Configura modal de imagem
     const imageModal = document.getElementById('image-modal');
-    const modalImage = document.getElementById('modal-image');
-    const closeBtn = document.querySelector('.image-modal-close-btn');
-    const portfolioFullImages = document.querySelectorAll('.portfolio-full-item-image img, .carousel-item img');
+const modalImage = document.getElementById('modal-image');
+const closeBtn = document.querySelector('.image-modal-close-btn');
+const portfolioFullImages = document.querySelectorAll('.portfolio-full-item-image img, .carousel-item img');
 
-    if (imageModal && modalImage && closeBtn && portfolioFullImages.length > 0) {
-        portfolioFullImages.forEach(image => {
-            image.addEventListener('click', () => {
-                if (image.src) {
-                    modalImage.src = image.src;
-                    imageModal.classList.add('open');
-                    document.body.style.overflow = 'hidden';
-                } else {
-                    console.warn("Imagem sem 'src' válida ao tentar abrir modal.");
-                }
-            });
-        });
-
-        closeBtn.addEventListener('click', () => {
-            imageModal.classList.remove('open');
-            document.body.style.overflow = 'auto';
-        });
-
-        imageModal.addEventListener('click', (event) => {
-            if (event.target === imageModal) {
-                imageModal.classList.remove('open');
-                document.body.style.overflow = 'auto';
+if (imageModal && modalImage && closeBtn && portfolioFullImages.length > 0) {
+    portfolioFullImages.forEach(image => {
+        // Suporte a click e touch
+        image.addEventListener('click', () => {
+            if (image.src) {
+                modalImage.src = image.src;
+                imageModal.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            } else {
+                console.warn("Imagem sem 'src' válida ao tentar abrir modal.");
             }
         });
-    } else {
-        console.warn("Elementos do modal ('image-modal', 'modal-image', 'image-modal-close-btn') ou imagens do portfólio/carrossel não encontrados.");
-    }
+
+        image.addEventListener('touchstart', (e) => {
+            e.preventDefault(); // Evita comportamento padrão de toque
+            if (image.src) {
+                modalImage.src = image.src;
+                imageModal.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            } else {
+                console.warn("Imagem sem 'src' válida ao tentar abrir modal (touch).");
+            }
+        }, { passive: false });
+    });
+
+    closeBtn.addEventListener('click', () => {
+        imageModal.classList.remove('open');
+        document.body.style.overflow = 'auto';
+    });
+
+    imageModal.addEventListener('click', (event) => {
+        if (event.target === imageModal) {
+            imageModal.classList.remove('open');
+            document.body.style.overflow = 'auto';
+        }
+    });
+
+    // Fechar com toque no fundo do modal
+    imageModal.addEventListener('touchstart', (event) => {
+        if (event.target === imageModal) {
+            imageModal.classList.remove('open');
+            document.body.style.overflow = 'auto';
+        }
+    }, { passive: false });
+} else {
+    console.warn("Elementos do modal ('image-modal', 'modal-image', 'image-modal-close-btn') ou imagens do portfólio/carrossel não encontrados.");
+}
+
 });
