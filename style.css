@@ -613,11 +613,12 @@ body {
 .full-portfolio-section {
     padding: 4em 0;
     text-align: center;
-    opacity: 0;
-    height: 0;
-    overflow: hidden;
-    visibility: hidden;
-    transition: opacity var(--transition-speed), height var(--transition-speed), visibility var(--transition-speed);
+    /* Remova as propriedades que ocultam a seção */
+    /* opacity: 0; */
+    /* height: 0; */
+    /* overflow: hidden; */
+    /* visibility: hidden; */
+    transition: none; /* A transição não é mais necessária se o estado inicial já é visível */
 }
 
 .full-portfolio-section.visible {
@@ -1019,6 +1020,10 @@ body {
 
     .nav-mobile-extras a:hover {
         color: var(--color-brown);
+    }
+
+    .nav-links.nav-links-active {
+        display: flex;
     }
 
     .desktop-only-icons {
