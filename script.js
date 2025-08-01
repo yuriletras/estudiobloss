@@ -8,66 +8,140 @@ document.addEventListener('DOMContentLoaded', () => {
             navLinks.classList.toggle('open');
             hamburgerMenu.classList.toggle('active');
         });
+    } else {
+        console.error('Elementos do menu hambúrguer não encontrados:', { hamburgerMenu, navLinks });
     }
 
     // ---- LÓGICA DO CARROSSEL DE MARCAS ----
-    let currentSlide = 0;
-    const carouselContainer = document.getElementById('brands-carousel-container');
-    const prevBtn = document.querySelector('.carousel-wrapper .prev');
-    const nextBtn = document.querySelector('.carousel-wrapper .next');
-    const dotsContainer = document.getElementById('brands-carousel-dots');
-    
-    if (carouselContainer && prevBtn && nextBtn && dotsContainer) {
-        const slides = carouselContainer.querySelectorAll('.carousel-item');
-        const totalSlides = slides.length;
-        const itemsPerSlide = window.innerWidth >= 768 ? 3 : 1;
-        const totalPages = Math.ceil(totalSlides / itemsPerSlide);
-        const slideWidth = carouselContainer.offsetWidth;
+    const carouselTrack = document.querySelector('.carousel-track');
+    const prevBtn = document.querySelector('.carousel-control.prev');
+    const nextBtn = document.querySelector('.carousel-control.next');
+    const dots = document.querySelectorAll('.carousel-dot');
 
-        // Cria os dots
-        for (let i = 0; i < totalPages; i++) {
-            const dot = document.createElement('span');
-            dot.classList.add('dot');
-            dot.addEventListener('click', () => {
-                currentSlide = i;
-                updateCarousel();
-            });
-            dotsContainer.appendChild(dot);
+    if (carouselTrack && prevBtn && nextBtn && dots.length > 0) {
+        const items = carouselTrack.querySelectorAll('.carousel-item');
+        if (items.length === 0) {
+            console.error('Nenhum item encontrado no carrossel.');
+            return;
         }
-        const dots = dotsContainer.querySelectorAll('.dot');
-        
-        const updateCarousel = () => {
-            const offset = -currentSlide * slideWidth;
-            carouselContainer.style.transform = `translateX(${offset}px)`;
-            
-            dots.forEach(dot => dot.classList.remove('active'));
-            dots[currentSlide].classList.add('active');
+
+        const totalItems = items.length / 2; // Metade dos itens (duplicados)
+        let currentIndex = 0;
+        let isDragging = false;
+        let startX = 0;
+        let autoScrollInterval;
+
+        // Calcular largura do item dinamicamente
+        const getItemWidth = () => {
+            const item = items[0];
+            const style = window.getComputedStyle(item);
+            const marginRight = parseFloat(style.marginRight) || 0;
+            return item.offsetWidth + marginRight;
+        };
+        let itemWidth = getItemWidth();
+
+        // Atualizar posição do carrossel
+        const updateCarousel = (index, useTransition = true) => {
+            currentIndex = (index + totalItems) % totalItems; // Normalizar índice
+            const offset = -currentIndex * itemWidth;
+            carouselTrack.style.transition = useTransition ? 'transform 0.5s ease-in-out' : 'none';
+            carouselTrack.style.transform = `translateX(${offset}px)`;
+
+            // Atualizar dot ativo
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentIndex);
+            });
+
+            // Reset para loop infinito
+            if (currentIndex === 0 && !useTransition) {
+                setTimeout(() => {
+                    carouselTrack.style.transition = 'none';
+                    carouselTrack.style.transform = `translateX(0)`;
+                    carouselTrack.offsetHeight; // Forçar reflow
+                    carouselTrack.style.transition = 'transform 0.5s ease-in-out';
+                }, 500);
+            }
         };
 
-        const nextSlide = () => {
-            currentSlide = (currentSlide + 1) % totalPages;
-            updateCarousel();
-        };
-
-        const prevSlide = () => {
-            currentSlide = (currentSlide - 1 + totalPages) % totalPages;
-            updateCarousel();
-        };
-        
-        nextBtn.addEventListener('click', nextSlide);
-        prevBtn.addEventListener('click', prevSlide);
-        
-        window.addEventListener('resize', () => {
-             // Lógica de redimensionamento aqui se necessário
+        // Navegação por botões
+        prevBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            clearInterval(autoScrollInterval);
+            updateCarousel(currentIndex - 1);
+            startAutoScroll();
         });
-        
-        updateCarousel(); // Inicia o carrossel
+
+        nextBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            clearInterval(autoScrollInterval);
+            updateCarousel(currentIndex + 1);
+            startAutoScroll();
+        });
+
+        // Navegação por dots
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                clearInterval(autoScrollInterval);
+                const index = parseInt(dot.getAttribute('data-index'), 10);
+                updateCarousel(index);
+                startAutoScroll();
+            });
+        });
+
+        // Rolagem automática
+        const startAutoScroll = () => {
+            autoScrollInterval = setInterval(() => {
+                updateCarousel(currentIndex + 1);
+            }, 3000); // 3 segundos por slide
+        };
+        startAutoScroll();
+
+        // Pausar no hover
+        carouselTrack.addEventListener('mouseenter', () => {
+            clearInterval(autoScrollInterval);
+        });
+        carouselTrack.addEventListener('mouseleave', () => {
+            startAutoScroll();
+        });
+
+        // Suporte a gestos de toque
+        carouselTrack.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            startX = e.touches[0].clientX;
+            clearInterval(autoScrollInterval);
+        });
+
+        carouselTrack.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            const x = e.touches[0].clientX;
+            const deltaX = x - startX;
+            if (Math.abs(deltaX) > 50) {
+                updateCarousel(currentIndex + (deltaX < 0 ? 1 : -1));
+                isDragging = false;
+                startAutoScroll();
+            }
+        });
+
+        carouselTrack.addEventListener('touchend', () => {
+            isDragging = false;
+            startAutoScroll();
+        });
+
+        // Atualizar itemWidth ao redimensionar
+        window.addEventListener('resize', () => {
+            itemWidth = getItemWidth();
+            updateCarousel(currentIndex, false);
+        });
+
+        // Inicializar carrossel
+        updateCarousel(currentIndex, false);
+    } else {
+        console.error('Elementos do carrossel não encontrados:', { carouselTrack, prevBtn, nextBtn, dots });
     }
 
     // ---- LÓGICA DE TRADUÇÃO ----
     const translations = {
         'en': {
-            // Seus textos em inglês aqui
             "page-title": "bloss studio",
             "nav-about-us": "ABOUT US",
             "nav-services": "SERVICES",
@@ -103,7 +177,6 @@ document.addEventListener('DOMContentLoaded', () => {
             "final-phrase-blossom": "It’s time to <span class=\"blossom-italic\">bloss</span>om.",
             "copyright-text": "&copy; 2025 bloss studio. All rights reserved.",
             "developed-by-text": "Developed by",
-            // Novos textos para a página de portfólio
             "page-title-portfolio": "Portfolio - bloss studio",
             "portfolio-page-title": "Our Portfolio",
             "portfolio-page-subtitle": "A collection of works that blossomed through design and strategy.",
@@ -159,7 +232,6 @@ document.addEventListener('DOMContentLoaded', () => {
             "project-video-year": "**Year:** 2024",
         },
         'pt-BR': {
-            // Seus textos em português aqui
             "page-title": "estúdio bloss",
             "nav-about-us": "SOBRE NÓS",
             "nav-services": "SERVIÇOS",
@@ -195,7 +267,6 @@ document.addEventListener('DOMContentLoaded', () => {
             "final-phrase-blossom": "It’s time to <span class=\"blossom-italic\">bloss</span>om.",
             "copyright-text": "&copy; 2025 estúdio bloss. Todos os direitos reservados.",
             "developed-by-text": "Desenvolvido por",
-            // Novos textos para a página de portfólio
             "page-title-portfolio": "Portfólio - estúdio bloss",
             "portfolio-page-title": "Nosso Portfólio",
             "portfolio-page-subtitle": "Uma coleção de trabalhos que floresceram através do design e estratégia.",
@@ -251,8 +322,7 @@ document.addEventListener('DOMContentLoaded', () => {
             "project-video-year": "**Ano:** 2024",
         }
     };
-    
-    // Início da lógica de tradução
+
     let currentLang = 'pt-BR';
 
     const updateTranslations = (lang) => {
@@ -260,13 +330,20 @@ document.addEventListener('DOMContentLoaded', () => {
             const key = element.getAttribute('data-translate');
             const translation = translations[lang][key];
             if (translation) {
-                // Manter o HTML interno
-                element.innerHTML = translation;
+                const img = element.querySelector('img');
+                if (img && key === 'developed-by-text') {
+                    element.innerHTML = translation + ' ';
+                    element.appendChild(img);
+                } else {
+                    element.innerHTML = translation;
+                }
             }
         });
-        document.getElementById('language-toggle').innerHTML = translations[lang]['nav-about-us'] === "SOBRE NÓS" ? "EN <i class=\"fas fa-chevron-down\"></i>" : "PT <i class=\"fas fa-chevron-down\"></i>";
-        
-        // Atualiza os títulos das páginas
+        const languageToggle = document.getElementById('language-toggle');
+        if (languageToggle) {
+            languageToggle.innerHTML = translations[lang]['nav-about-us'] === "SOBRE NÓS" ? "EN <i class=\"fas fa-chevron-down\"></i>" : "PT <i class=\"fas fa-chevron-down\"></i>";
+        }
+
         const pageTitleElement = document.querySelector('title');
         if (pageTitleElement) {
             const pageTitleKey = pageTitleElement.getAttribute('data-translate');
@@ -288,16 +365,19 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             toggleLanguage();
         });
+    } else {
+        console.error('Botão de troca de idioma não encontrado.');
     }
 
-    // Inicializa a tradução com base na preferência do usuário ou padrão
     const savedLang = localStorage.getItem('lang');
     if (savedLang) {
         currentLang = savedLang;
+        updateTranslations(currentLang);
+    } else {
+        updateTranslations(currentLang);
     }
-    updateTranslations(currentLang);
 
-    // ---- LÓGICA DO MODAL DE IMAGEM (para a página index.html) ----
+    // ---- LÓGICA DO MODAL DE IMAGEM ----
     const imageModal = document.getElementById('image-modal');
     const modalImage = document.getElementById('modal-image');
     const closeBtn = document.querySelector('.image-modal-close-btn');
@@ -321,9 +401,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 imageModal.classList.remove('open');
             }
         });
+    } else {
+        console.error('Elementos do modal não encontrados:', { imageModal, modalImage, closeBtn });
     }
-
-    
-
-    
 });

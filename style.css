@@ -409,16 +409,15 @@ body {
 .about-us-image-box {
     flex: 1;
     min-width: 300px;
-    max-width: 650px;
-    min-height: 300px;
-    padding-bottom: 40%;
+    max-width: 500px; /* Reduzido de 650px para desktop */
+    min-height: 250px;
+    padding-bottom: 30%; /* Reduzido de 40% para manter proporção */
     background-image: url('img/projetos/PROJETOS SITE-08.jpg');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    border-radius: 5px;
+    border-radius: var(--border-radius-global); /* Alterado de 5px para 15px */
     overflow: hidden;
-    border-radius:5px;
 }
 
 /* Services Section - Mantido como estava */
@@ -483,10 +482,11 @@ body {
     color: var(--color-dark-gray);
 }
 
-/* Brands Section - Mantido como estava */
+/* Brands Section - Carrossel Dinâmico */
 .brands-section {
     padding: 4em 0;
     text-align: center;
+    background-color: var(--color-light-gray);
 }
 
 .brands-section h2 {
@@ -503,78 +503,109 @@ body {
     font-style: italic;
 }
 
-.carousel-wrapper {
+.brands-carousel-wrapper {
     position: relative;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 var(--site-padding-desktop);
+    overflow: hidden;
 }
 
-.carousel-container {
-    overflow-x: auto;
-    overflow-y: hidden;
-    white-space: nowrap;
-    scroll-behavior: smooth;
-    scrollbar-width: none;
+.brands-carousel {
+    overflow: hidden;
+    width: 100%;
 }
 
-.carousel-container::-webkit-scrollbar {
-    display: none;
-}
-
-.carousel-slide {
+.carousel-track {
     display: flex;
-    gap: 1.5em;
-    padding: 0 20px;
+    transition: transform 0.5s ease-in-out;
+    will-change: transform;
 }
 
 .carousel-item {
     flex: 0 0 auto;
-    width: 280px;
-    height: 390px;
+    width: 300px;
+    margin-right: 1.5em;
     background-color: var(--color-white);
-    border-radius: var(--border-radius-global);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    border-radius: var(--border-radius-global, 8px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .carousel-item:hover {
     transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 .carousel-item img {
     width: 100%;
-    height: 100%;
+    height: 330px;
     object-fit: cover;
-    border-radius: var(--border-radius-global);
+    border-radius: var(--border-radius-global, 8px);
     transition: transform 0.5s ease;
+    cursor: pointer;
 }
 
-.carousel-item img:hover {
+.carousel-item:hover img {
     transform: scale(1.05);
 }
 
-.prev, .next {
+.carousel-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    margin-top: 1.5em;
+}
+
+.carousel-control {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: var(--color-dark-gray, #333);
+    color: var(--color-white, #fff);
+    font-size: 1.5em;
+    border-radius: 50%;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.carousel-control:hover {
+    background-color: #B7A692;
+    transform: scale(1.1);
+}
+
+.carousel-control.prev::before {
+    content: '←';
+}
+
+.carousel-control.next::before {
+    content: '→';
+}
+
+.carousel-dots {
+    display: flex;
+    gap: 0.5em;
+}
+
+.carousel-dot {
+    width: 10px;
+    height: 10px;
+    background-color: var(--color-light-gray, #ccc);
+    border-radius: 50%;
     cursor: pointer;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    padding: 16px;
-    color: var(--color-brown);
-    font-weight: bold;
-    font-size: 2.5em;
-    background-color: rgba(255, 255, 255, 0.4);
-    z-index: 51;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.next {
-    right: 0;
+.carousel-dot.active {
+    background-color: var(--color-dark-gray, #333);
+    transform: scale(1.2);
 }
 
-.prev {
-    left: 0;
+.carousel-dot:hover {
+    background-color: #B7A692;
 }
 
 /* Portfolio Call to Action - Mantido como estava */
@@ -1132,14 +1163,14 @@ body {
     }
 
     .about-us-image-box {
-        max-width: 100%;
+        max-width: 90%; /* Reduzido para mobile */
         min-height: 150px;
-        padding-bottom: 50%;
+        padding-bottom: 40%; /* Ajustado para mobile */
         background-image: url('img/projetos/PROJETOS SITE-08.jpg');
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
-        border-radius: 5px;
+        border-radius: var(--border-radius-global); /* Mantém 15px para consistência */
         overflow: hidden;
     }
 
@@ -1186,41 +1217,40 @@ body {
         line-height: 1.3;
     }
 
-    .brands-section {
-        padding: 1.5rem 0;
+     .brands-section {
+        padding: 2em 0;
     }
 
     .brands-section h2 {
-        font-size: 1.3rem;
-        margin-bottom: 0.75rem;
-    }
-
-    .carousel-wrapper {
-        padding: 0 0.5rem;
-    }
-
-    .carousel-container {
-        scroll-snap-type: x mandatory;
-        -webkit-overflow-scrolling: touch;
-    }
-
-    .carousel-slide {
-        gap: 0.5rem;
-        padding: 0 0.5rem;
-        scroll-snap-align: center;
+        font-size: 1.8em;
+        margin-bottom: 1em;
     }
 
     .carousel-item {
-        width: 150px;
-        height: 220px;
-        scroll-snap-align: center;
+        width: 200px;
+        margin-right: 1em;
     }
 
-    .prev, .next {
-        font-size: 1.2rem;
-        padding: 0.3rem;
+    .carousel-item img {
+        height: 150px;
     }
 
+    .carousel-controls {
+        gap: 0.75em;
+        margin-top: 1em;
+    }
+
+    .carousel-control {
+        width: 35px;
+        height: 35px;
+        font-size: 1.2em;
+    }
+
+    .carousel-dot {
+        width: 8px;
+        height: 8px;
+    }
+    
     .portfolio-call-to-action {
         padding: 1.5rem 0;
     }
@@ -1377,3 +1407,4 @@ body {
         padding: 1rem 0;
     }
 }
+

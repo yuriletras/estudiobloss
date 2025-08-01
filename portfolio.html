@@ -9,172 +9,346 @@
     <link rel="stylesheet" href="style.css">
     
     <style>
-    /* Estilos para o botão de voltar */
-    .btn-dark {
-        background-color: var(--color-dark);
-        color: var(--color-light);
-        padding: 10px 20px;
-        border-radius: 5px;
-        text-decoration: none;
-        display: inline-block;
-        margin-top: 20px;
-    }
-
-    /* Estilos para a galeria do portfólio (agora com o overlay) */
-    .portfolio-full-item-image {
-        width: 100%;
-        height: auto;
-        position: relative;
-        cursor: pointer;
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    
-    .portfolio-full-item-image img {
-        display: block;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-    
-    /* Estilos para o Overlay */
-    .image-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        color: white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-
-    .portfolio-full-item-image:hover .image-overlay {
-        opacity: 1;
-    }
-
-    .overlay-text {
-        font-family: 'Sora', sans-serif;
-        font-size: 1.25rem;
-        font-weight: 500;
-        text-transform: uppercase;
-    }
-
-    /* NOVOS ESTILOS PARA O MODAL COM TRANSIÇÃO PROFISSIONAL */
-    #fullscreen-modal {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.95);
-        z-index: 9999;
-        visibility: hidden;
-        opacity: 0;
-        transition: opacity 0.4s ease, visibility 0.4s ease;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 20px;
-    }
-
-    #fullscreen-modal.active {
-        visibility: visible;
-        opacity: 1;
-    }
-
-    .modal-content-wrapper {
-        position: relative;
-        max-width: 90%;
-        max-height: 90%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    
-    .modal-image {
-        max-width: 100%;
-        max-height: 100%;
-        display: block;
-        border-radius: 10px;
-    }
-
-    .modal-close-btn {
-        position: absolute;
-        top: -20px;
-        right: -20px;
-        color: white;
-        font-size: 40px;
-        cursor: pointer;
-        line-height: 1;
-        padding: 0 10px;
-    }
-
-    .modal-close-btn:hover {
-        color: #ccc;
-    }
-
-    /* Estilos de animação e layout existentes */
-    .item { display: none; }
-    .portfolio-hero { position: relative; background-color: var(--color-brown-light); padding: 80px 0; text-align: center; }
-    .portfolio-hero h1 { font-family: 'Noto Serif Display', serif; font-size: clamp(2.5rem, 5vw, 4rem); color: var(--color-dark); margin-bottom: 20px; }
-    .portfolio-hero p { font-family: 'Sora', sans-serif; font-size: clamp(1rem, 2vw, 1.25rem); color: var(--color-dark); max-width: 800px; margin: 0 auto; }
-    .full-portfolio-section { padding: 80px 0; background-color: var(--color-bg-light); }
-    .full-portfolio-items-container { display: grid; grid-template-columns: 1fr; gap: 60px; max-width: 1200px; margin: 0 auto; animation: fadeIn 1s ease-in-out; }
-    .portfolio-full-item { display: flex; flex-direction: column; gap: 40px; align-items: center; opacity: 0; transform: translateY(20px); animation: slideInUp 0.8s ease-out forwards; }
-    .portfolio-full-item:nth-child(even) { flex-direction: column; }
-    .portfolio-full-item-image:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15); }
-    .portfolio-full-item-description { width: 100%; font-family: 'Sora', sans-serif; }
-    .portfolio-full-item-description h3 { font-family: 'Noto Serif Display', serif; font-size: clamp(1.5rem, 3vw, 2rem); color: var(--color-brown); margin-bottom: 15px; }
-    .portfolio-full-item-description p { font-size: 1rem; color: var(--color-text-dark); line-height: 1.6; margin-bottom: 15px; }
-    .portfolio-full-item-description ul { list-style: none; padding: 0; margin: 0; }
-    .portfolio-full-item-description li { font-size: 0.9rem; color: var(--color-text-dark); margin-bottom: 5px; line-height: 1.4; }
-    .portfolio-grid .item { display: block; }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    @keyframes slideInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-    @media (min-width: 768px) {
-        .full-portfolio-items-container { gap: 80px; }
-        .portfolio-full-item { flex-direction: row; text-align: left; align-items: flex-start; }
-        .portfolio-full-item.reverse-layout { flex-direction: row-reverse; text-align: right; }
-        .portfolio-full-item-description ul { text-align: left; }
-        .portfolio-full-item.reverse-layout .portfolio-full-item-description ul { text-align: right; }
-
-        /* NOVO: Layout de 2 colunas iguais para telas grandes */
-        .portfolio-full-item-image,
-        .portfolio-full-item-description {
-            width: 50%;
+        /* --- Fontes Personalizadas para Editor'sNote --- */
+        @font-face {
+            font-family: 'EditorsNote';
+            src: url('fonts/Editor\'sNote-Hairline.otf') format('opentype'),
+                 url('fonts/Editor\'sNote-Hairline.ttf') format('truetype');
+            font-weight: 100;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'EditorsNote';
+            src: url('fonts/Editor\'sNote-HairlineItalic.otf') format('opentype'),
+                 url('fonts/Editor\'sNote-HairlineItalic.ttf') format('truetype');
+            font-weight: 100;
+            font-style: italic;
+        }
+        @font-face {
+            font-family: 'EditorsNote';
+            src: url('fonts/Editor\'sNote-Thin.otf') format('opentype'),
+                 url('fonts/Editor\'sNote-Thin.ttf') format('truetype');
+            font-weight: 200;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'EditorsNote';
+            src: url('fonts/Editor\'sNote-ThinItalic.otf') format('opentype'),
+                 url('fonts/Editor\'sNote-ThinItalic.ttf') format('truetype');
+            font-weight: 200;
+            font-style: italic;
+        }
+        @font-face {
+            font-family: 'EditorsNote';
+            src: url('fonts/Editor\'sNote-Extralight.otf') format('opentype'),
+                 url('fonts/Editor\'sNote-Extralight.ttf') format('truetype');
+            font-weight: 200;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'EditorsNote';
+            src: url('fonts/Editor\'sNote-ExtralightItalic.otf') format('opentype'),
+                 url('fonts/Editor\'sNote-ExtralightItalic.ttf') format('truetype');
+            font-weight: 200;
+            font-style: italic;
+        }
+        @font-face {
+            font-family: 'EditorsNote';
+            src: url('fonts/Editor\'sNote-Light.otf') format('opentype'),
+                 url('fonts/Editor\'sNote-Light.ttf') format('truetype');
+            font-weight: 300;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'EditorsNote';
+            src: url('fonts/Editor\'sNote-LightItalic.otf') format('opentype'),
+                 url('fonts/Editor\'sNote-LightItalic.ttf') format('truetype');
+            font-weight: 300;
+            font-style: italic;
+        }
+        @font-face {
+            font-family: 'EditorsNote';
+            src: url('fonts/Editor\'sNote-Regular.otf') format('opentype'),
+                 url('fonts/Editor\'sNote-Regular.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'EditorsNote';
+            src: url('fonts/Editor\'sNote-Medium.otf') format('opentype'),
+                 url('fonts/Editor\'sNote-Medium.ttf') format('truetype');
+            font-weight: 500;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'EditorsNote';
+            src: url('fonts/Editor\'sNote-MediumItalic.otf') format('opentype'),
+                 url('fonts/Editor\'sNote-MediumItalic.ttf') format('truetype');
+            font-weight: 500;
+            font-style: italic;
+        }
+        @font-face {
+            font-family: 'EditorsNote';
+            src: url('fonts/Editor\'sNote-Semibold.otf') format('opentype'),
+                 url('fonts/Editor\'sNote-Semibold.ttf') format('truetype');
+            font-weight: 600;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'EditorsNote';
+            src: url('fonts/Editor\'sNote-SemiboldItalic.otf') format('opentype'),
+                 url('fonts/Editor\'sNote-SemiboldItalic.ttf') format('truetype');
+            font-weight: 600;
+            font-style: italic;
+        }
+        @font-face {
+            font-family: 'EditorsNote';
+            src: url('fonts/Editor\'sNote-Bold.otf') format('opentype'),
+                 url('fonts/Editor\'sNote-Bold.ttf') format('truetype');
+            font-weight: 700;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'EditorsNote';
+            src: url('fonts/Editor\'sNote-BoldItalic.otf') format('opentype'),
+                 url('fonts/Editor\'sNote-BoldItalic.ttf') format('truetype');
+            font-weight: 700;
+            font-style: italic;
         }
 
-        /* NOVO: Adiciona um detalhe de linha vertical */
-        .portfolio-full-item-description {
+        /* Paleta de Cores do Index.html, com a nova cor para o fundo alternado */
+        :root {
+            --color-brown: #421F10;
+            --color-beige: #B7A692;
+            --color-white: #FFFFFF;
+            --color-dark-gray: #332626;
+            --cor-fundo-clara-alternada: #dbdbdb;
+            --cor-fundo-clara-alternada-2: #EEF4F4;
+            --transition-speed: 0.3s ease;
+        }
+
+        /* Estilos para o botão de voltar, agora com a cor correta da paleta */
+        .btn {
+            padding: 0.5em 0.5em;
+            border-radius: 5px;
+            text-decoration: none;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 600;
+            font-size: 0.95em;
+            cursor: pointer;
+            transition: background-color var(--transition-speed), color var(--transition-speed), border-color var(--transition-speed);
+        }
+
+        .btn-dark {
+            background-color: var(--color-brown);
+            color: var(--color-white);
+            border: 2px solid var(--color-brown);
+        }
+
+        .btn-dark:hover {
+            background-color: transparent;
+            color: var(--color-brown);
+            border-color: var(--color-brown);
+        }
+
+        /* Estilos para a galeria do portfólio (com overlay) */
+        .portfolio-full-item-image {
+            width: 100%;
+            height: auto;
             position: relative;
-            padding-left: 40px; /* Espaço para a linha */
+            cursor: pointer;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .portfolio-full-item-description::before {
-            content: '';
+        
+        .portfolio-full-item-image img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Estilos para o Overlay */
+        .image-overlay {
             position: absolute;
             top: 0;
             left: 0;
-            width: 2px;
+            width: 100%;
             height: 100%;
-            background-color: var(--color-brown);
-            opacity: 0.2;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
             transition: opacity 0.3s ease;
         }
 
-        /* Efeito de hover */
-        .portfolio-full-item:hover .portfolio-full-item-description::before {
-            opacity: 0.8;
+        .portfolio-full-item-image:hover .image-overlay {
+            opacity: 1;
         }
-    }
-</style>
 
+        .overlay-text {
+            font-family: 'Sora', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        /* NOVOS ESTILOS PARA O MODAL COM TRANSIÇÃO PROFISSIONAL */
+        #fullscreen-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        #fullscreen-modal.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .modal-content-wrapper {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-image {
+            max-width: 100%;
+            max-height: 100%;
+            display: block;
+            border-radius: 10px;
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+            line-height: 1;
+            padding: 0 10px;
+        }
+
+        .modal-close-btn:hover {
+            color: #ccc;
+        }
+
+        /* Estilos de animação e layout existentes */
+        .item { display: none; }
+        .portfolio-hero { position: relative; background-color: var(--color-beige); padding: 80px 0; text-align: center; }
+        
+        /* h1 da seção hero do portfólio voltou ao seu estilo original */
+        .portfolio-hero h1 { 
+            font-family: 'EditorsNote', serif; 
+            font-size: clamp(2.5rem, 5vw, 4rem); 
+            color: var(--color-brown); 
+            margin-bottom: 20px; 
+            font-weight: 200;
+        }
+        
+        /* ALTERAÇÃO APLICADA AQUI: O parágrafo da seção hero do portfólio foi atualizado com o estilo do parágrafo da página principal */
+        .portfolio-hero p { 
+            font-family: 'Roboto', sans-serif;
+            font-weight: 400; 
+            font-size: 1.2em; 
+            color: var(--color-dark-gray); 
+            max-width: 600px; 
+            margin: 0 auto; 
+        }
+
+        .full-portfolio-section { padding: 80px 0; background-color: var(--color-white); }
+        .full-portfolio-items-container { display: grid; grid-template-columns: 1fr; gap: 60px; max-width: 1200px; margin: 0 auto; animation: fadeIn 1s ease-in-out; }
+        .portfolio-full-item { display: flex; flex-direction: column; gap: 40px; align-items: center; opacity: 0; transform: translateY(20px); animation: slideInUp 0.8s ease-out forwards; }
+        .portfolio-full-item:nth-child(even) { flex-direction: column; }
+        .portfolio-full-item-image:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15); }
+        .portfolio-full-item-description { 
+            flex: 1;
+            padding: 30px; 
+            border-radius: 8px;
+            background-color: var(--color-white);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .portfolio-full-item-description h3 { font-family:'EditorsNote', serif; font-size: clamp(1.5rem, 3vw, 2rem); color: var(--color-brown); margin-bottom: 15px; }
+        .portfolio-full-item-description p { font-size: 1rem; color: var(--color-dark-gray); line-height: 1.6; margin-bottom: 15px; }
+        .portfolio-full-item-description ul { list-style: none; padding: 0; margin: 0; }
+        .portfolio-full-item-description li { font-size: 0.9rem; color: var(--color-dark-gray); margin-bottom: 5px; line-height: 1.4; }
+        .portfolio-grid .item { display: block; }
+
+        /* Estilo para a caixa de texto alternada (#dbdbdb) */
+        .portfolio-full-item.alternate-bg .portfolio-full-item-description {
+            background-color: var(--cor-fundo-clara-alternada);
+        }
+
+        /* Efeito de hover para as caixas de texto */
+        .portfolio-full-item:hover .portfolio-full-item-description {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        @media (min-width: 768px) {
+            .full-portfolio-items-container { gap: 80px; }
+            .portfolio-full-item { flex-direction: row; text-align: left; align-items: flex-start; }
+            .portfolio-full-item.reverse-layout { flex-direction: row-reverse; text-align: right; }
+            .portfolio-full-item-description ul { text-align: left; }
+            .portfolio-full-item.reverse-layout .portfolio-full-item-description ul { text-align: right; }
+
+            .portfolio-full-item-image,
+            .portfolio-full-item-description {
+                width: 50%;
+            }
+
+            .portfolio-full-item-description {
+                position: relative;
+                padding-left: 40px;
+            }
+            .portfolio-full-item.reverse-layout .portfolio-full-item-description {
+                padding-left: 0;
+                padding-right: 40px;
+            }
+
+            .portfolio-full-item-description::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 2px;
+                height: 100%;
+                background-color: var(--color-brown);
+                opacity: 0.2;
+                transition: opacity 0.3s ease;
+            }
+            .portfolio-full-item.reverse-layout .portfolio-full-item-description::before {
+                left: auto;
+                right: 0;
+            }
+
+            .portfolio-full-item:hover .portfolio-full-item-description::before {
+                opacity: 0.8;
+            }
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar">
@@ -214,7 +388,8 @@
         <section id="full-portfolio-section" class="full-portfolio-section">
             <div class="site-container">
                 <div id="full-portfolio-items-container" class="full-portfolio-items-container">
-                    <div class="portfolio-full-item">
+                    
+                    <div class="portfolio-full-item alternate-bg">
                         <div class="portfolio-full-item-image">
                             <img src="img/projetos/PROJETOS SITE_Prancheta 1.jpg" alt="Projeto Exemplo Rebranding">
                             <div class="image-overlay">
@@ -225,12 +400,13 @@
                             <h3 data-translate="project-rebranding-title">Projeto: Rebranding Café Renascer</h3>
                             <p data-translate="project-rebranding-desc">Descrição detalhada do projeto de rebranding para a marca fictícia "Café Renascer". Nosso trabalho envolveu a criação de uma nova identidade visual do zero, desde o logotipo até as paletas de cores, tipografia e diretrizes de aplicação para mídias digitais e impressas. O objetivo foi modernizar a imagem da marca, transmitindo sua essência artesanal e premium. Este projeto demonstrou como um design estratégico pode revitalizar a presença de uma empresa no mercado, atraindo um novo público e solidificando sua posição.</p>
                             <ul>
-                                <li data-translate="project-rebranding-services">**Serviços:** Criação de Logotipo, Design de Identidade Visual, Manual de Marca, Embalagens.</li>
-                                <li data-translate="project-rebranding-client">**Cliente:** Café Renascer</li>
-                                <li data-translate="project-rebranding-year">**Ano:** 2023</li>
+                                <li data-translate="project-rebranding-services"><strong>Serviços:</strong> Criação de Logotipo, Design de Identidade Visual, Manual de Marca, Embalagens.</li>
+                                <li data-translate="project-rebranding-client"><strong>Cliente:</strong> Café Renascer</li>
+                                <li data-translate="project-rebranding-year"><strong>Ano:</strong> 2023</li>
                             </ul>
                         </div>
                     </div>
+                    
                     <div class="portfolio-full-item reverse-layout">
                         <div class="portfolio-full-item-image">
                             <img src="img/projetos/PROJETOS SITE-02.jpg" alt="Projeto Exemplo Campanha Digital">
@@ -242,13 +418,14 @@
                             <h3 data-translate="project-campaign-title">Criação de Campanha Digital para Bloom Fitness</h3>
                             <p data-translate="project-campaign-desc">Desenvolvimento e execução de uma campanha de marketing digital completa para o lançamento do novo serviço "Bloom Fitness". Isso incluiu estratégia de conteúdo, design de peças visuais para redes sociais (Instagram, Facebook), criação de anúncios pagos (Google Ads, Meta Ads) e monitoramento contínuo de performance. A campanha resultou em um aumento significativo no engajamento (35% de crescimento) e nas conversões de leads online (15% de aumento em matrículas).</p>
                             <ul>
-                                <li data-translate="project-campaign-services">**Serviços:** Marketing Digital, Design para Redes Sociais, Gestão de Tráfego Pago, Análise de Dados.</li>
-                                <li data-translate="project-campaign-client">**Cliente:** Bloom Fitness</li>
-                                <li data-translate="project-campaign-year">**Ano:** 2024</li>
+                                <li data-translate="project-campaign-services"><strong>Serviços:</strong> Marketing Digital, Design para Redes Sociais, Gestão de Tráfego Pago, Análise de Dados.</li>
+                                <li data-translate="project-campaign-client"><strong>Cliente:</strong> Bloom Fitness</li>
+                                <li data-translate="project-campaign-year"><strong>Ano:</strong> 2024</li>
                             </ul>
                         </div>
                     </div>
-                    <div class="portfolio-full-item">
+                    
+                    <div class="portfolio-full-item alternate-bg">
                         <div class="portfolio-full-item-image">
                             <img src="img/projetos/PROJETOS SITE-03.jpg" alt="Projeto Exemplo Website Responsivo">
                             <div class="image-overlay">
@@ -259,12 +436,13 @@
                             <h3 data-translate="project-website-title">Desenvolvimento de Website para Clínica OdontoCare</h3>
                             <p data-translate="project-website-desc">Criação de um website institucional responsivo e otimizado para a Clínica OdontoCare. O projeto focou em uma experiência de usuário intuitiva, facilidade de agendamento online e apresentação clara dos serviços. Implementamos um design moderno, integração com sistema de agendamento e SEO básico para melhorar a visibilidade online da clínica.</p>
                             <ul>
-                                <li data-translate="project-website-services">**Serviços:** Web Design, Desenvolvimento Front-end, UX/UI Design, SEO.</li>
-                                <li data-translate="project-website-client">**Cliente:** Clínica OdontoCare</li>
-                                <li data-translate="project-website-year">**Ano:** 2023</li>
+                                <li data-translate="project-website-services"><strong>Serviços:</strong> Web Design, Desenvolvimento Front-end, UX/UI Design, SEO.</li>
+                                <li data-translate="project-website-client"><strong>Cliente:</strong> Clínica OdontoCare</li>
+                                <li data-translate="project-website-year"><strong>Ano:</strong> 2023</li>
                             </ul>
                         </div>
                     </div>
+                    
                     <div class="portfolio-full-item reverse-layout">
                         <div class="portfolio-full-item-image">
                             <img src="img/projetos/PROJETOS SITE-04.jpg" alt="Projeto Exemplo Design de Embalagem">
@@ -276,13 +454,14 @@
                             <h3 data-translate="project-packaging-title">Design de Embalagens para Alimentos Orgânicos "Terra Viva"</h3>
                             <p data-translate="project-packaging-desc">Criação de uma linha completa de embalagens ecológicas e atraentes para a marca de alimentos orgânicos "Terra Viva". O desafio foi comunicar frescor, naturalidade e sustentabilidade através do design, utilizando materiais recicláveis e uma estética limpa. O resultado foi um aumento nas vendas e reconhecimento da marca no segmento de produtos naturais.</p>
                             <ul>
-                                <li data-translate="project-packaging-services">**Serviços:** Design de Embalagens, Ilustração, Branding.</li>
-                                <li data-translate="project-packaging-client">**Cliente:** Terra Viva Alimentos Orgânicos</li>
-                                <li data-translate="project-packaging-year">**Ano:** 2024</li>
+                                <li data-translate="project-packaging-services"><strong>Serviços:</strong> Design de Embalagens, Ilustração, Branding.</li>
+                                <li data-translate="project-packaging-client"><strong>Cliente:</strong> Terra Viva Alimentos Orgânicos</li>
+                                <li data-translate="project-packaging-year"><strong>Ano:</strong> 2024</li>
                             </ul>
                         </div>
                     </div>
-                    <div class="portfolio-full-item">
+                    
+                    <div class="portfolio-full-item alternate-bg">
                         <div class="portfolio-full-item-image">
                             <img src="img/projetos/PROJETOS SITE-05.jpg" alt="Projeto Exemplo App Mobile">
                             <div class="image-overlay">
@@ -293,12 +472,13 @@
                             <h3 data-translate="project-app-title">Design de Interface para Aplicativo "CityGuide"</h3>
                             <p data-translate="project-app-desc">Design de interface (UI/UX) para o aplicativo móvel "CityGuide", um guia turístico interativo. O foco foi na usabilidade, navegabilidade e estética, criando telas intuitivas para busca de locais, avaliações e rotas. O protótipo desenvolvido permitiu testar e validar a experiência do usuário antes do desenvolvimento final.</p>
                             <ul>
-                                <li data-translate="project-app-services">**Serviços:** UI/UX Design, Prototipagem, Wireframing.</li>
-                                <li data-translate="project-app-client">**Cliente:** CityGuide StartUp</li>
-                                <li data-translate="project-app-year">**Ano:** 2023</li>
+                                <li data-translate="project-app-services"><strong>Serviços:</strong> UI/UX Design, Prototipagem, Wireframing.</li>
+                                <li data-translate="project-app-client"><strong>Cliente:</strong> CityGuide StartUp</li>
+                                <li data-translate="project-app-year"><strong>Ano:</strong> 2023</li>
                             </ul>
                         </div>
                     </div>
+                    
                     <div class="portfolio-full-item reverse-layout">
                         <div class="portfolio-full-item-image">
                             <img src="img/projetos/PROJETOS SITE-06.jpg" alt="Projeto Exemplo Material Gráfico">
@@ -310,13 +490,14 @@
                             <h3 data-translate="project-graphic-title">Criação de Material Gráfico para Evento Corporativo "InovaTech Summit"</h3>
                             <p data-translate="project-graphic-desc">Desenvolvimento de todo o material gráfico para o evento "InovaTech Summit", incluindo banners, crachás, folder, apresentações e posts para redes sociais. O objetivo era criar uma identidade visual coesa e profissional que transmitisse a inovação e tecnologia do evento.</p>
                             <ul>
-                                <li data-translate="project-graphic-services">**Serviços:** Design Gráfico, Diagramação, Criação de Banners, Artes para Eventos.</li>
-                                <li data-translate="project-graphic-client">**Cliente:** InovaTech Solutions</li>
-                                <li data-translate="project-graphic-year">**Ano:** 2024</li>
+                                <li data-translate="project-graphic-services"><strong>Serviços:</strong> Design Gráfico, Diagramação, Criação de Banners, Artes para Eventos.</li>
+                                <li data-translate="project-graphic-client"><strong>Cliente:</strong> InovaTech Solutions</li>
+                                <li data-translate="project-graphic-year"><strong>Ano:</strong> 2024</li>
                             </ul>
                         </div>
                     </div>
-                    <div class="portfolio-full-item">
+                    
+                    <div class="portfolio-full-item alternate-bg">
                         <div class="portfolio-full-item-image">
                             <img src="img/projetos/PROJETOS SITE-07.jpg" alt="Projeto Exemplo E-commerce">
                             <div class="image-overlay">
@@ -327,12 +508,13 @@
                             <h3 data-translate="project-ecommerce-title">Desenvolvimento de E-commerce para Loja de Artesanato "Mãos Que Criam"</h3>
                             <p data-translate="project-ecommerce-desc">Construção de uma loja virtual completa para a "Mãos Que Criam", uma loja de artesanato. O projeto incluiu customização da plataforma, design responsivo, integração de meios de pagamento e otimização para catálogo de produtos. A loja online permitiu que a cliente expandisse seu negócio para todo o Brasil.</p>
                             <ul>
-                                <li data-translate="project-ecommerce-services">**Serviços:** E-commerce Development, Web Design, Otimização de Produtos.</li>
-                                <li data-translate="project-ecommerce-client">**Cliente:** Mãos Que Criam Artesanato</li>
-                                <li data-translate="project-ecommerce-year">**Ano:** 2023</li>
+                                <li data-translate="project-ecommerce-services"><strong>Serviços:</strong> E-commerce Development, Web Design, Otimização de Produtos.</li>
+                                <li data-translate="project-ecommerce-client"><strong>Cliente:</strong> Mãos Que Criam Artesanato</li>
+                                <li data-translate="project-ecommerce-year"><strong>Ano:</strong> 2023</li>
                             </ul>
                         </div>
                     </div>
+                    
                     <div class="portfolio-full-item reverse-layout">
                         <div class="portfolio-full-item-image">
                             <img src="img/projetos/Untitled design - 1.jpg" alt="Projeto Exemplo Mídia Social">
@@ -344,13 +526,14 @@
                             <h3 data-translate="project-social-media-title">Estratégia e Conteúdo para Redes Sociais "Pet Feliz PetShop"</h3>
                             <p data-translate="project-social-media-desc">Criação de estratégia de conteúdo e gerenciamento de redes sociais para a PetShop "Pet Feliz". Desenvolvemos um calendário editorial, criamos posts visuais e legendas engajadoras, e monitoramos as interações para aumentar a comunidade online e o tráfego para a loja física e online.</p>
                             <ul>
-                                <li data-translate="project-social-media-services">**Serviços:** Gestão de Mídias Sociais, Criação de Conteúdo, Design para Redes Sociais.</li>
-                                <li data-translate="project-social-media-client">**Cliente:** Pet Feliz PetShop</li>
-                                <li data-translate="project-social-media-year">**Ano:** 2024</li>
+                                <li data-translate="project-social-media-services"><strong>Serviços:</strong> Gestão de Mídias Sociais, Criação de Conteúdo, Design para Redes Sociais.</li>
+                                <li data-translate="project-social-media-client"><strong>Cliente:</strong> Pet Feliz PetShop</li>
+                                <li data-translate="project-social-media-year"><strong>Ano:</strong> 2024</li>
                             </ul>
                         </div>
                     </div>
-                    <div class="portfolio-full-item">
+                    
+                    <div class="portfolio-full-item alternate-bg">
                         <div class="portfolio-full-item-image">
                             <img src="img/projetos/Untitled design - 2.jpg" alt="Projeto Exemplo Ilustração Personalizada">
                             <div class="image-overlay">
@@ -361,12 +544,13 @@
                             <h3 data-translate="project-illustration-title">Criação de Ilustrações Personalizadas para Livro Infantil "A Aventura da Luna"</h3>
                             <p data-translate="project-illustration-desc">Desenvolvimento de ilustrações vibrantes e cativantes para o livro infantil "A Aventura da Luna". Cada ilustração foi criada para complementar a narrativa e envolver o público jovem, trazendo vida aos personagens e cenários da história.</p>
                             <ul>
-                                <li data-translate="project-illustration-services">**Serviços:** Ilustração Digital, Design Editorial, Criação de Personagens.</li>
-                                <li data-translate="project-illustration-client">**Cliente:** Editora Fantasia</li>
-                                <li data-translate="project-illustration-year">**Ano:** 2023</li>
+                                <li data-translate="project-illustration-services"><strong>Serviços:</strong> Ilustração Digital, Design Editorial, Criação de Personagens.</li>
+                                <li data-translate="project-illustration-client"><strong>Cliente:</strong> Editora Fantasia</li>
+                                <li data-translate="project-illustration-year"><strong>Ano:</strong> 2023</li>
                             </ul>
                         </div>
                     </div>
+                    
                     <div class="portfolio-full-item reverse-layout">
                         <div class="portfolio-full-item-image">
                             <img src="img/projetos/Untitled design - 3.jpg" alt="Projeto Exemplo Vídeo Institucional">
@@ -378,17 +562,17 @@
                             <h3 data-translate="project-video-title">Produção de Vídeo Institucional para "Soluções Sustentáveis LTDA"</h3>
                             <p data-translate="project-video-desc">Produção de um vídeo institucional de 2 minutos para a empresa "Soluções Sustentáveis LTDA". O vídeo destacou a missão, valores e os impactos positivos da empresa no meio ambiente, utilizando animações, depoimentos e imagens de alta qualidade para transmitir sua mensagem.</p>
                             <ul>
-                                <li data-translate="project-video-services">**Serviços:** Roteiro, Edição de Vídeo, Motion Graphics, Sonoplastia.</li>
-                                <li data-translate="project-video-client">**Cliente:** Soluções Sustentáveis LTDA</li>
-                                <li data-translate="project-video-year">**Ano:** 2024</li>
+                                <li data-translate="project-video-services"><strong>Serviços:</strong> Roteiro, Edição de Vídeo, Motion Graphics, Sonoplastia.</li>
+                                <li data-translate="project-video-client"><strong>Cliente:</strong> Soluções Sustentáveis LTDA</li>
+                                <li data-translate="project-video-year"><strong>Ano:</strong> 2024</li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
-
+            
             <div class="site-container" style="text-align: center; margin-top: 40px; margin-bottom: -40px;">
-                <a href="#" id="back-button" class="btn btn-dark">
+                <a href="index.html" class="btn btn-dark" data-translate="back-to-home">
                     &larr; Voltar
                 </a>
             </div>
