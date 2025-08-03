@@ -1,26 +1,22 @@
 document.addEventListener('DOMContentLoaded', () => {
-// ---- LÓGICA DO MENU HAMBÚRGUER ----
-const hamburgerMenu = document.getElementById('hamburger-menu');
-const navLinks = document.getElementById('nav-links-menu');
+    // ---- LÓGICA DO MENU HAMBÚRGUER ----
+    const hamburgerMenu = document.getElementById('hamburger-menu');
+    const navLinks = document.getElementById('nav-links-menu');
 
-if (hamburgerMenu && navLinks) {
-    // Adiciona o evento de clique no ícone do hamburger
-    hamburgerMenu.addEventListener('click', () => {
-        navLinks.classList.toggle('open');
-        hamburgerMenu.classList.toggle('active');
-    });
-
-    // Adiciona um evento de clique em cada link para fechar o menu
-    const menuLinks = navLinks.querySelectorAll('a');
-    menuLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            navLinks.classList.remove('open');
-            hamburgerMenu.classList.remove('active');
+    if (hamburgerMenu && navLinks) {
+        hamburgerMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('open');
+            hamburgerMenu.classList.toggle('active');
         });
-    });
-} else {
-    console.error('Elementos do menu hambúrguer não encontrados:', { hamburgerMenu, navLinks });
-}
+
+        const menuLinks = navLinks.querySelectorAll('a');
+        menuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('open');
+                hamburgerMenu.classList.remove('active');
+            });
+        });
+    }
 
     // ---- LÓGICA DO CARROSSEL DE MARCAS ----
     const carouselTrack = document.querySelector('.carousel-track');
@@ -30,18 +26,12 @@ if (hamburgerMenu && navLinks) {
 
     if (carouselTrack && prevBtn && nextBtn && dots.length > 0) {
         const items = carouselTrack.querySelectorAll('.carousel-item');
-        if (items.length === 0) {
-            console.error('Nenhum item encontrado no carrossel.');
-            return;
-        }
-
-        const totalItems = items.length / 2; // Metade dos itens (duplicados)
+        const totalItems = items.length / 2;
         let currentIndex = 0;
         let isDragging = false;
         let startX = 0;
         let autoScrollInterval;
 
-        // Calcular largura do item dinamicamente
         const getItemWidth = () => {
             const item = items[0];
             const style = window.getComputedStyle(item);
@@ -50,75 +40,66 @@ if (hamburgerMenu && navLinks) {
         };
         let itemWidth = getItemWidth();
 
-        // Atualizar posição do carrossel
         const updateCarousel = (index, useTransition = true) => {
-            currentIndex = (index + totalItems) % totalItems; // Normalizar índice
+            currentIndex = (index + totalItems) % totalItems;
             const offset = -currentIndex * itemWidth;
             carouselTrack.style.transition = useTransition ? 'transform 0.5s ease-in-out' : 'none';
             carouselTrack.style.transform = `translateX(${offset}px)`;
 
-            // Atualizar dot ativo
             dots.forEach((dot, i) => {
                 dot.classList.toggle('active', i === currentIndex);
             });
 
-            // Reset para loop infinito
             if (currentIndex === 0 && !useTransition) {
                 setTimeout(() => {
                     carouselTrack.style.transition = 'none';
                     carouselTrack.style.transform = `translateX(0)`;
-                    carouselTrack.offsetHeight; // Forçar reflow
+                    carouselTrack.offsetHeight;
                     carouselTrack.style.transition = 'transform 0.5s ease-in-out';
                 }, 500);
             }
         };
 
-        // Navegação por botões
+        const startAutoScroll = () => {
+            autoScrollInterval = setInterval(() => {
+                updateCarousel(currentIndex + 1);
+            }, 3000);
+        };
+
+        const stopAutoScroll = () => {
+            clearInterval(autoScrollInterval);
+        };
+
         prevBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            clearInterval(autoScrollInterval);
+            stopAutoScroll();
             updateCarousel(currentIndex - 1);
             startAutoScroll();
         });
 
         nextBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            clearInterval(autoScrollInterval);
+            stopAutoScroll();
             updateCarousel(currentIndex + 1);
             startAutoScroll();
         });
 
-        // Navegação por dots
         dots.forEach(dot => {
             dot.addEventListener('click', () => {
-                clearInterval(autoScrollInterval);
+                stopAutoScroll();
                 const index = parseInt(dot.getAttribute('data-index'), 10);
                 updateCarousel(index);
                 startAutoScroll();
             });
         });
 
-        // Rolagem automática
-        const startAutoScroll = () => {
-            autoScrollInterval = setInterval(() => {
-                updateCarousel(currentIndex + 1);
-            }, 3000); // 3 segundos por slide
-        };
-        startAutoScroll();
+        carouselTrack.addEventListener('mouseenter', stopAutoScroll);
+        carouselTrack.addEventListener('mouseleave', startAutoScroll);
 
-        // Pausar no hover
-        carouselTrack.addEventListener('mouseenter', () => {
-            clearInterval(autoScrollInterval);
-        });
-        carouselTrack.addEventListener('mouseleave', () => {
-            startAutoScroll();
-        });
-
-        // Suporte a gestos de toque
         carouselTrack.addEventListener('touchstart', (e) => {
             isDragging = true;
             startX = e.touches[0].clientX;
-            clearInterval(autoScrollInterval);
+            stopAutoScroll();
         });
 
         carouselTrack.addEventListener('touchmove', (e) => {
@@ -137,16 +118,69 @@ if (hamburgerMenu && navLinks) {
             startAutoScroll();
         });
 
-        // Atualizar itemWidth ao redimensionar
         window.addEventListener('resize', () => {
             itemWidth = getItemWidth();
             updateCarousel(currentIndex, false);
         });
 
-        // Inicializar carrossel
         updateCarousel(currentIndex, false);
-    } else {
-        console.error('Elementos do carrossel não encontrados:', { carouselTrack, prevBtn, nextBtn, dots });
+        startAutoScroll();
+    }
+
+    // ---- LÓGICA DO CARROSSEL DE DEPOIMENTOS ----
+    const testimonialWrapper = document.querySelector('.testimonial-cards-wrapper');
+    const testimonialCards = document.querySelectorAll('.testimonial-card');
+    const testimonialPrevBtn = document.getElementById('prev-btn');
+    const testimonialNextBtn = document.getElementById('next-btn');
+    let testimonialIndex = 0;
+    let testimonialAutoScrollInterval;
+
+    if (testimonialWrapper && testimonialCards.length > 0 && testimonialPrevBtn && testimonialNextBtn) {
+        const updateTestimonialCarousel = () => {
+            const cardWidth = testimonialCards[0].offsetWidth;
+            const translateValue = -cardWidth * testimonialIndex;
+            testimonialWrapper.style.transform = `translateX(${translateValue}px)`;
+        };
+
+        const startTestimonialAutoScroll = () => {
+            testimonialAutoScrollInterval = setInterval(() => {
+                testimonialIndex = (testimonialIndex + 1) % testimonialCards.length;
+                updateTestimonialCarousel();
+            }, 5000); // Avança a cada 5 segundos
+        };
+        
+        const stopTestimonialAutoScroll = () => {
+            clearInterval(testimonialAutoScrollInterval);
+        };
+
+        testimonialNextBtn.addEventListener('click', () => {
+            stopTestimonialAutoScroll();
+            if (testimonialIndex < testimonialCards.length - 1) {
+                testimonialIndex++;
+            } else {
+                testimonialIndex = 0;
+            }
+            updateTestimonialCarousel();
+            startTestimonialAutoScroll();
+        });
+
+        testimonialPrevBtn.addEventListener('click', () => {
+            stopTestimonialAutoScroll();
+            if (testimonialIndex > 0) {
+                testimonialIndex--;
+            } else {
+                testimonialIndex = testimonialCards.length - 1;
+            }
+            updateTestimonialCarousel();
+            startTestimonialAutoScroll();
+        });
+        
+        testimonialWrapper.parentElement.addEventListener('mouseenter', stopTestimonialAutoScroll);
+        testimonialWrapper.parentElement.addEventListener('mouseleave', startTestimonialAutoScroll);
+
+        window.addEventListener('resize', updateTestimonialCarousel);
+
+        startTestimonialAutoScroll();
     }
 
     // ---- LÓGICA DE TRADUÇÃO ----
@@ -239,7 +273,18 @@ if (hamburgerMenu && navLinks) {
             "project-video-desc": "Production of a 2-minute institutional video for the company “Soluções Sustentáveis LTDA”. The video highlighted the company's mission, values and positive impacts on the environment, using animations, testimonials and high-quality images to convey its message.",
             "project-video-services": "**Services:** Script, Video Editing, Motion Graphics, Sound Design.",
             "project-video-client": "**Client:** Soluções Sustentáveis LTDA",
-            "project-video-year": "**Year:** 2024",
+            "project-video-year": "**Ano:** 2024",
+            "testimonials-title": "What our clients say",
+            "testimonial-1-quote": "\"Bloss Studio completely transformed our brand's visual identity. The result exceeded all expectations and our market presence has never been stronger. Incredible and dedicated professionals!\"",
+            "testimonial-1-client-name": "Ana Lúcia",
+            "testimonial-1-client-title": "CEO, Renascer Coffee",
+            "testimonial-2-quote": "\"Working with the team was a smooth and very creative experience. They captured the essence of our idea and turned it into a design that truly stands out. I highly recommend them!\"",
+            "testimonial-2-client-name": "João Marcos",
+            "testimonial-2-client-title": "Director, Bloom Fitness",
+            "testimonial-3-quote": "\"The attention to detail and passion for what they do are evident in every project. Our new website is visually stunning and extremely functional. We are very satisfied with the work!\"",
+            "testimonial-3-client-name": "Beatriz Costa",
+            "testimonial-3-client-title": "Founder, OdontoCare Clinic",
+            "back-to-home": "← Back"
         },
         'pt-BR': {
             "page-title": "estúdio bloss",
@@ -330,6 +375,17 @@ if (hamburgerMenu && navLinks) {
             "project-video-services": "**Serviços:** Roteiro, Edição de Vídeo, Motion Graphics, Sonoplastia.",
             "project-video-client": "**Cliente:** Soluções Sustentáveis LTDA",
             "project-video-year": "**Ano:** 2024",
+            "testimonials-title": "O que nossos clientes dizem",
+            "testimonial-1-quote": "\"O estúdio bloss transformou completamente a identidade visual da nossa marca. O resultado superou todas as expectativas e nossa presença no mercado nunca foi tão forte. Profissionais incríveis e dedicados!\"",
+            "testimonial-1-client-name": "Ana Lúcia",
+            "testimonial-1-client-title": "CEO, Café Renascer",
+            "testimonial-2-quote": "\"Trabalhar com a equipe foi uma experiência fluida e muito criativa. Eles capturaram a essência da nossa ideia e a transformaram em um design que realmente se destaca. Recomendo de olhos fechados!\"",
+            "testimonial-2-client-name": "João Marcos",
+            "testimonial-2-client-title": "Diretor, Bloom Fitness",
+            "testimonial-3-quote": "\"A atenção aos detalhes e a paixão pelo que fazem são evidentes em cada projeto. Nosso novo site é visualmente deslumbrante e extremamente funcional. Estamos muito satisfeitos com o trabalho!\"",
+            "testimonial-3-client-name": "Beatriz Costa",
+            "testimonial-3-client-title": "Fundadora, Clínica OdontoCare",
+            "back-to-home": "← Voltar"
         }
     };
 
@@ -341,7 +397,7 @@ if (hamburgerMenu && navLinks) {
             const translation = translations[lang][key];
             if (translation) {
                 const img = element.querySelector('img');
-                if (img && key === 'developed-by-text') {
+                if (img) {
                     element.innerHTML = translation + ' ';
                     element.appendChild(img);
                 } else {
@@ -351,7 +407,12 @@ if (hamburgerMenu && navLinks) {
         });
         const languageToggle = document.getElementById('language-toggle');
         if (languageToggle) {
-            languageToggle.innerHTML = translations[lang]['nav-about-us'] === "SOBRE NÓS" ? "EN <i class=\"fas fa-chevron-down\"></i>" : "PT <i class=\"fas fa-chevron-down\"></i>";
+            const navAboutUsText = translations[lang]['nav-about-us'];
+            if (navAboutUsText === "SOBRE NÓS") {
+                languageToggle.innerHTML = "EN <i class=\"fas fa-chevron-down\"></i>";
+            } else {
+                languageToggle.innerHTML = "PT <i class=\"fas fa-chevron-down\"></i>";
+            }
         }
 
         const pageTitleElement = document.querySelector('title');
@@ -375,8 +436,6 @@ if (hamburgerMenu && navLinks) {
             e.preventDefault();
             toggleLanguage();
         });
-    } else {
-        console.error('Botão de troca de idioma não encontrado.');
     }
 
     const savedLang = localStorage.getItem('lang');
@@ -411,7 +470,38 @@ if (hamburgerMenu && navLinks) {
                 imageModal.classList.remove('open');
             }
         });
-    } else {
-        console.error('Elementos do modal não encontrados:', { imageModal, modalImage, closeBtn });
+    }
+
+    // ---- LÓGICA DO MODAL DE IMAGEM DO PORTFÓLIO ----
+    const fullscreenModal = document.getElementById('fullscreen-modal');
+    if (fullscreenModal) {
+        const portfolioItems = document.querySelectorAll('.portfolio-full-item-image');
+        const modalContentWrapper = document.querySelector('.modal-content-wrapper');
+        const closeFullscreenBtn = document.querySelector('.modal-close-btn');
+
+        portfolioItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const imageClone = item.querySelector('img').cloneNode(true);
+                modalContentWrapper.innerHTML = '';
+                modalContentWrapper.appendChild(imageClone);
+                modalContentWrapper.appendChild(closeFullscreenBtn);
+                fullscreenModal.classList.add('open');
+                document.body.classList.add('no-scroll');
+            });
+        });
+
+        if (closeFullscreenBtn) {
+            closeFullscreenBtn.addEventListener('click', () => {
+                fullscreenModal.classList.remove('open');
+                document.body.classList.remove('no-scroll');
+            });
+        }
+
+        fullscreenModal.addEventListener('click', (event) => {
+            if (event.target === fullscreenModal) {
+                fullscreenModal.classList.remove('open');
+                document.body.classList.remove('no-scroll');
+            }
+        });
     }
 });

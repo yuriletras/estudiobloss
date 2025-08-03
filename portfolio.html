@@ -402,6 +402,115 @@
     color: var(--color-brown); /* Altera a cor do texto para marrom */
 }
 
+/* --- Estilos para a Seção de Depoimentos (Carrossel) --- */
+
+.testimonials-section {
+    padding: 80px 0;
+    text-align: center;
+    background-color: var(--color-dark-gray); /* Fundo escuro para combinar com a seção final */
+    color: var(--color-white); /* Texto branco para contraste */
+}
+
+.section-title-blossom {
+    font-family: 'EditorsNote', serif;
+    font-weight: 200;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    color: var(--color-white); /* Título agora branco para se destacar no fundo escuro */
+    margin-bottom: 20px;
+}
+
+.testimonial-carousel-container {
+    max-width: 800px;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+}
+
+.testimonial-cards-wrapper {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.testimonial-card {
+    flex-shrink: 0;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 30px;
+    background-color: var(--color-white); /* Mantido com fundo branco para destaque */
+    border-radius: var(--border-radius-global);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.testimonial-quote {
+    font-family: 'Noto Serif Display', serif;
+    font-style: italic;
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: var(--color-brown); /* Cor do texto do depoimento dentro do cartão */
+    margin-bottom: 20px;
+}
+
+.testimonial-client-name {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--color-brown); /* Nome do cliente em marrom, dentro do cartão branco */
+    margin-bottom: 5px;
+}
+
+.testimonial-client-title {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 0.9rem;
+    color: var(--color-beige); /* Cargo em bege para um tom mais suave */
+}
+
+.carousel-nav {
+    margin-top: 25px;
+}
+
+.carousel-btn {
+    background-color: transparent;
+    color: var(--color-white); /* Botões agora brancos para se destacarem no fundo escuro */
+    border: 2px solid var(--color-white);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin: 0 10px;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+.carousel-btn:hover {
+    background-color: var(--color-beige); /* Fundo bege no hover para um efeito suave */
+    color: var(--color-brown); /* Texto em marrom no hover */
+    border-color: var(--color-beige);
+}
+
+.btn-dark {
+    color: var(--color-white); /* Garante que o botão 'Voltar' seja branco */
+    border-color: var(--color-white);
+}
+
+.btn-dark:hover {
+    background-color: var(--color-beige);
+    color: var(--color-brown);
+    border-color: var(--color-beige);
+}
+
+/* Responsividade para tablets e mobile */
+@media (max-width: 768px) {
+    .testimonial-quote {
+        font-size: 1.1rem;
+    }
+}
+
 
         @media (min-width: 768px) {
             .full-portfolio-items-container { gap: 80px; }
@@ -667,11 +776,7 @@
                 </div>
             </div>
             
-            <div class="site-container" style="text-align: center; margin-top: 40px; margin-bottom: -40px;">
-                <a href="index.html" class="btn btn-dark" data-translate="back-to-home">
-                    &larr; Voltar
-                </a>
-            </div>
+            
         </section>
     </main>
     
@@ -680,6 +785,41 @@
             <span class="modal-close-btn">&times;</span>
         </div>
     </div>
+
+    <section class="testimonials-section alternate-bg section">
+    <div class="site-container">
+        <h2 class="section-title-blossom" data-translate="testimonials-title">O que nossos clientes dizem</h2>
+        <div class="testimonial-carousel-container">
+            <div class="testimonial-cards-wrapper">
+                <div class="testimonial-card">
+                    <p class="testimonial-quote" data-translate="testimonial-1-quote">"O estúdio bloss transformou completamente a identidade visual da nossa marca. O resultado superou todas as expectativas e nossa presença no mercado nunca foi tão forte. Profissionais incríveis e dedicados!"</p>
+                    <p class="testimonial-client-name" data-translate="testimonial-1-client-name">Ana Lúcia</p>
+                    <p class="testimonial-client-title" data-translate="testimonial-1-client-title">CEO, Café Renascer</p>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-quote" data-translate="testimonial-2-quote">"Trabalhar com a equipe foi uma experiência fluida e muito criativa. Eles capturaram a essência da nossa ideia e a transformaram em um design que realmente se destaca. Recomendo de olhos fechados!"</p>
+                    <p class="testimonial-client-name" data-translate="testimonial-2-client-name">João Marcos</p>
+                    <p class="testimonial-client-title" data-translate="testimonial-2-client-title">Diretor, Bloom Fitness</p>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-quote" data-translate="testimonial-3-quote">"A atenção aos detalhes e a paixão pelo que fazem são evidentes em cada projeto. Nosso novo site é visualmente deslumbrante e extremamente funcional. Estamos muito satisfeitos com o trabalho!"</p>
+                    <p class="testimonial-client-name" data-translate="testimonial-3-client-name">Beatriz Costa</p>
+                    <p class="testimonial-client-title" data-translate="testimonial-3-client-title">Fundadora, Clínica OdontoCare</p>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-nav">
+            <button id="prev-btn" class="carousel-btn">&larr;</button>
+            <button id="next-btn" class="carousel-btn">&rarr;</button>
+        </div>
+    </div>
+
+    <div class="site-container" style="text-align: center; margin-top: 40px; margin-bottom: -40px;">
+        <a href="index.html" class="btn btn-dark" data-translate="back-to-home">
+            &larr; Voltar
+        </a>
+    </div>
+</section>
     
     <footer class="footer">
         <div class="site-container">
