@@ -1,16 +1,26 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // ---- LÓGICA DO MENU HAMBÚRGUER ----
-    const hamburgerMenu = document.getElementById('hamburger-menu');
-    const navLinks = document.getElementById('nav-links-menu');
+// ---- LÓGICA DO MENU HAMBÚRGUER ----
+const hamburgerMenu = document.getElementById('hamburger-menu');
+const navLinks = document.getElementById('nav-links-menu');
 
-    if (hamburgerMenu && navLinks) {
-        hamburgerMenu.addEventListener('click', () => {
-            navLinks.classList.toggle('open');
-            hamburgerMenu.classList.toggle('active');
+if (hamburgerMenu && navLinks) {
+    // Adiciona o evento de clique no ícone do hamburger
+    hamburgerMenu.addEventListener('click', () => {
+        navLinks.classList.toggle('open');
+        hamburgerMenu.classList.toggle('active');
+    });
+
+    // Adiciona um evento de clique em cada link para fechar o menu
+    const menuLinks = navLinks.querySelectorAll('a');
+    menuLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('open');
+            hamburgerMenu.classList.remove('active');
         });
-    } else {
-        console.error('Elementos do menu hambúrguer não encontrados:', { hamburgerMenu, navLinks });
-    }
+    });
+} else {
+    console.error('Elementos do menu hambúrguer não encontrados:', { hamburgerMenu, navLinks });
+}
 
     // ---- LÓGICA DO CARROSSEL DE MARCAS ----
     const carouselTrack = document.querySelector('.carousel-track');
