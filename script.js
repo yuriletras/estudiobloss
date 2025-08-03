@@ -473,35 +473,70 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ---- LÓGICA DO MODAL DE IMAGEM DO PORTFÓLIO ----
-    const fullscreenModal = document.getElementById('fullscreen-modal');
-    if (fullscreenModal) {
-        const portfolioItems = document.querySelectorAll('.portfolio-full-item-image');
-        const modalContentWrapper = document.querySelector('.modal-content-wrapper');
-        const closeFullscreenBtn = document.querySelector('.modal-close-btn');
+const fullscreenModal = document.getElementById('fullscreen-modal');
+const closeFullscreenBtn = document.querySelector('.modal-close-btn');
+const modalImageContainer = document.getElementById('modal-image-container'); // Precisaremos de um novo container para a imagem
 
-        portfolioItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const imageClone = item.querySelector('img').cloneNode(true);
-                modalContentWrapper.innerHTML = '';
-                modalContentWrapper.appendChild(imageClone);
-                modalContentWrapper.appendChild(closeFullscreenBtn);
+if (fullscreenModal && closeFullscreenBtn) {
+    const portfolioItems = document.querySelectorAll('.portfolio-full-item-image');
+
+    portfolioItems.forEach(item => {
+        item.addEventListener('click', () => {
+            const clickedImage = item.querySelector('img');
+            if (clickedImage) {
+                // Cria um novo elemento <img>
+                const newImage = document.createElement('img');
+                newImage.src = clickedImage.src;
+                newImage.alt = clickedImage.alt;
+                newImage.style.maxWidth = '100%';
+                newImage.style.maxHeight = '100%';
+                newImage.style.objectFit = 'contain';
+
+                // Limpa o conteúdo anterior e adiciona a nova imagem
+                modalImageContainer.innerHTML = '';
+                modalImageContainer.appendChild(newImage);
+                
                 fullscreenModal.classList.add('open');
                 document.body.classList.add('no-scroll');
-            });
-        });
-
-        if (closeFullscreenBtn) {
-            closeFullscreenBtn.addEventListener('click', () => {
-                fullscreenModal.classList.remove('open');
-                document.body.classList.remove('no-scroll');
-            });
-        }
-
-        fullscreenModal.addEventListener('click', (event) => {
-            if (event.target === fullscreenModal) {
-                fullscreenModal.classList.remove('open');
-                document.body.classList.remove('no-scroll');
             }
         });
-    }
+    });
+
+    closeFullscreenBtn.addEventListener('click', () => {
+        fullscreenModal.classList.remove('open');
+        document.body.classList.remove('no-scroll');
+    });
+
+    fullscreenModal.addEventListener('click', (event) => {
+        if (event.target === fullscreenModal) {
+            fullscreenModal.classList.remove('open');
+            document.body.classList.remove('no-scroll');
+        }
+    });
+}
+
+
+});
+
+    // Script para o botão "Voltar ao Topo"
+document.addEventListener('DOMContentLoaded', function() {
+    const backToTopBtn = document.getElementById('back-to-top-btn');
+
+    // Mostra ou esconde o botão com base na posição do scroll
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTopBtn.classList.add('show');
+        } else {
+            backToTopBtn.classList.remove('show');
+        }
+    });
+
+    // Faz o scroll suave para o topo quando o botão é clicado
+    backToTopBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
 });

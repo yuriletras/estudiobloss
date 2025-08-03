@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Noto+Serif+Display:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600;1,700&family=Roboto:ital,wght@0,100..900;1,100..900&family=Sora:wght@100..800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-   
     
     <style>
         /* --- Fontes Personalizadas para Editor'sNote --- */
@@ -127,6 +126,19 @@
             --cor-fundo-clara-alternada-2: #EEF4F4;
             --transition-speed: 0.3s ease;
         }
+
+        /* --- INÍCIO: NOVOS ESTILOS PARA TRANSIÇÃO DE SEÇÕES --- */
+        .section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* --- FIM: NOVOS ESTILOS PARA TRANSIÇÃO DE SEÇÕES --- */
 
         /* Estilos para o botão de voltar, agora com a cor correta da paleta */
         .btn {
@@ -277,7 +289,10 @@
 
         .full-portfolio-section { padding: 80px 0; background-color: var(--color-white); }
         .full-portfolio-items-container { display: grid; grid-template-columns: 1fr; gap: 60px; max-width: 1200px; margin: 0 auto; animation: fadeIn 1s ease-in-out; }
-        .portfolio-full-item { display: flex; flex-direction: column; gap: 40px; align-items: center; opacity: 0; transform: translateY(20px); animation: slideInUp 0.8s ease-out forwards; }
+        
+        /* REMOVEMOS AQUI OS ESTILOS QUE CAUSAVAM CONFLITO */
+        .portfolio-full-item { display: flex; flex-direction: column; gap: 40px; align-items: center; }
+        
         .portfolio-full-item:nth-child(even) { flex-direction: column; }
         .portfolio-full-item-image:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15); }
         .portfolio-full-item-description { 
@@ -309,207 +324,240 @@
         @keyframes slideInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         
         @media (min-width: 768px) and (max-width: 1024px) {
-  /* Espaçamento e layout ajustado para tablets */
-  .full-portfolio-items-container {
-    gap: 60px; /* Reduz o espaçamento para não ficar tão grande quanto no desktop */
-  }
+            /* Espaçamento e layout ajustado para tablets */
+            .full-portfolio-items-container {
+                gap: 60px; /* Reduz o espaçamento para não ficar tão grande quanto no desktop */
+            }
 
-  /* Mantém o layout horizontal, mas com ajustes de tamanho */
-  .portfolio-full-item {
-    flex-direction: row;
-    text-align: left;
-    align-items: flex-start;
-  }
-  .portfolio-full-item.reverse-layout {
-    flex-direction: row-reverse;
-    text-align: right;
-  }
+            /* Mantém o layout horizontal, mas com ajustes de tamanho */
+            .portfolio-full-item {
+                flex-direction: row;
+                text-align: left;
+                align-items: flex-start;
+            }
+            .portfolio-full-item.reverse-layout {
+                flex-direction: row-reverse;
+                text-align: right;
+            }
 
-  /* Ajusta o tamanho da imagem e da descrição */
-  .portfolio-full-item-image,
-  .portfolio-full-item-description {
-    width: 50%;
-  }
+            /* Ajusta o tamanho da imagem e da descrição */
+            .portfolio-full-item-image,
+            .portfolio-full-item-description {
+                width: 50%;
+            }
 
-  /* Reorganiza a barra lateral para tablets */
-  .portfolio-full-item-description {
-    position: relative;
-    padding-left: 30px; /* Reduz o padding para tablet */
-  }
-  .portfolio-full-item.reverse-layout .portfolio-full-item-description {
-    padding-left: 0;
-    padding-right: 30px; /* Reduz o padding para tablet */
-  }
+            /* Reorganiza a barra lateral para tablets */
+            .portfolio-full-item-description {
+                position: relative;
+                padding-left: 30px; /* Reduz o padding para tablet */
+            }
+            .portfolio-full-item.reverse-layout .portfolio-full-item-description {
+                padding-left: 0;
+                padding-right: 30px; /* Reduz o padding para tablet */
+            }
 
-  /* Mantém a barra lateral de destaque */
-  .portfolio-full-item-description::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 2px;
-    height: 100%;
+            /* Mantém a barra lateral de destaque */
+            .portfolio-full-item-description::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 2px;
+                height: 100%;
+                background-color: var(--color-brown);
+                opacity: 0.2;
+                transition: opacity 0.3s ease;
+            }
+            .portfolio-full-item.reverse-layout .portfolio-full-item-description::before {
+                left: auto;
+                right: 0;
+            }
+            .portfolio-full-item:hover .portfolio-full-item-description::before {
+                opacity: 0.8;
+            }
+
+            /* Tamanho de fonte ajustado para tablet */
+            .portfolio-full-item-description h3 {
+                font-size: 1.5rem;
+            }
+
+            .portfolio-full-item-description p,
+            .portfolio-full-item-description ul li {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Efeito de traço ao passar o mouse */
+        .nav-links li a {
+            position: relative;
+            /* Adicione padding-bottom se precisar de espaço entre o texto e o traço */
+            padding-bottom: 5px; 
+        }
+
+        .nav-links li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background-color: var(--color-brown); /* Mude para a cor desejada */
+            transition: width 0.3s ease, left 0.3s ease;
+        }
+
+        .nav-links li a:hover::after,
+        .nav-links li a:focus::after {
+            width: 100%;
+            left: 0;
+        }
+
+        /* Cor do texto do link ao passar o mouse */
+        .nav-links li a:hover,
+        .nav-links li a:focus {
+            color: var(--color-brown); /* Altera a cor do texto para marrom */
+        }
+
+        /* --- Estilos para a Seção de Depoimentos (Carrossel) --- */
+        .testimonials-section {
+            padding: 80px 0;
+            text-align: center;
+            background-color: var(--color-dark-gray); /* Fundo escuro para combinar com a seção final */
+            color: var(--color-white); /* Texto branco para contraste */
+        }
+
+        .section-title-blossom {
+            font-family: 'EditorsNote', serif;
+            font-weight: 200;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: var(--color-white); /* Título agora branco para se destacar no fundo escuro */
+            margin-bottom: 20px;
+        }
+
+        .testimonial-carousel-container {
+            max-width: 800px;
+            margin: 0 auto;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .testimonial-cards-wrapper {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .testimonial-card {
+            flex-shrink: 0;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 30px;
+            background-color: var(--color-white); /* Mantido com fundo branco para destaque */
+            border-radius: var(--border-radius-global);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .testimonial-quote {
+            font-family: 'Noto Serif Display', serif;
+            font-style: italic;
+            font-size: 1.25rem;
+            line-height: 1.6;
+            color: var(--color-brown); /* Cor do texto do depoimento dentro do cartão */
+            margin-bottom: 20px;
+        }
+
+        .testimonial-client-name {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--color-brown); /* Nome do cliente em marrom, dentro do cartão branco */
+            margin-bottom: 5px;
+        }
+
+        .testimonial-client-title {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 400;
+            font-size: 0.9rem;
+            color: var(--color-beige); /* Cargo em bege para um tom mais suave */
+        }
+
+        .carousel-nav {
+            margin-top: 25px;
+        }
+
+        .carousel-btn {
+            background-color: transparent;
+            color: var(--color-white); /* Botões agora brancos para se destacarem no fundo escuro */
+            border: 2px solid var(--color-white);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+        }
+
+        .carousel-btn:hover {
+            background-color: var(--color-beige); /* Fundo bege no hover para um efeito suave */
+            color: var(--color-brown); /* Texto em marrom no hover */
+            border-color: var(--color-beige);
+        }
+
+        .btn-dark {
+            color: var(--color-white); /* Garante que o botão 'Voltar' seja branco */
+            border-color: var(--color-white);
+        }
+
+        .btn-dark:hover {
+            background-color: var(--color-beige);
+            color: var(--color-brown);
+            border-color: var(--color-beige);
+        }
+
+        /* --- Estilos para o botão Voltar ao Topo --- */
+.back-to-top-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
     background-color: var(--color-brown);
-    opacity: 0.2;
-    transition: opacity 0.3s ease;
-  }
-  .portfolio-full-item.reverse-layout .portfolio-full-item-description::before {
-    left: auto;
-    right: 0;
-  }
-  .portfolio-full-item:hover .portfolio-full-item-description::before {
-    opacity: 0.8;
-  }
-
-  /* Tamanho de fonte ajustado para tablet */
-  .portfolio-full-item-description h3 {
-    font-size: 1.5rem;
-  }
-
-  .portfolio-full-item-description p,
-  .portfolio-full-item-description ul li {
-    font-size: 0.9rem;
-  }
-}
-
-/* Efeito de traço ao passar o mouse */
-.nav-links li a {
-    position: relative;
-    /* Adicione padding-bottom se precisar de espaço entre o texto e o traço */
-    padding-bottom: 5px; 
-}
-
-.nav-links li a::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 0;
-    height: 2px;
-    background-color: var(--color-brown); /* Mude para a cor desejada */
-    transition: width 0.3s ease, left 0.3s ease;
-}
-
-.nav-links li a:hover::after,
-.nav-links li a:focus::after {
-    width: 100%;
-    left: 0;
-}
-
-/* Cor do texto do link ao passar o mouse */
-.nav-links li a:hover,
-.nav-links li a:focus {
-    color: var(--color-brown); /* Altera a cor do texto para marrom */
-}
-
-/* --- Estilos para a Seção de Depoimentos (Carrossel) --- */
-
-.testimonials-section {
-    padding: 80px 0;
-    text-align: center;
-    background-color: var(--color-dark-gray); /* Fundo escuro para combinar com a seção final */
-    color: var(--color-white); /* Texto branco para contraste */
-}
-
-.section-title-blossom {
-    font-family: 'EditorsNote', serif;
-    font-weight: 200;
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    color: var(--color-white); /* Título agora branco para se destacar no fundo escuro */
-    margin-bottom: 20px;
-}
-
-.testimonial-carousel-container {
-    max-width: 800px;
-    margin: 0 auto;
-    overflow: hidden;
-    position: relative;
-}
-
-.testimonial-cards-wrapper {
+    color: var(--color-white);
+    border: 2px solid var(--color-brown);
+    width: 45px;
+    height: 45px;
+    border-radius: 5px;
     display: flex;
-    transition: transform 0.5s ease-in-out;
-}
-
-.testimonial-card {
-    flex-shrink: 0;
-    width: 100%;
-    box-sizing: border-box;
-    padding: 30px;
-    background-color: var(--color-white); /* Mantido com fundo branco para destaque */
-    border-radius: var(--border-radius-global);
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-    display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    text-align: center;
-}
-
-.testimonial-quote {
-    font-family: 'Noto Serif Display', serif;
-    font-style: italic;
-    font-size: 1.25rem;
-    line-height: 1.6;
-    color: var(--color-brown); /* Cor do texto do depoimento dentro do cartão */
-    margin-bottom: 20px;
-}
-
-.testimonial-client-name {
-    font-family: 'Roboto', sans-serif;
-    font-weight: 700;
-    font-size: 1rem;
-    color: var(--color-brown); /* Nome do cliente em marrom, dentro do cartão branco */
-    margin-bottom: 5px;
-}
-
-.testimonial-client-title {
-    font-family: 'Roboto', sans-serif;
-    font-weight: 400;
-    font-size: 0.9rem;
-    color: var(--color-beige); /* Cargo em bege para um tom mais suave */
-}
-
-.carousel-nav {
-    margin-top: 25px;
-}
-
-.carousel-btn {
-    background-color: transparent;
-    color: var(--color-white); /* Botões agora brancos para se destacarem no fundo escuro */
-    border: 2px solid var(--color-white);
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
     font-size: 1.2rem;
+    text-decoration: none;
     cursor: pointer;
-    margin: 0 10px;
-    transition: background-color var(--transition-speed), color var(--transition-speed);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s, visibility 0.4s, transform 0.3s ease;
+    z-index: 1000;
 }
 
-.carousel-btn:hover {
-    background-color: var(--color-beige); /* Fundo bege no hover para um efeito suave */
-    color: var(--color-brown); /* Texto em marrom no hover */
-    border-color: var(--color-beige);
-}
-
-.btn-dark {
-    color: var(--color-white); /* Garante que o botão 'Voltar' seja branco */
-    border-color: var(--color-white);
-}
-
-.btn-dark:hover {
-    background-color: var(--color-beige);
+.back-to-top-btn:hover {
+    background-color: transparent;
     color: var(--color-brown);
-    border-color: var(--color-beige);
+    transform: translateY(-5px); /* Efeito de elevação sutil */
 }
 
-/* Responsividade para tablets e mobile */
-@media (max-width: 768px) {
-    .testimonial-quote {
-        font-size: 1.1rem;
-    }
+.back-to-top-btn.show {
+    opacity: 1;
+    visibility: visible;
 }
+
+        /* Responsividade para tablets e mobile */
+        @media (max-width: 768px) {
+            .testimonial-quote {
+                font-size: 1.1rem;
+            }
+        }
 
 
         @media (min-width: 768px) {
@@ -590,11 +638,11 @@
             </div>
         </section>
 
-        <section id="full-portfolio-section" class="full-portfolio-section section">
+        <section id="full-portfolio-section" class="full-portfolio-section">
             <div class="site-container">
                 <div id="full-portfolio-items-container" class="full-portfolio-items-container">
                     
-                    <div class="portfolio-full-item alternate-bg">
+                    <div class="portfolio-full-item alternate-bg section">
                         <div class="portfolio-full-item-image">
                             <img src="img/projetos/PROJETOS SITE_Prancheta 1.jpg" alt="Projeto Exemplo Rebranding">
                             <div class="image-overlay">
@@ -612,7 +660,7 @@
                         </div>
                     </div>
                     
-                    <div class="portfolio-full-item reverse-layout">
+                    <div class="portfolio-full-item reverse-layout section">
                         <div class="portfolio-full-item-image">
                             <img src="img/projetos/PROJETOS SITE-02.jpg" alt="Projeto Exemplo Campanha Digital">
                             <div class="image-overlay">
@@ -630,7 +678,7 @@
                         </div>
                     </div>
                     
-                    <div class="portfolio-full-item alternate-bg">
+                    <div class="portfolio-full-item alternate-bg section">
                         <div class="portfolio-full-item-image">
                             <img src="img/projetos/PROJETOS SITE-03.jpg" alt="Projeto Exemplo Website Responsivo">
                             <div class="image-overlay">
@@ -648,7 +696,7 @@
                         </div>
                     </div>
                     
-                    <div class="portfolio-full-item reverse-layout">
+                    <div class="portfolio-full-item reverse-layout section">
                         <div class="portfolio-full-item-image">
                             <img src="img/projetos/PROJETOS SITE-04.jpg" alt="Projeto Exemplo Design de Embalagem">
                             <div class="image-overlay">
@@ -666,7 +714,7 @@
                         </div>
                     </div>
                     
-                    <div class="portfolio-full-item alternate-bg">
+                    <div class="portfolio-full-item alternate-bg section">
                         <div class="portfolio-full-item-image">
                             <img src="img/projetos/PROJETOS SITE-05.jpg" alt="Projeto Exemplo App Mobile">
                             <div class="image-overlay">
@@ -684,7 +732,7 @@
                         </div>
                     </div>
                     
-                    <div class="portfolio-full-item reverse-layout">
+                    <div class="portfolio-full-item reverse-layout section">
                         <div class="portfolio-full-item-image">
                             <img src="img/projetos/PROJETOS SITE-06.jpg" alt="Projeto Exemplo Material Gráfico">
                             <div class="image-overlay">
@@ -702,7 +750,7 @@
                         </div>
                     </div>
                     
-                    <div class="portfolio-full-item alternate-bg">
+                    <div class="portfolio-full-item alternate-bg section">
                         <div class="portfolio-full-item-image">
                             <img src="img/projetos/PROJETOS SITE-07.jpg" alt="Projeto Exemplo E-commerce">
                             <div class="image-overlay">
@@ -720,7 +768,7 @@
                         </div>
                     </div>
                     
-                    <div class="portfolio-full-item reverse-layout">
+                    <div class="portfolio-full-item reverse-layout section">
                         <div class="portfolio-full-item-image">
                             <img src="img/projetos/Untitled design - 1.jpg" alt="Projeto Exemplo Mídia Social">
                             <div class="image-overlay">
@@ -738,7 +786,7 @@
                         </div>
                     </div>
                     
-                    <div class="portfolio-full-item alternate-bg">
+                    <div class="portfolio-full-item alternate-bg section">
                         <div class="portfolio-full-item-image">
                             <img src="img/projetos/Untitled design - 2.jpg" alt="Projeto Exemplo Ilustração Personalizada">
                             <div class="image-overlay">
@@ -756,7 +804,7 @@
                         </div>
                     </div>
                     
-                    <div class="portfolio-full-item reverse-layout">
+                    <div class="portfolio-full-item reverse-layout section">
                         <div class="portfolio-full-item-image">
                             <img src="img/projetos/Untitled design - 3.jpg" alt="Projeto Exemplo Vídeo Institucional">
                             <div class="image-overlay">
@@ -775,8 +823,6 @@
                     </div>
                 </div>
             </div>
-            
-            
         </section>
     </main>
     
@@ -787,50 +833,100 @@
     </div>
 
     <section class="testimonials-section alternate-bg section">
-    <div class="site-container">
-        <h2 class="section-title-blossom" data-translate="testimonials-title">O que nossos clientes dizem</h2>
-        <div class="testimonial-carousel-container">
-            <div class="testimonial-cards-wrapper">
-                <div class="testimonial-card">
-                    <p class="testimonial-quote" data-translate="testimonial-1-quote">"O estúdio bloss transformou completamente a identidade visual da nossa marca. O resultado superou todas as expectativas e nossa presença no mercado nunca foi tão forte. Profissionais incríveis e dedicados!"</p>
-                    <p class="testimonial-client-name" data-translate="testimonial-1-client-name">Ana Lúcia</p>
-                    <p class="testimonial-client-title" data-translate="testimonial-1-client-title">CEO, Café Renascer</p>
-                </div>
-                <div class="testimonial-card">
-                    <p class="testimonial-quote" data-translate="testimonial-2-quote">"Trabalhar com a equipe foi uma experiência fluida e muito criativa. Eles capturaram a essência da nossa ideia e a transformaram em um design que realmente se destaca. Recomendo de olhos fechados!"</p>
-                    <p class="testimonial-client-name" data-translate="testimonial-2-client-name">João Marcos</p>
-                    <p class="testimonial-client-title" data-translate="testimonial-2-client-title">Diretor, Bloom Fitness</p>
-                </div>
-                <div class="testimonial-card">
-                    <p class="testimonial-quote" data-translate="testimonial-3-quote">"A atenção aos detalhes e a paixão pelo que fazem são evidentes em cada projeto. Nosso novo site é visualmente deslumbrante e extremamente funcional. Estamos muito satisfeitos com o trabalho!"</p>
-                    <p class="testimonial-client-name" data-translate="testimonial-3-client-name">Beatriz Costa</p>
-                    <p class="testimonial-client-title" data-translate="testimonial-3-client-title">Fundadora, Clínica OdontoCare</p>
+        <div class="site-container">
+            <h2 class="section-title-blossom" data-translate="testimonials-title">O que nossos clientes dizem</h2>
+            <div class="testimonial-carousel-container">
+                <div class="testimonial-cards-wrapper">
+                    <div class="testimonial-card">
+                        <p class="testimonial-quote" data-translate="testimonial-1-quote">"O estúdio bloss transformou completamente a identidade visual da nossa marca. O resultado superou todas as expectativas e nossa presença no mercado nunca foi tão forte. Profissionais incríveis e dedicados!"</p>
+                        <p class="testimonial-client-name" data-translate="testimonial-1-client-name">Ana Lúcia</p>
+                        <p class="testimonial-client-title" data-translate="testimonial-1-client-title">CEO, Café Renascer</p>
+                    </div>
+                    <div class="testimonial-card">
+                        <p class="testimonial-quote" data-translate="testimonial-2-quote">"Trabalhar com a equipe foi uma experiência fluida e muito criativa. Eles capturaram a essência da nossa ideia e a transformaram em um design que realmente se destaca. Recomendo de olhos fechados!"</p>
+                        <p class="testimonial-client-name" data-translate="testimonial-2-client-name">João Marcos</p>
+                        <p class="testimonial-client-title" data-translate="testimonial-2-client-title">Diretor, Bloom Fitness</p>
+                    </div>
+                    <div class="testimonial-card">
+                        <p class="testimonial-quote" data-translate="testimonial-3-quote">"A atenção aos detalhes e a paixão pelo que fazem são evidentes em cada projeto. Nosso novo site é visualmente deslumbrante e extremamente funcional. Estamos muito satisfeitos com o trabalho!"</p>
+                        <p class="testimonial-client-name" data-translate="testimonial-3-client-name">Beatriz Costa</p>
+                        <p class="testimonial-client-title" data-translate="testimonial-3-client-title">Fundadora, Clínica OdontoCare</p>
+                    </div>
                 </div>
             </div>
+            <div class="carousel-nav">
+                <button id="prev-btn" class="carousel-btn">&larr;</button>
+                <button id="next-btn" class="carousel-btn">&rarr;</button>
+            </div>
         </div>
-        <div class="carousel-nav">
-            <button id="prev-btn" class="carousel-btn">&larr;</button>
-            <button id="next-btn" class="carousel-btn">&rarr;</button>
-        </div>
-    </div>
 
-    <div class="site-container" style="text-align: center; margin-top: 40px; margin-bottom: -40px;">
-        <a href="index.html" class="btn btn-dark" data-translate="back-to-home">
-            &larr; Voltar
-        </a>
-    </div>
-</section>
+        <div class="site-container" style="text-align: center; margin-top: 40px; margin-bottom: -40px;">
+            <a href="index.html" class="btn btn-dark" data-translate="back-to-home">
+                &larr; Voltar
+            </a>
+        </div>
+    </section>
     
-    <footer class="footer">
+    <footer class="footer section">
         <div class="site-container">
             <p data-translate="copyright-text">&copy; 2025 estúdio bloss. Todos os direitos reservados.</p>
             <p data-translate="developed-by-text">Desenvolvido por <img src="img/ybarbosa.png" alt="Descrição da imagem do desenvolvedor" class="developer-logo"></p>
         </div>
     </footer>
+
+    <a href="#" id="back-to-top-btn" class="back-to-top-btn" aria-label="Voltar ao topo">
+    <i class="fas fa-chevron-up"></i>
+    </a>
     
-   
     <script src="portfolio-scripts.js"></script>
     <script src="script.js"></script>
     
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sections = document.querySelectorAll('.section');
+        
+        // Cria um observador para monitorar quando as seções entram e saem da área de visualização
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Adiciona a classe 'visible' quando o elemento entra na tela
+                    entry.target.classList.add('visible');
+                } else {
+                    // Remove a classe 'visible' quando o elemento sai da tela,
+                    // permitindo que o efeito se repita
+                    entry.target.classList.remove('visible');
+                }
+            });
+        }, { threshold: 0.2 }); // O 'threshold' determina o quão visível o elemento deve estar (20%) para o efeito acontecer
+
+        // Inicia a observação de cada seção e item de portfólio
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+    });
+
+    // Script para o botão "Voltar ao Topo"
+document.addEventListener('DOMContentLoaded', function() {
+    const backToTopBtn = document.getElementById('back-to-top-btn');
+
+    // Mostra ou esconde o botão com base na posição do scroll
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTopBtn.classList.add('show');
+        } else {
+            backToTopBtn.classList.remove('show');
+        }
+    });
+
+    // Faz o scroll suave para o topo quando o botão é clicado
+    backToTopBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+});
+</script>
 </body>
 </html>
