@@ -983,6 +983,37 @@ body {
     color: var(--color-brown);
 }
 
+/* Efeito de traço ao passar o mouse */
+.nav-links li a {
+    position: relative;
+    /* Adicione padding-bottom se precisar de espaço entre o texto e o traço */
+    padding-bottom: 5px; 
+}
+
+.nav-links li a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: var(--color-brown); /* Mude para a cor desejada */
+    transition: width 0.3s ease, left 0.3s ease;
+}
+
+.nav-links li a:hover::after,
+.nav-links li a:focus::after {
+    width: 100%;
+    left: 0;
+}
+
+/* Cor do texto do link ao passar o mouse */
+.nav-links li a:hover,
+.nav-links li a:focus {
+    color: var(--color-brown); /* Altera a cor do texto para marrom */
+}
+
+
 @keyframes zoomIn {
     from { transform: scale(0.8); opacity: 0; }
     to { transform: scale(1); opacity: 1; }

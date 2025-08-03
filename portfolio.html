@@ -372,6 +372,37 @@
   }
 }
 
+/* Efeito de traço ao passar o mouse */
+.nav-links li a {
+    position: relative;
+    /* Adicione padding-bottom se precisar de espaço entre o texto e o traço */
+    padding-bottom: 5px; 
+}
+
+.nav-links li a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: var(--color-brown); /* Mude para a cor desejada */
+    transition: width 0.3s ease, left 0.3s ease;
+}
+
+.nav-links li a:hover::after,
+.nav-links li a:focus::after {
+    width: 100%;
+    left: 0;
+}
+
+/* Cor do texto do link ao passar o mouse */
+.nav-links li a:hover,
+.nav-links li a:focus {
+    color: var(--color-brown); /* Altera a cor do texto para marrom */
+}
+
+
         @media (min-width: 768px) {
             .full-portfolio-items-container { gap: 80px; }
             .portfolio-full-item { flex-direction: row; text-align: left; align-items: flex-start; }
