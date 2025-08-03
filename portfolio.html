@@ -308,6 +308,70 @@
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         
+        @media (min-width: 768px) and (max-width: 1024px) {
+  /* Espaçamento e layout ajustado para tablets */
+  .full-portfolio-items-container {
+    gap: 60px; /* Reduz o espaçamento para não ficar tão grande quanto no desktop */
+  }
+
+  /* Mantém o layout horizontal, mas com ajustes de tamanho */
+  .portfolio-full-item {
+    flex-direction: row;
+    text-align: left;
+    align-items: flex-start;
+  }
+  .portfolio-full-item.reverse-layout {
+    flex-direction: row-reverse;
+    text-align: right;
+  }
+
+  /* Ajusta o tamanho da imagem e da descrição */
+  .portfolio-full-item-image,
+  .portfolio-full-item-description {
+    width: 50%;
+  }
+
+  /* Reorganiza a barra lateral para tablets */
+  .portfolio-full-item-description {
+    position: relative;
+    padding-left: 30px; /* Reduz o padding para tablet */
+  }
+  .portfolio-full-item.reverse-layout .portfolio-full-item-description {
+    padding-left: 0;
+    padding-right: 30px; /* Reduz o padding para tablet */
+  }
+
+  /* Mantém a barra lateral de destaque */
+  .portfolio-full-item-description::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    background-color: var(--color-brown);
+    opacity: 0.2;
+    transition: opacity 0.3s ease;
+  }
+  .portfolio-full-item.reverse-layout .portfolio-full-item-description::before {
+    left: auto;
+    right: 0;
+  }
+  .portfolio-full-item:hover .portfolio-full-item-description::before {
+    opacity: 0.8;
+  }
+
+  /* Tamanho de fonte ajustado para tablet */
+  .portfolio-full-item-description h3 {
+    font-size: 1.5rem;
+  }
+
+  .portfolio-full-item-description p,
+  .portfolio-full-item-description ul li {
+    font-size: 0.9rem;
+  }
+}
+
         @media (min-width: 768px) {
             .full-portfolio-items-container { gap: 80px; }
             .portfolio-full-item { flex-direction: row; text-align: left; align-items: flex-start; }
