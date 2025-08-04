@@ -1,8 +1,8 @@
-/* Importação das fontes - Mantido como estava */
+/* Importação das fontes */
 @import url('https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Roboto:ital,wght@0,100..900;1,100..900&family=Sora:wght@100..800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Display:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600;1,700&display=swap');
 
-/* --- Fontes Personalizadas para Editor'sNote --- - Mantido como estava */
+/* Fontes Personalizadas para Editor'sNote */
 @font-face {
     font-family: 'EditorsNote';
     src: url('fonts/Editor\'sNote-Hairline.otf') format('opentype'),
@@ -109,7 +109,7 @@
     font-style: italic;
 }
 
-/* Variáveis de cores - Mantido como estava */
+/* Variáveis de cores */
 :root {
     --color-brown: #421F10;
     --color-beige: #B7A692;
@@ -123,7 +123,7 @@
     --cor-fundo-clara-alternada-2: #EEF4F4;
 }
 
-/* Estilo global - Mantido como estava */
+/* Estilo global */
 body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
@@ -135,7 +135,7 @@ body {
     padding-top: 60px;
 }
 
-/* Container global - Mantido como estava */
+/* Container global */
 .site-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -143,13 +143,13 @@ body {
     box-sizing: border-box;
 }
 
-/* Estilo para seções com background alternado - Mantido como estava */
+/* Estilo para seções com background alternado */
 .alternate-bg {
     background-color: var(--cor-fundo-clara-alternada);
     transition: background-color 0.5s ease-in-out;
 }
 
-/* Navbar - Mantido como estava */
+/* Navbar */
 .navbar {
     position: fixed;
     top: 0;
@@ -255,7 +255,7 @@ body {
     transform: translateY(-10px) rotate(-45deg);
 }
 
-/* Hero Section - Mantido como estava */
+/* Hero Section */
 .hero {
     display: flex;
     flex-direction: column;
@@ -310,7 +310,7 @@ body {
     margin: 0;
 }
 
-/* About Us Section - Mantido como estava */
+/* About Us Section */
 .about-us-section {
     padding: 4em 0;
     background-color: var(--color-white);
@@ -409,18 +409,18 @@ body {
 .about-us-image-box {
     flex: 1;
     min-width: 300px;
-    max-width: 500px; /* Reduzido de 650px para desktop */
+    max-width: 500px;
     min-height: 250px;
-    padding-bottom: 30%; /* Reduzido de 40% para manter proporção */
+    padding-bottom: 30%;
     background-image: url('img/projetos/PROJETOS SITE-08.jpg');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    border-radius: var(--border-radius-global); /* Alterado de 5px para 15px */
+    border-radius: var(--border-radius-global);
     overflow: hidden;
 }
 
-/* Services Section - Mantido como estava */
+/* Services Section */
 .services {
     padding: 4em 0;
     text-align: center;
@@ -445,25 +445,34 @@ body {
 .service-cards {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    gap: 1.5em; /* Reduzido para melhor alinhamento */
-    padding: 0 1rem; /* Alinhado com outras seções */
+    justify-content: space-between;
+    gap: 1.5em;
+    padding: 0 1rem;
 }
 
 .service-card {
     background-color: var(--color-white);
-    padding: 1rem; /* Padronizado */
+    padding: 1.5rem;
     border-radius: var(--border-radius-global);
-    width: 90%; /* Ocupa 90% do container */
-    max-width: 320px; /* Limite máximo para consistência */
-    margin: 0 auto; /* Centraliza */
+    width: calc(33.33% - 1em);
+    max-width: 320px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
     transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
 }
 
 .service-card:hover {
     transform: translateY(-8px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.service-icon {
+    font-size: 1.5em;
+    color: var(--color-brown);
+    margin-bottom: 0.5em;
 }
 
 .service-card h3 {
@@ -608,7 +617,7 @@ body {
     background-color: #B7A692;
 }
 
-/* Portfolio Call to Action - Mantido como estava */
+/* Portfolio Call to Action */
 .portfolio-call-to-action {
     background-color: var(--color-beige);
     color: var(--color-brown);
@@ -640,16 +649,11 @@ body {
     transform: translateY(-3px);
 }
 
-/* Full Portfolio Section - Mantido como estava */
+/* Full Portfolio Section */
 .full-portfolio-section {
     padding: 4em 0;
     text-align: center;
-    /* Remova as propriedades que ocultam a seção */
-    /* opacity: 0; */
-    /* height: 0; */
-    /* overflow: hidden; */
-    /* visibility: hidden; */
-    transition: none; /* A transição não é mais necessária se o estado inicial já é visível */
+    transition: none;
 }
 
 .full-portfolio-section.visible {
@@ -745,7 +749,7 @@ body {
     margin-top: 2em;
 }
 
-/* Contact Section - Mantido como estava */
+/* Contact Section */
 .contact-section {
     padding: 4em 0;
 }
@@ -847,7 +851,7 @@ body {
     transform: translateY(-5px);
 }
 
-/* Final Phrase - Mantido como estava */
+/* Final Phrase */
 .final-phrase {
     padding: 4em 0;
     text-align: center;
@@ -860,6 +864,12 @@ body {
     margin-bottom: 0.5em;
 }
 
+.final-phrase-icon {
+    font-size: 1.5em;
+    color: var(--color-beige);
+    margin: 0.5em 0;
+}
+
 .final-phrase .blossom-text {
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
@@ -870,7 +880,7 @@ body {
     font-style: italic;
 }
 
-/* Footer - Mantido como estava */
+/* Footer */
 .footer {
     background-color: var(--color-beige);
     color: var(--color-white);
@@ -923,7 +933,7 @@ body {
 
 .image-modal-content {
     display: block;
-    width: auto; /* Ajuste automático */
+    width: auto;
     max-width: 100%;
     max-height: 70vh;
     object-fit: contain;
@@ -960,7 +970,7 @@ body {
     border-radius: 8px;
     transform: scale(0.8);
     transition: transform 0.5s ease;
-    width: auto; /* Ajuste automático */
+    width: auto;
     height: auto;
 }
 
@@ -986,8 +996,7 @@ body {
 /* Efeito de traço ao passar o mouse */
 .nav-links li a {
     position: relative;
-    /* Adicione padding-bottom se precisar de espaço entre o texto e o traço */
-    padding-bottom: 5px; 
+    padding-bottom: 5px;
 }
 
 .nav-links li a::after {
@@ -997,7 +1006,7 @@ body {
     left: 50%;
     width: 0;
     height: 2px;
-    background-color: var(--color-brown); /* Mude para a cor desejada */
+    background-color: var(--color-brown);
     transition: width 0.3s ease, left 0.3s ease;
 }
 
@@ -1010,10 +1019,10 @@ body {
 /* Cor do texto do link ao passar o mouse */
 .nav-links li a:hover,
 .nav-links li a:focus {
-    color: var(--color-brown); /* Altera a cor do texto para marrom */
+    color: var(--color-brown);
 }
 
-/* --- Estilos para o botão Voltar ao Topo --- */
+/* Estilos para o botão Voltar ao Topo */
 .back-to-top-btn {
     position: fixed;
     bottom: 20px;
@@ -1039,7 +1048,7 @@ body {
 .back-to-top-btn:hover {
     background-color: transparent;
     color: var(--color-brown);
-    transform: translateY(-5px); /* Efeito de elevação sutil */
+    transform: translateY(-5px);
 }
 
 .back-to-top-btn.show {
@@ -1047,67 +1056,24 @@ body {
     visibility: visible;
 }
 
-
 @keyframes zoomIn {
     from { transform: scale(0.8); opacity: 0; }
     to { transform: scale(1); opacity: 1; }
 }
 
-@media (min-width: 769px) and (max-width: 1024px) {
+/* ========================================= */
+/* ===== MEDIA QUERIES: VERSÃO MOBILE ===== */
+/* ========================================= */
+@media (max-width: 768px) {
     /* Container principal */
     .site-container {
-        padding: 0 2rem;
-        max-width: 95%;
-    }
-    
-    .navbar-inner {
-        padding: 0 2rem;
+        padding: 0 1rem;
+        max-width: 100%;
+        margin: 0 auto;
+        box-sizing: border-box;
     }
 
-    /* Oculta o menu hambúrguer e exibe a navegação desktop */
-    .hamburger-menu {
-        display: none;
-    }
-    .nav-links {
-        display: flex;
-        position: static;
-        flex-direction: row;
-        width: auto;
-        background-color: transparent;
-        box-shadow: none;
-        padding: 0;
-    }
-
-    /* Esconde os links extras do menu mobile */
-    .nav-mobile-extras {
-        display: none;
-    }
-
-    /* Restaura o display dos ícones desktop */
-    .desktop-only-icons {
-        display: flex;
-    }
-
-    .nav-links li a {
-        font-size: 0.9rem;
-        padding: 0.5rem 1rem;
-    }
-
-    /* Hero */
-    .hero-content {
-        max-width: 80%;
-    }
-
-    .hero-content h1 {
-        font-size: 3.2rem;
-        line-height: 1.1;
-    }
-
-    .hero-content p {
-        font-size: 0.9rem;
-    }
-
-    /* Seções */
+    /* Seções (Espaçamento entre elas) */
     .about-us-section,
     .services,
     .brands-section,
@@ -1116,155 +1082,10 @@ body {
     .contact-section,
     .final-phrase,
     .footer {
-        padding: 3rem 0;
+        padding: 2.5rem 0;
     }
 
-    /* Sobre Nós */
-    .about-us-content-wrapper {
-        flex-direction: row;
-        gap: 40px;
-        align-items: center;
-        text-align: left;
-    }
-
-    .about-us-text-content {
-        padding: 0;
-        max-width: 50%;
-    }
-
-    .about-us-image-box {
-        max-width: 45%;
-        min-height: 250px;
-    }
-
-    .about-us-title,
-    .section-title {
-        font-size: 2.1rem;
-        line-height: 1.1;
-    }
-
-    .about-us-subtitle,
-    .section-subtitle {
-        font-size: 0.7rem;
-    }
-
-    .about-us-paragraph,
-    .section-paragraph {
-        font-size: 0.9rem;
-    }
-
-    /* Botões */
-    .btn,
-    .btn-dark,
-    .btn-light-outline {
-        padding: 0.5rem 1.2rem;
-        font-size: 0.8rem;
-    }
-    
-    .about-us-buttons {
-        justify-content: flex-start;
-    }
-
-    /* Serviços */
-    .service-cards {
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 2.5rem;
-    }
-
-    .service-card {
-        width: 45%;
-        max-width: none;
-        padding: 1.5rem;
-    }
-    
-    .service-card h3 {
-        font-size: 0.75rem;
-    }
-    
-    .service-card p {
-        font-size: 0.8rem;
-    }
-
-    /* Carrossel */
-    .carousel-item {
-        width: 250px;
-        margin-right: 1.5rem;
-    }
-
-    .carousel-item img {
-        height: 320px;
-    }
-
-    /* Portfólio */
-    .full-portfolio-items-container {
-        gap: 2rem;
-    }
-
-    .portfolio-full-item {
-        flex-direction: row;
-        align-items: center;
-        gap: 2rem;
-    }
-    .portfolio-full-item.reverse-layout {
-        flex-direction: row-reverse;
-    }
-
-    .portfolio-full-item-image {
-        min-width: 50%;
-        max-width: 50%;
-        padding-bottom: 25%;
-    }
-
-    .portfolio-full-item-description {
-        min-width: 45%;
-        max-width: 45%;
-        text-align: left;
-    }
-    
-    .portfolio-full-item-description h3 {
-        font-size: 1.5rem;
-    }
-    
-    .portfolio-full-item-description p {
-        font-size: 0.8rem;
-    }
-
-    /* Contato */
-    .contact-section .content-wrapper {
-        flex-direction: row;
-        align-items: center;
-        gap: 2rem;
-    }
-    
-    .contact-section .text-content {
-        text-align: left;
-        max-width: 50%;
-    }
-
-    .social-box {
-        max-width: 45%;
-    }
-
-    /* Rodapé */
-    .final-phrase .light-text {
-        font-size: 1.2rem;
-    }
-
-    .final-phrase .blossom-text {
-        font-size: 1.5rem;
-    }
-}
-
-/* Media Queries */
-@media (max-width: 768px) {
-    .site-container {
-        padding: 0 1rem;
-        max-width: 100%;
-        margin: 0 auto;
-        box-sizing: border-box;
-    }
-
+    /* Navegação (Nav) */
     .navbar-inner {
         padding: 0 1rem;
     }
@@ -1294,7 +1115,7 @@ body {
     .nav-links li a {
         display: block;
         padding: 0.75rem 0;
-        font-size: 0.75rem;
+        font-size: 0.8rem;
     }
 
     .nav-mobile-extras {
@@ -1321,10 +1142,6 @@ body {
         color: var(--color-brown);
     }
 
-    .nav-links.nav-links-active {
-        display: flex;
-    }
-
     .desktop-only-icons {
         display: none;
     }
@@ -1337,6 +1154,7 @@ body {
         padding-top: 60px;
     }
 
+    /* Seção Hero */
     .hero {
         height: calc(80vh - 60px);
         background-image: url('img/capa2.png') !important;
@@ -1371,13 +1189,10 @@ body {
         margin: 0;
     }
 
-    .about-us-section {
-        padding: 40px 20px;
-    }
-
+    /* Sobre Nós */
     .about-us-content-wrapper {
         flex-direction: column;
-        gap: 30px;
+        gap: 2.5rem;
         align-items: center;
     }
 
@@ -1388,19 +1203,21 @@ body {
     }
 
     .about-us-subtitle {
-        font-size: 0.6rem;
-        letter-spacing: 0.05em;
+        font-size: 0.7rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
     }
 
     .about-us-title {
-        font-size: 1.3rem;
+        font-size: 1.6rem;
         line-height: 1.2;
         margin-bottom: 0.5rem;
     }
 
     .about-us-paragraph {
-        font-size: 0.7rem;
-        line-height: 1.3;
+        font-size: 0.8rem;
+        line-height: 1.5;
+        margin-bottom: 1rem;
     }
 
     .about-us-buttons {
@@ -1413,41 +1230,38 @@ body {
         width: 100%;
     }
 
-    .about-us-buttons .btn {
+    /* Botão */
+    .btn, .btn-dark, .btn-light-outline {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.75rem;
         width: auto;
-        max-width: 200px;
-        padding: 0.3rem 0.8rem;
-        font-size: 0.7rem;
-    }
-
-    .btn,
-    .btn-dark,
-    .btn-light-outline {
-        padding: 0.3rem 0.8rem;
-        width: auto;
-        max-width: 200px;
-        font-size: 0.7rem;
+        max-width: 250px;
         text-align: center;
     }
 
+    /* Solução para a imagem ocupar 100% da largura, de ponta a ponta */
     .about-us-image-box {
-        max-width: 90%; /* Reduzido para mobile */
-        min-height: 150px;
-        padding-bottom: 40%; /* Ajustado para mobile */
+        width: auto;
+        max-width: unset;
+        margin-left: -1rem;
+        margin-right: -1rem;
+        min-height: 250px;
         background-image: url('img/projetos/PROJETOS SITE-08.jpg');
-        background-size: contain;
+        background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
-        border-radius: var(--border-radius-global); /* Mantém 15px para consistência */
+        border-radius: 0;
         overflow: hidden;
     }
 
+    /* Serviços (Cards) */
     .services {
-        padding: 1.5rem 0;
+        padding: 2.5rem 0;
+        text-align: center;
     }
 
     .services h2 {
-        font-size: 1.3rem;
+        font-size: 1.6rem;
         line-height: 1.2;
         margin-bottom: 1.5rem;
     }
@@ -1455,104 +1269,67 @@ body {
     .service-cards {
         display: flex;
         flex-direction: column;
-        align-items: center; /* Centraliza as caixas */
-        justify-content: center;
-        gap: 1.5em; /* Espaçamento reduzido */
-        padding: 0 1rem; /* Alinhado com outras seções */
+        align-items: center;
+        gap: 1rem;
+        padding: 0;
     }
 
     .service-card {
-        width: 90%; /* Ocupa 90% do container */
-        max-width: 320px; /* Limite máximo para consistência */
-        margin: 0 auto; /* Centraliza perfeitamente */
-        padding: 1rem; /* Padronizado */
+        width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 1.5rem;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
         transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+        border-radius: var(--border-radius-global);
+        box-sizing: border-box;
+    }
+
+    .service-icon {
+        font-size: 1.125em;
+        color: var(--color-brown);
+        margin-bottom: 0.5em;
     }
 
     .service-card:hover {
-        transform: translateY(-8px);
+        transform: translateY(-5px);
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     }
 
     .service-card h3 {
-        font-size: 0.6rem;
-        margin-bottom: 0.05rem;
-    }
-
-    .service-card p {
-        font-size: 0.7rem;
-        line-height: 1.3;
-    }
-
-     .brands-section {
-        padding: 2em 0;
-    }
-
-    .brands-section h2 {
-        font-size: 1.8em;
-        margin-bottom: 1em;
-    }
-
-    .carousel-item {
-        width: 200px;
-        margin-right: 1em;
-    }
-
-    .carousel-item img {
-        height: 260px;
-    }
-
-    .carousel-controls {
-        gap: 0.75em;
-        margin-top: 1em;
-    }
-
-    .carousel-control {
-        width: 35px;
-        height: 35px;
-        font-size: 1.2em;
-    }
-
-    .carousel-dot {
-        width: 8px;
-        height: 8px;
-    }
-    
-    .portfolio-call-to-action {
-        padding: 1.5rem 0;
-    }
-
-    .portfolio-call-to-action p {
-        font-size: 0.9rem;
-        line-height: 1.3;
+        font-size: 0.8rem;
         margin-bottom: 0.5rem;
     }
 
-    .btn-portfolio {
-        padding: 0.5em 0.5em;
-            border-radius: 2px;
-            text-decoration: none;
-            font-family: 'Roboto', sans-serif;
-            font-weight: 600;
-            font-size: 0.65em;
-            cursor: pointer;
-            transition: background-color var(--transition-speed), color var(--transition-speed), border-color var(--transition-speed);
-        }
-
-    .full-portfolio-section {
-        padding: 1.5rem 0;
+    .service-card p {
+        font-size: 0.75rem;
+        line-height: 1.4;
     }
 
+    /* Carrossel de Marcas */
+    .brands-section h2 {
+        font-size: 1.6rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .carousel-item {
+        width: 180px;
+        margin-right: 1.25rem;
+    }
+
+    .carousel-item img {
+        height: 240px;
+    }
+
+    /* Seção Portfólio */
     .full-portfolio-items-container {
-        gap: 1rem;
-        margin: 1rem auto;
+        gap: 2rem;
     }
 
     .portfolio-full-item {
         flex-direction: column;
-        gap: 0.75rem;
-        padding: 0.75rem;
+        gap: 1.5rem;
+        padding: 0;
     }
 
     .portfolio-full-item.reverse-layout {
@@ -1560,9 +1337,13 @@ body {
     }
 
     .portfolio-full-item-image {
-        max-width: 100%;
+        max-width: unset;
         min-width: unset;
-        padding-bottom: 50%;
+        width: 100%;
+        margin-left: -1rem;
+        margin-right: -1rem;
+        border-radius: 0;
+        padding-bottom: 60%;
     }
 
     .portfolio-full-item-description {
@@ -1572,24 +1353,24 @@ body {
     }
 
     .portfolio-full-item-description h3 {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
         margin-bottom: 0.3rem;
     }
 
-    .portfolio-full-item-description p,
-    .portfolio-full-item-description ul {
-        font-size: 0.7rem;
-        line-height: 1.3;
+    .portfolio-full-item-description p {
+        font-size: 0.8rem;
+        line-height: 1.4;
     }
 
+    .portfolio-full-item-description ul {
+        font-size: 0.8rem;
+    }
+
+    /* Modal de Imagem */
     .image-modal-preview {
         max-width: 95%;
         max-height: 85vh;
         padding: 5px;
-    }
-
-    .image-modal-content {
-        max-height: 60vh;
     }
 
     .image-modal-full-content {
@@ -1603,13 +1384,14 @@ body {
         font-size: 30px;
     }
 
+    /* Contato */
     .contact-section {
-        padding: 1.5rem 0;
+        padding: 2.5rem 0;
     }
 
     .contact-section .content-wrapper {
         flex-direction: column;
-        gap: 0.75rem;
+        gap: 1.5rem;
     }
 
     .text-content {
@@ -1617,20 +1399,15 @@ body {
         max-width: 100%;
     }
 
-    .section-subtitle {
-        font-size: 0.6rem;
-        letter-spacing: 0.05em;
-    }
-
     .section-title {
-        font-size: 1.3rem;
+        font-size: 1.6rem;
         line-height: 1.2;
         margin-bottom: 0.5rem;
     }
 
     .section-paragraph {
-        font-size: 0.7rem;
-        line-height: 1.3;
+        font-size: 0.8rem;
+        line-height: 1.4;
     }
 
     .section-buttons {
@@ -1643,43 +1420,130 @@ body {
     }
 
     .social-box {
-        max-width: 150%;
-        min-height: 50px;
-        padding: 0.75rem;
+        width: 100%;
+        max-width: none;
+        margin: 0;
+        padding: 1.5rem;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        border-radius: var(--border-radius-global);
+        transition: box-shadow var(--transition-speed);
+        box-sizing: border-box;
+    }
+
+    .social-box:hover {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     }
 
     .social-box p {
-        font-size: 0.7rem;
+        font-size: 0.8rem;
         margin-bottom: 0.5rem;
     }
 
     .social-icons {
-        gap: 0.9rem;
+        gap: 1.2rem;
     }
 
     .social-icons a {
-        font-size: 1.2rem;
+        font-size: 1.5rem;
     }
 
+    /* Rodapé */
     .final-phrase {
-        padding: 1.5rem 0;
+        padding: 2rem 0;
     }
 
     .final-phrase .light-text {
-        font-size: 0.9rem;
+        font-size: 1rem;
         margin-bottom: 0.3rem;
     }
 
+    .final-phrase-icon {
+        font-size: 1.125em;
+        color: var(--color-beige);
+        margin: 0.3em 0;
+    }
+
     .final-phrase .blossom-text {
-        font-size: 1rem;
+        font-size: 1.2rem;
     }
 
     .footer {
-        font-size: 0.6rem;
-        padding: 1rem 0;
+        font-size: 0.7rem;
+        padding: 1.5rem 0;
     }
-
 }
 
+/* ========================================= */
+/* === MEDIA QUERIES: VERSÃO TABLET (769px a 1024px) === */
+/* ========================================= */
+@media (min-width: 769px) and (max-width: 1024px) {
+    /* Container principal */
+    .site-container {
+        padding: 0 2rem;
+        max-width: 95%;
+    }
 
+    .navbar-inner {
+        padding: 0 2rem;
+    }
 
+    .about-us-section,
+    .services,
+    .brands-section,
+    .portfolio-call-to-action,
+    .full-portfolio-section,
+    .contact-section,
+    .final-phrase,
+    .footer {
+        padding: 4rem 0;
+    }
+
+    .about-us-content-wrapper,
+    .contact-section .content-wrapper {
+        gap: 3rem;
+    }
+
+    .about-us-title,
+    .section-title {
+        font-size: 2.4rem;
+    }
+
+    .about-us-paragraph,
+    .section-paragraph {
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+
+    .service-cards {
+        gap: 2.5rem;
+        justify-content: space-between;
+    }
+
+    .service-card {
+        width: calc(50% - 1.25em);
+        max-width: 400px;
+        margin: 0;
+    }
+
+    .service-icon {
+        font-size: 1.35em;
+        margin-bottom: 0.5em;
+    }
+
+    .final-phrase-icon {
+        font-size: 1.35em;
+        margin: 0.5em 0;
+    }
+
+    .portfolio-full-item {
+        gap: 2.5rem;
+    }
+
+    .portfolio-full-item-description h3 {
+        font-size: 1.6rem;
+    }
+
+    .portfolio-full-item-description p {
+        font-size: 0.9rem;
+    }
+}
