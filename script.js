@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
         hamburgerMenu.addEventListener('click', () => {
             navLinks.classList.toggle('open');
             hamburgerMenu.classList.toggle('active');
+            hamburgerMenu.setAttribute('aria-expanded', hamburgerMenu.classList.contains('active'));
         });
 
         const menuLinks = navLinks.querySelectorAll('a');
@@ -14,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
             link.addEventListener('click', () => {
                 navLinks.classList.remove('open');
                 hamburgerMenu.classList.remove('active');
+                hamburgerMenu.setAttribute('aria-expanded', 'false');
             });
         });
     }
@@ -146,9 +148,9 @@ document.addEventListener('DOMContentLoaded', () => {
             testimonialAutoScrollInterval = setInterval(() => {
                 testimonialIndex = (testimonialIndex + 1) % testimonialCards.length;
                 updateTestimonialCarousel();
-            }, 5000); // Avança a cada 5 segundos
+            }, 5000);
         };
-        
+
         const stopTestimonialAutoScroll = () => {
             clearInterval(testimonialAutoScrollInterval);
         };
@@ -174,7 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
             updateTestimonialCarousel();
             startTestimonialAutoScroll();
         });
-        
+
         testimonialWrapper.parentElement.addEventListener('mouseenter', stopTestimonialAutoScroll);
         testimonialWrapper.parentElement.addEventListener('mouseleave', startTestimonialAutoScroll);
 
@@ -234,46 +236,46 @@ document.addEventListener('DOMContentLoaded', () => {
             "project-campaign-services": "**Services:** Digital Marketing, Social Media Design, Paid Traffic Management, Data Analysis.",
             "project-campaign-client": "**Client:** Bloom Fitness",
             "project-campaign-year": "**Year:** 2024",
-            "project-website-title": "Website Development for OdontoCare Clinic",
-            "project-website-desc": "Creation of a responsive and optimized institutional website for the OdontoCare Clinic. The project focused on an intuitive user experience, ease of online scheduling and a clear presentation of services. We implemented a modern design, integration with a scheduling system and basic SEO to improve the clinic's online visibility.",
-            "project-website-services": "**Services:** Web Design, Front-end Development, UX/UI Design, SEO.",
-            "project-website-client": "**Client:** OdontoCare Clinic",
-            "project-website-year": "**Year:** 2023",
-            "project-packaging-title": "Packaging Design for “Terra Viva” Organic Foods",
-            "project-packaging-desc": "Creation of a complete line of ecological and attractive packaging for the organic food brand “Terra Viva”. The challenge was to communicate freshness, naturalness and sustainability through design, using recyclable materials and a clean aesthetic. The result was an increase in sales and brand recognition in the natural products segment.",
-            "project-packaging-services": "**Services:** Packaging Design, Illustration, Branding.",
-            "project-packaging-client": "**Client:** Terra Viva Organic Foods",
-            "project-packaging-year": "**Year:** 2024",
-            "project-app-title": "Interface Design for “CityGuide” App",
-            "project-app-desc": "Interface design (UI/UX) for the mobile app “CityGuide”, an interactive tourist guide. The focus was on usability, navigability and aesthetics, creating intuitive screens for searching for locations, reviews and routes. The prototype developed allowed testing and validating the user experience before final development.",
-            "project-app-services": "**Services:** UI/UX Design, Prototyping, Wireframing.",
-            "project-app-client": "**Client:** CityGuide StartUp",
-            "project-app-year": "**Year:** 2023",
-            "project-graphic-title": "Creation of Graphic Material for Corporate Event “InovaTech Summit”",
-            "project-graphic-desc": "Development of all graphic material for the “InovaTech Summit” event, including banners, badges, folders, presentations and social media posts. The objective was to create a cohesive and professional visual identity that conveyed the event's innovation and technology.",
-            "project-graphic-services": "**Services:** Graphic Design, Layout, Banner Creation, Arts for Events.",
-            "project-graphic-client": "**Client:** InovaTech Solutions",
-            "project-graphic-year": "**Year:** 2024",
-            "project-ecommerce-title": "E-commerce Development for Handicraft Store “Mãos Que Criam”",
-            "project-ecommerce-desc": "Construction of a complete virtual store for “Mãos Que Criam”, a handicraft store. The project included platform customization, responsive design, integration of payment methods and optimization for the product catalog. The online store allowed the client to expand their business throughout Brazil.",
-            "project-ecommerce-services": "**Services:** E-commerce Development, Web Design, Product Optimization.",
-            "project-ecommerce-client": "**Client:** Mãos Que Criam Artesanato",
-            "project-ecommerce-year": "**Year:** 2023",
-            "project-social-media-title": "Strategy and Content for Social Media “Pet Feliz PetShop”",
-            "project-social-media-desc": "Creation of content strategy and social media management for the “Pet Feliz” PetShop. We developed an editorial calendar, created visual posts and engaging captions, and monitored interactions to grow the online community and traffic to the physical and online store.",
-            "project-social-media-services": "**Services:** Social Media Management, Content Creation, Social Media Design.",
-            "project-social-media-client": "**Client:** Pet Feliz PetShop",
-            "project-social-media-year": "**Year:** 2024",
-            "project-illustration-title": "Creation of Personalized Illustrations for Children's Book “Luna's Adventure”",
-            "project-illustration-desc": "Development of vibrant and captivating illustrations for the children's book “Luna's Adventure”. Each illustration was created to complement the narrative and engage the young audience, bringing the story's characters and settings to life.",
-            "project-illustration-services": "**Services:** Digital Illustration, Editorial Design, Character Creation.",
-            "project-illustration-client": "**Client:** Fantasia Publishing House",
-            "project-illustration-year": "**Year:** 2023",
-            "project-video-title": "Production of Institutional Video for “Soluções Sustentáveis LTDA”",
-            "project-video-desc": "Production of a 2-minute institutional video for the company “Soluções Sustentáveis LTDA”. The video highlighted the company's mission, values and positive impacts on the environment, using animations, testimonials and high-quality images to convey its message.",
-            "project-video-services": "**Services:** Script, Video Editing, Motion Graphics, Sound Design.",
-            "project-video-client": "**Client:** Soluções Sustentáveis LTDA",
-            "project-video-year": "**Ano:** 2024",
+            "project-odontocare-title": "Project: OdontoCare Visual Identity",
+            "project-odontocare-desc": "Creation of a complete visual identity for the OdontoCare clinic, including logo, color palette, typography, and promotional materials.",
+            "project-odontocare-services": "**Services:** Logo, Visual Identity, Printed Materials.",
+            "project-odontocare-client": "**Client:** OdontoCare Clinic",
+            "project-odontocare-year": "**Year:** 2023",
+            "project-ecovida-title": "Project: EcoVida Social Media",
+            "project-ecovida-desc": "Development of templates and visual content for EcoVida's social media, a brand of sustainable products.",
+            "project-ecovida-services": "**Services:** Social Media Design, Post Templates, Highlights.",
+            "project-ecovida-client": "**Client:** EcoVida",
+            "project-ecovida-year": "**Year:** 2024",
+            "project-modaviva-title": "Project: Moda Viva Branding",
+            "project-modaviva-desc": "Creation of a vibrant visual identity for the fashion brand Moda Viva, with logo, color palette, and marketing materials.",
+            "project-modaviva-services": "**Services:** Logo, Visual Identity, Promotional Materials.",
+            "project-modaviva-client": "**Client:** Moda Viva",
+            "project-modaviva-year": "**Year:** 2023",
+            "project-technow-title": "Project: TechNow Digital Strategy",
+            "project-technow-desc": "Strategic Instagram consulting for TechNow, with content planning, post design, and ad management.",
+            "project-technow-services": "**Services:** Instagram Consulting, Post Design, Ad Management.",
+            "project-technow-client": "**Client:** TechNow",
+            "project-technow-year": "**Year:** 2024",
+            "project-sabornatural-title": "Project: Sabor Natural Visual Identity",
+            "project-sabornatural-desc": "Development of a visual identity for Sabor Natural, focusing on organic foods, including logo, packaging, and promotional materials.",
+            "project-sabornatural-services": "**Services:** Logo, Packaging, Visual Identity.",
+            "project-sabornatural-client": "**Client:** Sabor Natural",
+            "project-sabornatural-year": "**Year:** 2023",
+            "project-artevida-title": "Project: ArteVida Social Campaign",
+            "project-artevida-desc": "Creation of a visual campaign for the NGO ArteVida, with social media posts and printed materials promoting inclusion through art.",
+            "project-artevida-services": "**Services:** Social Media Design, Printed Materials.",
+            "project-artevida-client": "**Client:** ArteVida NGO",
+            "project-artevida-year": "**Year:** 2024",
+            "project-luxojoias-title": "Project: LuxoJoias Branding",
+            "project-luxojoias-desc": "Development of a sophisticated visual identity for LuxoJoias, with logo, color palette, and brand manual reflecting exclusivity.",
+            "project-luxojoias-services": "**Services:** Logo, Visual Identity, Brand Manual.",
+            "project-luxojoias-client": "**Client:** LuxoJoias",
+            "project-luxojoias-year": "**Year:** 2023",
+            "project-petamor-title": "Project: PetAmor Digital Strategy",
+            "project-petamor-desc": "Planning and execution of a digital strategy for PetAmor, with post design and content management for social media, increasing engagement.",
+            "project-petamor-services": "**Services:** Social Media Design, Instagram Consulting.",
+            "project-petamor-client": "**Client:** PetAmor",
+            "project-petamor-year": "**Year:** 2024",
             "testimonials-title": "What our clients say",
             "testimonial-1-quote": "\"Bloss Studio completely transformed our brand's visual identity. The result exceeded all expectations and our market presence has never been stronger. Incredible and dedicated professionals!\"",
             "testimonial-1-client-name": "Ana Lúcia",
@@ -284,7 +286,10 @@ document.addEventListener('DOMContentLoaded', () => {
             "testimonial-3-quote": "\"The attention to detail and passion for what they do are evident in every project. Our new website is visually stunning and extremely functional. We are very satisfied with the work!\"",
             "testimonial-3-client-name": "Beatriz Costa",
             "testimonial-3-client-title": "Founder, OdontoCare Clinic",
-            "back-to-home": "← Back"
+            "back-to-home": "← Back",
+            "visual-samples-title": "Visual Samples",
+            "enlarge-image": "Enlarge Image",
+            "view-details": "View Details"
         },
         'pt-BR': {
             "page-title": "estúdio bloss",
@@ -335,46 +340,46 @@ document.addEventListener('DOMContentLoaded', () => {
             "project-campaign-services": "**Serviços:** Marketing Digital, Design para Redes Sociais, Gestão de Tráfego Pago, Análise de Dados.",
             "project-campaign-client": "**Cliente:** Bloom Fitness",
             "project-campaign-year": "**Ano:** 2024",
-            "project-website-title": "Desenvolvimento de Website para Clínica OdontoCare",
-            "project-website-desc": "Criação de um website institucional responsivo e otimizado para a Clínica OdontoCare. O projeto focou em uma experiência de usuário intuitiva, facilidade de agendamento online e apresentação clara dos serviços. Implementamos um design moderno, integração com sistema de agendamento e SEO básico para melhorar a visibilidade online da clínica.",
-            "project-website-services": "**Serviços:** Web Design, Desenvolvimento Front-end, UX/UI Design, SEO.",
-            "project-website-client": "**Cliente:** Clínica OdontoCare",
-            "project-website-year": "**Ano:** 2023",
-            "project-packaging-title": "Design de Embalagens para Alimentos Orgânicos \"Terra Viva\"",
-            "project-packaging-desc": "Criação de uma linha completa de embalagens ecológicas e atraentes para a marca de alimentos orgânicos \"Terra Viva\". O desafio foi comunicar frescor, naturalidade e sustentabilidade através do design, utilizando materiais recicláveis e uma estética limpa. O resultado foi um aumento nas vendas e reconhecimento da marca no segmento de produtos naturais.",
-            "project-packaging-services": "**Serviços:** Design de Embalagens, Ilustração, Branding.",
-            "project-packaging-client": "**Cliente:** Terra Viva Alimentos Orgânicos",
-            "project-packaging-year": "**Ano:** 2024",
-            "project-app-title": "Design de Interface para Aplicativo \"CityGuide\"",
-            "project-app-desc": "Design de interface (UI/UX) para o aplicativo móvel \"CityGuide\", um guia turístico interativo. O foco foi na usabilidade, navegabilidade e estética, criando telas intuitivas para busca de locais, avaliações e rotas. O protótipo desenvolvido permitiu testar e validar a experiência do usuário antes do desenvolvimento final.",
-            "project-app-services": "**Serviços:** UI/UX Design, Prototipagem, Wireframing.",
-            "project-app-client": "**Cliente:** CityGuide StartUp",
-            "project-app-year": "**Ano:** 2023",
-            "project-graphic-title": "Criação de Material Gráfico para Evento Corporativo \"InovaTech Summit\"",
-            "project-graphic-desc": "Desenvolvimento de todo o material gráfico para o evento \"InovaTech Summit\", incluindo banners, crachás, folder, apresentações e posts para redes sociais. O objetivo era criar uma identidade visual coesa e profissional que transmitisse a inovação e tecnologia do evento.",
-            "project-graphic-services": "**Serviços:** Design Gráfico, Diagramação, Criação de Banners, Artes para Eventos.",
-            "project-graphic-client": "**Cliente:** InovaTech Solutions",
-            "project-graphic-year": "**Ano:** 2024",
-            "project-ecommerce-title": "Desenvolvimento de E-commerce para Loja de Artesanato \"Mãos Que Criam\"",
-            "project-ecommerce-desc": "Construção de uma loja virtual completa para a \"Mãos Que Criam\", uma loja de artesanato. O projeto incluiu customização da plataforma, design responsivo, integração de meios de pagamento e otimização para catálogo de produtos. A loja online permitiu que a cliente expandisse seu negócio para todo o Brasil.",
-            "project-ecommerce-services": "**Serviços:** E-commerce Development, Web Design, Otimização de Produtos.",
-            "project-ecommerce-client": "**Cliente:** Mãos Que Criam Artesanato",
-            "project-ecommerce-year": "**Ano:** 2023",
-            "project-social-media-title": "Estratégia e Conteúdo para Redes Sociais \"Pet Feliz PetShop\"",
-            "project-social-media-desc": "Criação de estratégia de conteúdo e gerenciamento de redes sociais para a PetShop \"Pet Feliz\". Desenvolvemos um calendário editorial, criamos posts visuais e legendas engajadoras, e monitoramos as interações para aumentar a comunidade online e o tráfego para a loja física e online.",
-            "project-social-media-services": "**Serviços:** Gestão de Mídias Sociais, Criação de Conteúdo, Design para Redes Sociais.",
-            "project-social-media-client": "**Cliente:** Pet Feliz PetShop",
-            "project-social-media-year": "**Ano:** 2024",
-            "project-illustration-title": "Criação de Ilustrações Personalizadas para Livro Infantil \"A Aventura da Luna\"",
-            "project-illustration-desc": "Desenvolvimento de ilustrações vibrantes e cativantes para o livro infantil \"A Aventura da Luna\". Cada ilustração foi criada para complementar a narrativa e envolver o público jovem, trazendo vida aos personagens e cenários da história.",
-            "project-illustration-services": "**Serviços:** Ilustração Digital, Design Editorial, Criação de Personagens.",
-            "project-illustration-client": "**Cliente:** Editora Fantasia",
-            "project-illustration-year": "**Ano:** 2023",
-            "project-video-title": "Produção de Vídeo Institucional para \"Soluções Sustentáveis LTDA\"",
-            "project-video-desc": "Produção de um vídeo institucional de 2 minutos para a empresa \"Soluções Sustentáveis LTDA\". O vídeo destacou a missão, valores e os impactos positivos da empresa no meio ambiente, utilizando animações, depoimentos e imagens de alta qualidade para transmitir sua mensagem.",
-            "project-video-services": "**Serviços:** Roteiro, Edição de Vídeo, Motion Graphics, Sonoplastia.",
-            "project-video-client": "**Cliente:** Soluções Sustentáveis LTDA",
-            "project-video-year": "**Ano:** 2024",
+            "project-odontocare-title": "Projeto: Identidade Visual OdontoCare",
+            "project-odontocare-desc": "Criação de uma identidade visual completa para a clínica OdontoCare, incluindo logotipo, paleta de cores, tipografia e materiais promocionais.",
+            "project-odontocare-services": "**Serviços:** Logotipo, Identidade Visual, Materiais Impressos.",
+            "project-odontocare-client": "**Cliente:** Clínica OdontoCare",
+            "project-odontocare-year": "**Ano:** 2023",
+            "project-ecovida-title": "Projeto: Redes Sociais EcoVida",
+            "project-ecovida-desc": "Desenvolvimento de templates e conteúdos visuais para as redes sociais da EcoVida, uma marca de produtos sustentáveis.",
+            "project-ecovida-services": "**Serviços:** Design para Redes Sociais, Templates de Posts, Destaques.",
+            "project-ecovida-client": "**Cliente:** EcoVida",
+            "project-ecovida-year": "**Ano:** 2024",
+            "project-modaviva-title": "Projeto: Branding Moda Viva",
+            "project-modaviva-desc": "Criação de uma identidade visual vibrante para a marca de moda Moda Viva, com logotipo, paleta de cores e materiais de marketing.",
+            "project-modaviva-services": "**Serviços:** Logotipo, Identidade Visual, Materiais Promocionais.",
+            "project-modaviva-client": "**Cliente:** Moda Viva",
+            "project-modaviva-year": "**Ano:** 2023",
+            "project-technow-title": "Projeto: Estratégia Digital TechNow",
+            "project-technow-desc": "Consultoria estratégica para o Instagram da TechNow, com planejamento de conteúdo, design de posts e gestão de anúncios.",
+            "project-technow-services": "**Serviços:** Consultoria Instagram, Design de Posts, Gestão de Anúncios.",
+            "project-technow-client": "**Cliente:** TechNow",
+            "project-technow-year": "**Ano:** 2024",
+            "project-sabornatural-title": "Projeto: Identidade Visual Sabor Natural",
+            "project-sabornatural-desc": "Desenvolvimento de uma identidade visual para a Sabor Natural, com foco em alimentos orgânicos, incluindo logotipo, embalagens e materiais promocionais.",
+            "project-sabornatural-services": "**Serviços:** Logotipo, Embalagens, Identidade Visual.",
+            "project-sabornatural-client": "**Cliente:** Sabor Natural",
+            "project-sabornatural-year": "**Ano:** 2023",
+            "project-artevida-title": "Projeto: Campanha Social ArteVida",
+            "project-artevida-desc": "Criação de uma campanha visual para a ONG ArteVida, com posts para redes sociais e materiais impressos que promovem inclusão através da arte.",
+            "project-artevida-services": "**Serviços:** Design para Redes Sociais, Materiais Impressos.",
+            "project-artevida-client": "**Cliente:** ONG ArteVida",
+            "project-artevida-year": "**Ano:** 2024",
+            "project-luxojoias-title": "Projeto: Branding LuxoJoias",
+            "project-luxojoias-desc": "Desenvolvimento de uma identidade visual sofisticada para a LuxoJoias, com logotipo, paleta de cores e manual de marca que refletem exclusividade.",
+            "project-luxojoias-services": "**Serviços:** Logotipo, Identidade Visual, Manual de Marca.",
+            "project-luxojoias-client": "**Cliente:** LuxoJoias",
+            "project-luxojoias-year": "**Ano:** 2023",
+            "project-petamor-title": "Projeto: Estratégia Digital PetAmor",
+            "project-petamor-desc": "Planejamento e execução de uma estratégia digital para a PetAmor, com design de posts e gestão de conteúdo para redes sociais, aumentando o engajamento.",
+            "project-petamor-services": "**Serviços:** Design para Redes Sociais, Consultoria Instagram.",
+            "project-petamor-client": "**Cliente:** PetAmor",
+            "project-petamor-year": "**Ano:** 2024",
             "testimonials-title": "O que nossos clientes dizem",
             "testimonial-1-quote": "\"O estúdio bloss transformou completamente a identidade visual da nossa marca. O resultado superou todas as expectativas e nossa presença no mercado nunca foi tão forte. Profissionais incríveis e dedicados!\"",
             "testimonial-1-client-name": "Ana Lúcia",
@@ -385,7 +390,10 @@ document.addEventListener('DOMContentLoaded', () => {
             "testimonial-3-quote": "\"A atenção aos detalhes e a paixão pelo que fazem são evidentes em cada projeto. Nosso novo site é visualmente deslumbrante e extremamente funcional. Estamos muito satisfeitos com o trabalho!\"",
             "testimonial-3-client-name": "Beatriz Costa",
             "testimonial-3-client-title": "Fundadora, Clínica OdontoCare",
-            "back-to-home": "← Voltar"
+            "back-to-home": "← Voltar",
+            "visual-samples-title": "Amostras Visuais",
+            "enlarge-image": "Ampliar Imagem",
+            "view-details": "Ver Detalhes"
         }
     };
 
@@ -447,96 +455,123 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ---- LÓGICA DO MODAL DE IMAGEM ----
-    const imageModal = document.getElementById('image-modal');
+    const imageModal = document.getElementById('image-modal') || document.getElementById('fullscreen-modal');
     const modalImage = document.getElementById('modal-image');
-    const closeBtn = document.querySelector('.image-modal-close-btn');
+    const closeBtn = document.querySelector('.image-modal-close-btn') || document.querySelector('.modal-close-btn');
 
     if (imageModal && modalImage && closeBtn) {
-        const carouselItems = document.querySelectorAll('.carousel-item img');
+        const carouselItems = document.querySelectorAll('.carousel-item');
+        const portfolioItems = document.querySelectorAll('.portfolio-full-item');
+        const sampleItems = document.querySelectorAll('.sample-item');
 
-        carouselItems.forEach(image => {
-            image.addEventListener('click', () => {
-                modalImage.src = image.src;
-                imageModal.classList.add('open');
+        const openModal = (image) => {
+            modalImage.src = '';
+            modalImage.classList.remove('loaded');
+            imageModal.classList.add('open');
+            modalImage.src = image.src;
+            modalImage.alt = image.alt;
+            modalImage.onload = () => {
+                modalImage.classList.add('loaded');
+                const spinner = imageModal.querySelector('.spinner');
+                if (spinner) {
+                    spinner.classList.remove('active');
+                }
+            };
+        };
+
+        // Modal para carrossel de marcas (index.html)
+        carouselItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                if (e.target.classList.contains('image-overlay') || e.target.classList.contains('overlay-text')) {
+                    const image = item.querySelector('img');
+                    if (image) {
+                        openModal(image);
+                    }
+                }
             });
+        });
+
+        // Modal para itens de portfólio e amostras visuais (portfolio.html)
+        portfolioItems.forEach(item => {
+            const overlay = item.querySelector('.image-overlay');
+            if (overlay) {
+                overlay.addEventListener('click', () => {
+                    const image = item.querySelector('img');
+                    if (image) {
+                        openModal(image);
+                    }
+                });
+            }
+        });
+
+        sampleItems.forEach(item => {
+            const overlay = item.querySelector('.image-overlay');
+            if (overlay) {
+                overlay.addEventListener('click', () => {
+                    const image = item.querySelector('img');
+                    if (image) {
+                        openModal(image);
+                    }
+                });
+            }
         });
 
         closeBtn.addEventListener('click', () => {
             imageModal.classList.remove('open');
+            modalImage.src = '';
+            modalImage.classList.remove('loaded');
+            const spinner = imageModal.querySelector('.spinner');
+            if (spinner) {
+                spinner.classList.add('active');
+            }
         });
 
         imageModal.addEventListener('click', (event) => {
             if (event.target === imageModal) {
                 imageModal.classList.remove('open');
+                modalImage.src = '';
+                modalImage.classList.remove('loaded');
+                const spinner = imageModal.querySelector('.spinner');
+                if (spinner) {
+                    spinner.classList.add('active');
+                }
             }
         });
     }
 
-    // ---- LÓGICA DO MODAL DE IMAGEM DO PORTFÓLIO ----
-const fullscreenModal = document.getElementById('fullscreen-modal');
-const closeFullscreenBtn = document.querySelector('.modal-close-btn');
-const modalImageContainer = document.getElementById('modal-image-container'); // Precisaremos de um novo container para a imagem
-
-if (fullscreenModal && closeFullscreenBtn) {
-    const portfolioItems = document.querySelectorAll('.portfolio-full-item-image');
-
-    portfolioItems.forEach(item => {
-        item.addEventListener('click', () => {
-            const clickedImage = item.querySelector('img');
-            if (clickedImage) {
-                // Cria um novo elemento <img>
-                const newImage = document.createElement('img');
-                newImage.src = clickedImage.src;
-                newImage.alt = clickedImage.alt;
-                newImage.style.maxWidth = '100%';
-                newImage.style.maxHeight = '100%';
-                newImage.style.objectFit = 'contain';
-
-                // Limpa o conteúdo anterior e adiciona a nova imagem
-                modalImageContainer.innerHTML = '';
-                modalImageContainer.appendChild(newImage);
-                
-                fullscreenModal.classList.add('open');
-                document.body.classList.add('no-scroll');
+    // ---- REMOVER SPINNER APÓS CARREGAMENTO DAS IMAGENS ----
+    document.querySelectorAll('.portfolio-full-item img, .sample-item img').forEach(img => {
+        img.addEventListener('load', () => {
+            const spinner = img.parentElement.querySelector('.spinner');
+            if (spinner) {
+                spinner.classList.remove('active');
             }
         });
-    });
-
-    closeFullscreenBtn.addEventListener('click', () => {
-        fullscreenModal.classList.remove('open');
-        document.body.classList.remove('no-scroll');
-    });
-
-    fullscreenModal.addEventListener('click', (event) => {
-        if (event.target === fullscreenModal) {
-            fullscreenModal.classList.remove('open');
-            document.body.classList.remove('no-scroll');
+        if (img.complete) {
+            const spinner = img.parentElement.querySelector('.spinner');
+            if (spinner) {
+                spinner.classList.remove('active');
+            }
         }
     });
-}
 
-
-});
-
-    // Script para o botão "Voltar ao Topo"
-document.addEventListener('DOMContentLoaded', function() {
+    // ---- BOTÃO VOLTAR AO TOPO ----
     const backToTopBtn = document.getElementById('back-to-top-btn');
-
-    // Mostra ou esconde o botão com base na posição do scroll
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 300) {
-            backToTopBtn.classList.add('show');
-        } else {
-            backToTopBtn.classList.remove('show');
-        }
-    });
-
-    // Faz o scroll suave para o topo quando o botão é clicado
-    backToTopBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
+    if (backToTopBtn) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
         });
-    });
+
+        backToTopBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
 });

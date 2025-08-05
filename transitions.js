@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Verificar suporte para prefers-reduced-motion
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Inicializar estilos iniciais
+    // Inicializar estilos iniciais para seções
     sections.forEach(section => {
         if (!reduceMotion) {
             section.style.opacity = '0';
@@ -33,6 +33,36 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     });
+
+    // Inicializar spinners para imagens do carrossel
+    const carouselItems = document.querySelectorAll('.carousel-item img');
+    carouselItems.forEach(img => {
+        const spinner = img.parentElement.querySelector('.spinner');
+        if (spinner) {
+            img.addEventListener('load', () => {
+                img.classList.add('loaded');
+                spinner.classList.remove('active');
+            });
+            if (img.complete) {
+                img.classList.add('loaded');
+                spinner.classList.remove('active');
+            }
+        }
+    });
+
+    // Inicializar spinner para modal
+    const modalImage = document.querySelector('#image-modal .image-modal-content');
+    const modalSpinner = document.querySelector('#image-modal .spinner');
+    if (modalImage && modalSpinner) {
+        modalImage.addEventListener('load', () => {
+            modalImage.classList.add('loaded');
+            modalSpinner.classList.remove('active');
+        });
+        if (modalImage.complete) {
+            modalImage.classList.add('loaded');
+            modalSpinner.classList.remove('active');
+        }
+    }
 
     function showSection(sectionId) {
         console.log('Mostrando seção:', sectionId);
@@ -154,7 +184,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                 }
             } else {
-                // Reativar animação ao sair da viewport
                 resetSection(entry.target);
             }
         });
@@ -164,7 +193,6 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(section);
     });
 
-    // Forçar visibilidade da primeira seção com atraso inicial
     if (sections.length > 0) {
         console.log('Ativando primeira seção:', sections[0].id);
         setTimeout(() => {

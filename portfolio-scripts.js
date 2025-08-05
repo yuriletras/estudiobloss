@@ -1,143 +1,134 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // ---- SCRIPT PARA O MENU HAMBURGUER (NOVO) ----
-    const hamburgerMenu = document.getElementById('hamburger-menu');
-    const navLinks = document.getElementById('nav-links-menu');
-
-    if (hamburgerMenu && navLinks) {
-        hamburgerMenu.addEventListener('click', function() {
-            navLinks.classList.toggle('nav-links-active');
-            hamburgerMenu.classList.toggle('is-active');
-        });
-
-        // Adiciona um evento de clique para fechar o menu ao selecionar um link (opcional, mas recomendado para UX)
-        navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('nav-links-active');
-                hamburgerMenu.classList.remove('is-active');
-            });
-        });
-    }
-
-    // ---- FIM DO SCRIPT PARA O MENU HAMBURGUER ----
-
-
-    // ---- Script para o botão de voltar ----
-    const backButton = document.getElementById('back-button');
-    if (backButton) {
-        backButton.addEventListener('click', function(event) {
-            event.preventDefault();
-            window.history.back();
-        });
-    }
-
-    // ---- SCRIPT para o modal de tela cheia com transição, arrastar e zoom ----
-    const portfolioImageContainers = document.querySelectorAll('.portfolio-full-item-image');
+document.addEventListener('DOMContentLoaded', () => {
+    // ---- LÓGICA DO MODAL DE IMAGEM ----
     const fullscreenModal = document.getElementById('fullscreen-modal');
-    const modalContentWrapper = document.querySelector('.modal-content-wrapper');
-    const modalCloseBtn = document.querySelector('.modal-close-btn');
+    const modalImage = document.getElementById('modal-image');
+    const closeFullscreenBtn = document.querySelector('.modal-close-btn');
+    const modalSpinner = fullscreenModal?.querySelector('.spinner');
 
-    let isDragging = false;
-    let startX;
-    let startY;
-    let offsetX = 0;
-    let offsetY = 0;
-    let zoomLevel = 1;
-    const minZoom = 0.5;
-    const maxZoom = 3;
-    const zoomSensitivity = 0.1;
+    if (fullscreenModal && modalImage && closeFullscreenBtn && modalSpinner) {
+        const portfolioItems = document.querySelectorAll('.portfolio-full-item .image-overlay, .sample-item .image-overlay');
+        let startX, startY, translateX = 0, translateY = 0, scale = 1;
+        let isDragging = false;
 
-    portfolioImageContainers.forEach(container => {
-        container.addEventListener('click', function() {
-            const imageSrc = container.querySelector('img').src;
-
-            const modalImage = document.createElement('img');
-            modalImage.classList.add('modal-image');
-            modalImage.src = imageSrc;
-            modalImage.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${zoomLevel})`;
-            modalImage.style.transition = 'transform 0.1s ease-out';
-
-            modalContentWrapper.innerHTML = '';
-            modalContentWrapper.appendChild(modalImage);
-            modalContentWrapper.appendChild(modalCloseBtn);
-
-            fullscreenModal.classList.add('active');
-
-            modalImage.addEventListener('mousedown', (e) => {
-                isDragging = true;
-                startX = e.clientX - offsetX;
-                startY = e.clientY - offsetY;
-                modalImage.style.cursor = 'grab';
-            });
-
-            modalImage.addEventListener('mousemove', (e) => {
-                if (!isDragging) return;
-                offsetX = e.clientX - startX;
-                offsetY = e.clientY - startY;
-                modalImage.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${zoomLevel})`;
-            });
-
-            modalImage.addEventListener('mouseup', () => {
-                isDragging = false;
-                modalImage.style.cursor = 'default';
-            });
-
-            modalImage.addEventListener('mouseleave', () => {
-                if (!isDragging) return;
-                isDragging = false;
-                modalImage.style.cursor = 'default';
-            });
-
-            modalImage.addEventListener('wheel', (e) => {
-                e.preventDefault();
-
-                const zoomDirection = e.deltaY > 0 ? -1 : 1;
-                zoomLevel += zoomDirection * zoomSensitivity;
-                zoomLevel = Math.max(minZoom, Math.min(maxZoom, zoomLevel));
-
-                modalImage.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${zoomLevel})`;
-            }, { passive: false });
-        });
-    });
-
-    function closeModal() {
-        fullscreenModal.classList.remove('active');
-        offsetX = 0;
-        offsetY = 0;
-        zoomLevel = 1;
-        const existingImage = modalContentWrapper.querySelector('.modal-image');
-        if (existingImage) {
-            existingImage.remove();
-        }
-    }
-
-    modalCloseBtn.addEventListener('click', closeModal);
-
-    fullscreenModal.addEventListener('click', function(event) {
-        if (event.target === fullscreenModal) {
-            closeModal();
-        }
-    });
-
-    // ---- Animação na página de portfólio ----
-    const portfolioItems = document.querySelectorAll('.portfolio-full-item');
-    if (portfolioItems.length > 0) {
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                    observer.unobserve(entry.target);
+        portfolioItems.forEach(overlay => {
+            overlay.style.cursor = 'pointer'; // Indica que o overlay é clicável
+            overlay.addEventListener('click', () => {
+                const clickedImage = overlay.parentElement.querySelector('img');
+                if (clickedImage) {
+                    modalImage.src = ''; // Resetar src para evitar flickering
+                    modalImage.classList.remove('loaded');
+                    modalSpinner.classList.add('active');
+                    translateX = 0;
+                    translateY = 0;
+                    scale = 1;
+                    modalImage.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+                    modalImage.src = clickedImage.src;
+                    modalImage.alt = clickedImage.alt;
+                    fullscreenModal.classList.add('open');
+                    document.body.classList.add('no-scroll');
                 }
             });
-        }, {
-            threshold: 0.2
         });
 
-        portfolioItems.forEach((item, index) => {
-            item.style.animationDelay = `${index * 0.2}s`;
-            observer.observe(item);
+        modalImage.addEventListener('load', () => {
+            modalSpinner.classList.remove('active');
+            modalImage.classList.add('loaded');
+        });
+
+        closeFullscreenBtn.addEventListener('click', () => {
+            fullscreenModal.classList.remove('open');
+            document.body.classList.remove('no-scroll');
+            modalImage.classList.remove('loaded');
+            modalSpinner.classList.add('active');
+            modalImage.src = '';
+        });
+
+        fullscreenModal.addEventListener('click', (event) => {
+            if (event.target === fullscreenModal) {
+                fullscreenModal.classList.remove('open');
+                document.body.classList.remove('no-scroll');
+                modalImage.classList.remove('loaded');
+                modalSpinner.classList.add('active');
+                modalImage.src = '';
+            }
+        });
+
+        modalImage.addEventListener('wheel', (event) => {
+            event.preventDefault();
+            const zoomSpeed = 0.1;
+            const minScale = 1;
+            const maxScale = 3;
+            scale += event.deltaY < 0 ? zoomSpeed : -zoomSpeed;
+            scale = Math.min(Math.max(minScale, scale), maxScale);
+            modalImage.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+            modalImage.style.cursor = scale > 1 ? 'grab' : 'default';
+        });
+
+        modalImage.addEventListener('mousedown', (event) => {
+            if (scale > 1) {
+                isDragging = true;
+                startX = event.clientX - translateX;
+                startY = event.clientY - translateY;
+                modalImage.style.cursor = 'grabbing';
+            }
+        });
+
+        modalImage.addEventListener('mousemove', (event) => {
+            if (isDragging) {
+                translateX = event.clientX - startX;
+                translateY = event.clientY - startY;
+                modalImage.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+            }
+        });
+
+        modalImage.addEventListener('mouseup', () => {
+            isDragging = false;
+            modalImage.style.cursor = scale > 1 ? 'grab' : 'default';
+        });
+
+        modalImage.addEventListener('mouseleave', () => {
+            isDragging = false;
+            modalImage.style.cursor = scale > 1 ? 'grab' : 'default';
+        });
+
+        modalImage.addEventListener('touchstart', (event) => {
+            if (scale > 1 && event.touches.length === 1) {
+                isDragging = true;
+                startX = event.touches[0].clientX - translateX;
+                startY = event.touches[0].clientY - translateY;
+            }
+        });
+
+        modalImage.addEventListener('touchmove', (event) => {
+            if (isDragging && event.touches.length === 1) {
+                translateX = event.touches[0].clientX - startX;
+                translateY = event.touches[0].clientY - startY;
+                modalImage.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+            }
+        });
+
+        modalImage.addEventListener('touchend', () => {
+            isDragging = false;
         });
     }
 
-    
+    // ---- LÓGICA DOS SPINNERS ----
+    const images = document.querySelectorAll('.portfolio-full-item-image img, .sample-item img');
+    images.forEach(img => {
+        if (img.complete) {
+            img.classList.add('loaded');
+            const spinner = img.parentElement.querySelector('.spinner');
+            if (spinner) {
+                spinner.classList.remove('active');
+            }
+        } else {
+            img.addEventListener('load', () => {
+                img.classList.add('loaded');
+                const spinner = img.parentElement.querySelector('.spinner');
+                if (spinner) {
+                    spinner.classList.remove('active');
+                }
+            });
+        }
+    });
 });
