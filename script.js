@@ -125,6 +125,29 @@ document.addEventListener('DOMContentLoaded', () => {
             updateCarousel(currentIndex, false);
         });
 
+        // ---- LÓGICA DE CARREGAMENTO DE IMAGENS NO CARROSSEL ----
+        items.forEach(item => {
+            const img = item.querySelector('img');
+            const spinner = document.createElement('div');
+            spinner.classList.add('spinner', 'active');
+            item.appendChild(spinner);
+
+            if (img.complete) {
+                img.classList.add('loaded');
+                spinner.classList.remove('active');
+            } else {
+                img.addEventListener('load', () => {
+                    img.classList.add('loaded');
+                    spinner.classList.remove('active');
+                });
+                img.addEventListener('error', () => {
+                    console.error(`Erro ao carregar a imagem: ${img.src}`);
+                    spinner.classList.remove('active');
+                    img.alt = 'Imagem não carregada';
+                });
+            }
+        });
+
         updateCarousel(currentIndex, false);
         startAutoScroll();
     }
@@ -328,8 +351,8 @@ document.addEventListener('DOMContentLoaded', () => {
             "copyright-text": "&copy; 2025 estúdio bloss. Todos os direitos reservados.",
             "developed-by-text": "Desenvolvido por",
             "page-title-portfolio": "Portfólio - estúdio bloss",
-            "portfolio-page-title": "Nosso Portfólio",
-            "portfolio-page-subtitle": "Uma coleção de trabalhos que floresceram através do design e estratégia.",
+            "portfolio-page-title": "Our Portfolio",
+            "portfolio-page-subtitle": "A collection of works that blossomed through design and strategy.",
             "project-rebranding-title": "Projeto: Rebranding Café Renascer",
             "project-rebranding-desc": "Descrição detalhada do projeto de rebranding para a marca fictícia \"Café Renascer\". Nosso trabalho envolveu a criação de uma nova identidade visual do zero, desde o logotipo até as paletas de cores, tipografia e diretrizes de aplicação para mídias digitais e impressas. O objetivo foi modernizar a imagem da marca, transmitindo sua essência artesanal e premium. Este projeto demonstrou como um design estratégico pode revitalizar a presença de uma empresa no mercado, atraindo um novo público e solidificando sua posição.",
             "project-rebranding-services": "**Serviços:** Criação de Logotipo, Design de Identidade Visual, Manual de Marca, Embalagens.",
@@ -393,7 +416,7 @@ document.addEventListener('DOMContentLoaded', () => {
             "back-to-home": "← Voltar",
             "visual-samples-title": "Amostras Visuais",
             "enlarge-image": "Ampliar Imagem",
-            "view-details": "Ver Detalhes"
+            "view-details": "View Details"
         }
     };
 
@@ -454,107 +477,6 @@ document.addEventListener('DOMContentLoaded', () => {
         updateTranslations(currentLang);
     }
 
-    // ---- LÓGICA DO MODAL DE IMAGEM ----
-    const imageModal = document.getElementById('image-modal') || document.getElementById('fullscreen-modal');
-    const modalImage = document.getElementById('modal-image');
-    const closeBtn = document.querySelector('.image-modal-close-btn') || document.querySelector('.modal-close-btn');
-
-    if (imageModal && modalImage && closeBtn) {
-        const carouselItems = document.querySelectorAll('.carousel-item');
-        const portfolioItems = document.querySelectorAll('.portfolio-full-item');
-        const sampleItems = document.querySelectorAll('.sample-item');
-
-        const openModal = (image) => {
-            modalImage.src = '';
-            modalImage.classList.remove('loaded');
-            imageModal.classList.add('open');
-            modalImage.src = image.src;
-            modalImage.alt = image.alt;
-            modalImage.onload = () => {
-                modalImage.classList.add('loaded');
-                const spinner = imageModal.querySelector('.spinner');
-                if (spinner) {
-                    spinner.classList.remove('active');
-                }
-            };
-        };
-
-        // Modal para carrossel de marcas (index.html)
-        carouselItems.forEach(item => {
-            item.addEventListener('click', (e) => {
-                if (e.target.classList.contains('image-overlay') || e.target.classList.contains('overlay-text')) {
-                    const image = item.querySelector('img');
-                    if (image) {
-                        openModal(image);
-                    }
-                }
-            });
-        });
-
-        // Modal para itens de portfólio e amostras visuais (portfolio.html)
-        portfolioItems.forEach(item => {
-            const overlay = item.querySelector('.image-overlay');
-            if (overlay) {
-                overlay.addEventListener('click', () => {
-                    const image = item.querySelector('img');
-                    if (image) {
-                        openModal(image);
-                    }
-                });
-            }
-        });
-
-        sampleItems.forEach(item => {
-            const overlay = item.querySelector('.image-overlay');
-            if (overlay) {
-                overlay.addEventListener('click', () => {
-                    const image = item.querySelector('img');
-                    if (image) {
-                        openModal(image);
-                    }
-                });
-            }
-        });
-
-        closeBtn.addEventListener('click', () => {
-            imageModal.classList.remove('open');
-            modalImage.src = '';
-            modalImage.classList.remove('loaded');
-            const spinner = imageModal.querySelector('.spinner');
-            if (spinner) {
-                spinner.classList.add('active');
-            }
-        });
-
-        imageModal.addEventListener('click', (event) => {
-            if (event.target === imageModal) {
-                imageModal.classList.remove('open');
-                modalImage.src = '';
-                modalImage.classList.remove('loaded');
-                const spinner = imageModal.querySelector('.spinner');
-                if (spinner) {
-                    spinner.classList.add('active');
-                }
-            }
-        });
-    }
-
-    // ---- REMOVER SPINNER APÓS CARREGAMENTO DAS IMAGENS ----
-    document.querySelectorAll('.portfolio-full-item img, .sample-item img').forEach(img => {
-        img.addEventListener('load', () => {
-            const spinner = img.parentElement.querySelector('.spinner');
-            if (spinner) {
-                spinner.classList.remove('active');
-            }
-        });
-        if (img.complete) {
-            const spinner = img.parentElement.querySelector('.spinner');
-            if (spinner) {
-                spinner.classList.remove('active');
-            }
-        }
-    });
-
     // ---- BOTÃO VOLTAR AO TOPO ----
     const backToTopBtn = document.getElementById('back-to-top-btn');
     if (backToTopBtn) {
@@ -572,6 +494,58 @@ document.addEventListener('DOMContentLoaded', () => {
                 top: 0,
                 behavior: 'smooth'
             });
+        });
+    }
+
+    // ---- LÓGICA DO MODAL DA SEÇÃO DE MARCAS ----
+    const modal = document.getElementById('image-modal');
+    const modalImage = document.querySelector('.image-modal-content');
+    const modalCloseBtn = document.querySelector('.image-modal-close-btn');
+    const imageOverlays = document.querySelectorAll('.carousel-item .image-overlay');
+
+    if (modal && modalImage && modalCloseBtn && imageOverlays.length > 0) {
+        imageOverlays.forEach(overlay => {
+            overlay.addEventListener('click', () => {
+                const img = overlay.previousElementSibling;
+                if (img && img.tagName === 'IMG') {
+                    modalImage.src = '';
+                    modalImage.classList.remove('loaded');
+                    const spinner = document.createElement('div');
+                    spinner.classList.add('spinner', 'active');
+                    modal.appendChild(spinner);
+
+                    modalImage.src = img.src;
+                    modal.classList.add('open');
+                    document.body.classList.add('no-scroll');
+
+                    modalImage.addEventListener('load', () => {
+                        modalImage.classList.add('loaded');
+                        spinner.remove();
+                    }, { once: true });
+
+                    modalImage.addEventListener('error', () => {
+                        console.error(`Erro ao carregar a imagem no modal: ${modalImage.src}`);
+                        spinner.remove();
+                        modalImage.alt = 'Imagem não carregada';
+                    }, { once: true });
+                }
+            });
+        });
+
+        modalCloseBtn.addEventListener('click', () => {
+            modal.classList.remove('open');
+            document.body.classList.remove('no-scroll');
+            modalImage.src = '';
+            modalImage.classList.remove('loaded');
+        });
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('open');
+                document.body.classList.remove('no-scroll');
+                modalImage.src = '';
+                modalImage.classList.remove('loaded');
+            }
         });
     }
 });

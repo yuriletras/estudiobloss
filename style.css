@@ -151,12 +151,11 @@ body {
 
 /* Estilo para o spinner de carregamento */
 .spinner {
-    display: none;
     border: 4px solid var(--color-beige);
     border-top: 4px solid var(--color-brown);
     border-radius: 50%;
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     animation: spin 1s linear infinite;
     position: absolute;
     top: 50%;
@@ -167,6 +166,12 @@ body {
 
 .spinner.active {
     display: block;
+    opacity: 1;
+}
+
+.spinner:not(.active) {
+    display: none !important;
+    opacity: 0 !important;
 }
 
 @keyframes spin {
@@ -571,7 +576,6 @@ body {
     border-radius: var(--border-radius-global, 8px);
     transition: transform 0.5s ease, opacity 0.3s ease;
     cursor: pointer;
-    opacity: 0;
 }
 
 .carousel-item img.loaded {
@@ -600,6 +604,8 @@ body {
     align-items: center;
     opacity: 0;
     transition: opacity 0.3s ease;
+    pointer-events: auto;
+    z-index: 5;
 }
 
 .carousel-item:hover .image-overlay {
@@ -743,8 +749,7 @@ body {
     height: 100%;
     object-fit: cover;
     border-radius: var(--border-radius-global);
-    transition: transform 0.3s ease, opacity 0.3s ease;
-    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.5s ease;
 }
 
 .portfolio-full-item-image img.loaded {
@@ -785,6 +790,42 @@ body {
     font-size: 0.95em;
     color: var(--color-dark-gray);
     line-height: 1.8;
+}
+
+/* Estilos para o overlay das imagens do portfólio */
+.portfolio-full-item-image, .sample-item {
+    position: relative;
+    overflow: hidden;
+}
+
+.image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    cursor: pointer;
+    pointer-events: auto;
+    z-index: 5;
+}
+
+.image-overlay:hover {
+    opacity: 1;
+}
+
+.overlay-text {
+    color: #fff;
+    font-family: 'Sora', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    text-align: center;
+    text-transform: uppercase;
 }
 
 /* Contact Section */
@@ -933,7 +974,7 @@ body {
     vertical-align: middle;
 }
 
-/* Image Modal */
+/* Image Modal (for index.html) */
 #image-modal {
     display: none;
     position: fixed;
@@ -945,13 +986,12 @@ body {
     background-color: rgba(0, 0, 0, 0.8);
     justify-content: center;
     align-items: center;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
+    transition: opacity 0.3s ease;
 }
 
 #image-modal.open {
     display: flex;
     opacity: 1;
-    visibility: visible;
 }
 
 .image-modal-preview {
@@ -976,7 +1016,6 @@ body {
     border-radius: 4px;
     cursor: pointer;
     transition: transform 0.3s ease, opacity 0.3s ease;
-    opacity: 0;
 }
 
 .image-modal-content.loaded {
@@ -1002,64 +1041,159 @@ body {
     color: var(--color-brown);
 }
 
-/* Fullscreen Modal */
+/* Fullscreen Modal (for portfolio.html) */
 #fullscreen-modal {
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.95);
-    z-index: 9999;
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.4s ease, visibility 0.4s ease;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-}
-
-#fullscreen-modal.active {
-    visibility: visible;
-    opacity: 1;
-}
-
-.modal-content-wrapper {
-    position: relative;
-    max-width: 90%;
-    max-height: 90%;
-    display: flex;
+    background-color: rgba(0, 0, 0, 0.9); /* Fundo escuro com maior opacidade para contraste */
+    z-index: 1000;
     justify-content: center;
     align-items: center;
 }
 
-.modal-image {
-    max-width: 100%;
-    max-height: 100%;
-    display: block;
-    border-radius: 10px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
+#fullscreen-modal.open {
+    display: flex;
 }
 
-.modal-image.loaded {
+#fullscreen-modal .modal-image {
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+    transform-origin: center center;
+    cursor: grab;
+    transition: transform 0.2s ease; /* Transição apenas para transform, sem opacidade */
+}
+
+#fullscreen-modal .modal-image.loaded {
     opacity: 1;
 }
 
-.modal-close-btn {
-    position: absolute;
-    top: -20px;
-    right: -20px;
-    color: white;
-    font-size: 40px;
+#fullscreen-modal .modal-close-btn {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    width: 40px;
+    height: 40px;
+    background-color: var(--color-brown);
+    color: #ffffff;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    line-height: 1;
-    padding: 0 10px;
+    z-index: 1100;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.modal-close-btn:hover {
-    color: #ccc;
+#fullscreen-modal .modal-close-btn:hover {
+    background-color: var(--color-beige);
+    transform: scale(1.1);
+}
+
+#fullscreen-modal .zoom-btn {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    background-color: var(--color-brown);
+    color: #ffffff;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1100;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#fullscreen-modal .zoom-btn:hover {
+    background-color: var(--color-beige);
+    transform: scale(1.1);
+}
+
+#fullscreen-modal .zoom-btn.zoom-in {
+    bottom: 60px;
+    right: 15px;
+}
+
+#fullscreen-modal .zoom-btn.zoom-out {
+    bottom: 15px;
+    right: 15px;
+}
+
+#fullscreen-modal .spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 4px solid var(--color-beige);
+    border-top: 4px solid var(--color-brown);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    z-index: 1001;
+}
+
+#fullscreen-modal .spinner.active {
+    display: block;
+    opacity: 1;
+}
+
+#fullscreen-modal .spinner:not(.active) {
+    display: none !important;
+    opacity: 0 !important;
+}
+
+/* Estilos para spinners na seção de portfólio */
+.portfolio-full-item-image, .sample-item {
+    position: relative;
+}
+
+.portfolio-full-item-image .spinner,
+.sample-item .spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 4px solid var(--color-beige);
+    border-top: 4px solid var(--color-brown);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    z-index: 10;
+    transition: opacity 0.5s ease;
+}
+
+.portfolio-full-item-image .spinner.active,
+.sample-item .spinner.active {
+    display: block;
+    opacity: 1;
+}
+
+.portfolio-full-item-image .spinner:not(.active),
+.sample-item .spinner:not(.active) {
+    display: none !important;
+    opacity: 0 !important;
+}
+
+.portfolio-full-item-image img,
+.sample-item img {
+    transition: opacity 0.5s ease;
+    opacity: 0;
+}
+
+.portfolio-full-item-image img.loaded,
+.sample-item img.loaded {
+    opacity: 1;
 }
 
 /* Efeito de traço ao passar o mouse */
@@ -1148,8 +1282,7 @@ body {
     height: auto;
     object-fit: cover;
     display: block;
-    opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.5s ease;
 }
 
 .sample-item img.loaded {
@@ -1168,6 +1301,8 @@ body {
     justify-content: center;
     opacity: 0;
     transition: opacity 0.3s ease;
+    pointer-events: auto;
+    z-index: 5;
 }
 
 .sample-item:hover .image-overlay {
@@ -1339,7 +1474,7 @@ body {
 
     /* Navegação (Nav) */
     .navbar-inner {
-        padding: 0 1rem;
+        padding: 0 1.5rem; /* Aumentado para afastar o botão hambúrguer da borda */
     }
 
     .nav-links {
@@ -1400,6 +1535,7 @@ body {
 
     .hamburger-menu {
         display: flex;
+        margin-right: 1.5rem; /* Adicionado para afastar o botão da borda direita */
     }
 
     body {
@@ -1415,159 +1551,90 @@ body {
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
-        align-items: flex-start;
-        text-align: center;
-        padding: 2rem 1rem 0;
+        align-items: center;
     }
 
     .hero-content {
-        max-width: 90%;
-        margin: 0 auto;
-        padding: 0;
-        width: 100%;
-        box-sizing: border-box;
+        margin-top: 5vh;
+        padding: 0 1.5rem; /* Ajustado para alinhar com o .site-container */
         text-align: center;
+        width: 100%;
+        max-width: 100%; /* Garante consistência com outras seções */
+        box-sizing: border-box; /* Evita que o padding aumente a largura */
     }
 
     .hero-content h1 {
-        font-size: 2.1rem;
-        line-height: 1.2;
-        margin-bottom: 0.3rem;
+        font-size: 2.5em;
     }
 
     .hero-content p {
-        font-size: 0.7rem;
-        line-height: 1.9;
-        margin: 0;
+        font-size: 1em;
     }
 
-    /* Sobre Nós */
+    /* About Us Section */
     .about-us-content-wrapper {
         flex-direction: column;
-        gap: 2.5rem;
-        align-items: center;
+        gap: 1.5em;
     }
 
     .about-us-text-content {
-        text-align: center;
-        padding: 0;
         max-width: 100%;
-    }
-
-    .about-us-subtitle {
-        font-size: 0.7rem;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
+        text-align: center;
     }
 
     .about-us-title {
-        font-size: 1.6rem;
-        line-height: 1.2;
-        margin-bottom: 0.5rem;
+        font-size: 2em;
     }
 
     .about-us-paragraph {
-        font-size: 0.8rem;
-        line-height: 1.5;
-        margin-bottom: 1rem;
+        font-size: 1em;
     }
 
     .about-us-buttons {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        align-items: center;
         justify-content: center;
-        gap: 0.5rem;
-        width: 100%;
     }
 
-    /* Botão */
-    .btn, .btn-dark, .btn-light-outline {
-        padding: 0.6rem 1.2rem;
-        font-size: 0.75rem;
-        width: auto;
-        max-width: 250px;
-        text-align: center;
-    }
-
-    /* Solução para a imagem ocupar 100% da largura, de ponta a ponta */
     .about-us-image-box {
-        width: auto;
-        max-width: unset;
-        margin-left: -1rem;
-        margin-right: -1rem;
-        min-height: 250px;
-        background-image: url('img/projetos/PROJETOS SITE-08.jpg');
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
-        border-radius: 0;
-        overflow: hidden;
+        max-width: 100%;
+        padding-bottom: 60%;
     }
 
-    /* Serviços (Cards) */
-    .services {
-        padding: 2.5rem 0;
-        text-align: center;
-    }
-
+    /* Services Section */
     .services h2 {
-        font-size: 1.6rem;
-        line-height: 1.2;
-        margin-bottom: 1.5rem;
+        font-size: 2em;
     }
 
     .service-cards {
         flex-direction: column;
-        gap: 1.5rem;
+        align-items: center;
     }
 
     .service-card {
-        width: 100%;
-        max-width: 400px;
-        margin: 0 auto;
-        padding: 1.5rem;
+        max-width: 100%;
     }
 
-    .service-icon {
-        font-size: 1.125em;
-    }
-
-    .service-card h3 {
-        font-size: 0.8rem;
-        margin-bottom: 0.5rem;
-    }
-
-    .service-card p {
-        font-size: 0.75rem;
-        line-height: 1.4;
-    }
-
-    /* Carrossel de Marcas */
+    /* Brands Section */
     .brands-section h2 {
-        font-size: 1.6rem;
-        margin-bottom: 1.5rem;
+        font-size: 2em;
     }
 
     .carousel-item {
-        width: 180px;
-        margin-right: 1.25rem;
+        width: 250px;
     }
 
     .carousel-item img {
-        height: 240px;
+        height: 280px;
     }
 
-    /* Seção Portfólio */
-    .full-portfolio-items-container {
-        gap: 2rem;
+    /* Portfolio Call to Action */
+    .portfolio-call-to-action p {
+        font-size: 1.5em;
     }
 
+    /* Full Portfolio Section */
     .portfolio-full-item {
         flex-direction: column;
-        gap: 1.5rem;
-        padding: 0;
+        padding: 1.5em;
     }
 
     .portfolio-full-item.reverse-layout {
@@ -1575,233 +1642,86 @@ body {
     }
 
     .portfolio-full-item-image {
-        max-width: unset;
-        min-width: unset;
-        width: 100%;
-        margin-left: -1rem;
-        margin-right: -1rem;
-        border-radius: 0;
+        max-width: 100%;
         padding-bottom: 60%;
     }
 
     .portfolio-full-item-description {
-        min-width: unset;
         max-width: 100%;
-        text-align: center;
     }
 
     .portfolio-full-item-description h3 {
-        font-size: 1.3rem;
-        margin-bottom: 0.3rem;
+        font-size: 1.8em;
     }
 
-    .portfolio-full-item-description p {
-        font-size: 0.8rem;
-        line-height: 1.4;
+    .portfolio-hero h1 {
+        font-size: 2.5em;
     }
 
-    .portfolio-full-item-description ul {
-        font-size: 0.8rem;
+    .portfolio-hero p {
+        font-size: 1em;
     }
 
-    /* Modal de Imagem */
-    .image-modal-preview {
-        max-width: 95%;
-        max-height: 85vh;
-        padding: 5px;
+    /* Visual Samples Section */
+    .portfolio-visual-samples h2 {
+        font-size: 2em;
     }
 
-    .image-modal-content {
-        max-width: 95%;
-        max-height: 85vh;
+    .visual-samples-gallery {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     }
 
-    .image-modal-close-btn {
-        top: 15px;
-        right: 20px;
-        font-size: 30px;
+    /* Testimonials Section */
+    .section-title-blossom {
+        font-size: 2.5em;
     }
 
-    /* Contato */
-    .contact-section {
-        padding: 2.5rem 0;
+    .testimonial-card {
+        padding: 20px;
     }
 
-    .contact-section .content-wrapper {
-        flex-direction: column;
-        gap: 1.5rem;
-    }
-
-    .text-content {
-        text-align: center;
-        max-width: 100%;
-    }
-
-    .section-title {
-        font-size: 1.6rem;
-        line-height: 1.2;
-        margin-bottom: 0.5rem;
-    }
-
-    .section-paragraph {
-        font-size: 0.8rem;
-        line-height: 1.4;
-    }
-
-    .section-buttons {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: center;
-        gap: 0.5rem;
-    }
-
-    .social-box {
-        width: 100%;
-        max-width: none;
-        margin: 0;
-        padding: 1.5rem;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-        border-radius: var(--border-radius-global);
-        transition: box-shadow var(--transition-speed);
-        box-sizing: border-box;
-    }
-
-    .social-box:hover {
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    }
-
-    .social-box p {
-        font-size: 0.8rem;
-        margin-bottom: 0.5rem;
-    }
-
-    .social-icons {
-        gap: 1.2rem;
-    }
-
-    .social-icons a {
-        font-size: 1.5rem;
-    }
-
-    /* Rodapé */
-    .final-phrase {
-        padding: 2rem 0;
-    }
-
-    .final-phrase .light-text {
-        font-size: 1rem;
-        margin-bottom: 0.3rem;
-    }
-
-    .final-phrase-icon {
-        font-size: 1.5em;
-        margin: 0.3em 0;
-    }
-
-    .final-phrase .blossom-text {
-        font-size: 1.2rem;
-    }
-
-    .footer {
-        font-size: 0.7rem;
-        padding: 1.5rem 0;
-    }
-
-    /* Modal do Portfólio */
-    .modal-content-wrapper {
-        max-width: 95%;
-        max-height: 85vh;
-    }
-
-    .modal-image {
-        max-width: 100%;
-        max-height: 85vh;
-    }
-
-    .modal-close-btn {
-        top: 10px;
-        right: 10px;
-        font-size: 30px;
-    }
-
-    /* Depoimentos */
     .testimonial-quote {
         font-size: 1.1rem;
     }
-}
 
-/* ========================================= */
-/* === MEDIA QUERIES: VERSÃO TABLET (769px a 1024px) === */
-/* ========================================= */
-@media (min-width: 769px) and (max-width: 1024px) {
-    /* Container principal */
-    .site-container {
-        padding: 0 2rem;
-        max-width: 95%;
-    }
-
-    .navbar-inner {
-        padding: 0 2rem;
-    }
-
-    .about-us-section,
-    .services,
-    .brands-section,
-    .portfolio-call-to-action,
-    .full-portfolio-section,
-    .contact-section,
-    .final-phrase,
-    .footer,
-    .portfolio-visual-samples,
-    .testimonials-section {
-        padding: 4rem 0;
-    }
-
-    .about-us-content-wrapper,
+    /* Contact Section */
     .contact-section .content-wrapper {
-        gap: 3rem;
+        flex-direction: column;
+        gap: 1.5em;
     }
 
-    .about-us-title,
-    .section-title,
-    .section-title-blossom {
-        font-size: 2.4rem;
+    .text-content {
+        max-width: 100%;
+        text-align: center;
     }
 
-    .about-us-paragraph,
+    .section-title {
+        font-size: 2em;
+    }
+
     .section-paragraph {
-        font-size: 1rem;
-        line-height: 1.5;
+        font-size: 1em;
     }
 
-    .service-cards {
-        gap: 2.5rem;
+    .section-buttons {
+        justify-content: center;
     }
 
-    .service-card {
-        width: 47%;
-        margin: 0;
+    .social-box {
+        max-width: 100%;
     }
 
-    .service-icon {
-        font-size: 1.35em;
+    /* Final Phrase */
+    .final-phrase .light-text {
+        font-size: 1.5em;
     }
 
-    .final-phrase-icon {
-        font-size: 1.75em;
+    .final-phrase .blossom-text {
+        font-size: 1.8em;
     }
 
-    .portfolio-full-item {
-        gap: 2.5rem;
-    }
-
-    .portfolio-full-item-description h3 {
-        font-size: 1.6rem;
-    }
-
-    .portfolio-full-item-description p {
-        font-size: 0.9rem;
+    /* Footer */
+    .footer {
+        padding: 1.5em 0;
     }
 }
