@@ -340,6 +340,8 @@ body {
     margin: 0;
 }
 
+
+
 /* About Us Section */
 .about-us-section {
     padding: 4em 0;
@@ -350,9 +352,10 @@ body {
     display: flex;
     flex-direction: row;
     gap: 2em;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     flex-wrap: wrap;
+    width: 100%;
 }
 
 .about-us-text-content {
@@ -404,7 +407,7 @@ body {
 }
 
 .btn {
-    padding: 0.5em 0.5em;
+    padding: 0.5em 1em;
     border-radius: 5px;
     text-decoration: none;
     font-family: 'Roboto', sans-serif;
@@ -436,19 +439,38 @@ body {
     color: var(--color-white);
 }
 
-.about-us-image-box {
-    flex: 1;
-    min-width: 300px;
+/* --- ATUALIZAÇÕES PARA REMOVER A DISTÂNCIA ENTRE AS IMAGENS --- */
+.about-us-image-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0; /* Garante que não haja espaço entre as caixas */
     max-width: 500px;
-    min-height: 250px;
-    padding-bottom: 30%;
-    background-image: url('img/projetos/PROJETOS SITE-08.jpg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: var(--border-radius-global);
-    overflow: hidden;
+    width: 100%;
 }
+
+.about-us-image-box {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--border-radius-global);
+    width: 100%;
+    margin: 0; /* Garante que não haja margem externa */
+    padding: 0; /* Garante que não haja preenchimento interno */
+}
+
+/* Removi o pseudo-elemento ::before para evitar espaçamentos indesejados. */
+/* Se precisar de uma proporção específica para as imagens, considere
+   ajustar o tamanho delas diretamente ou usar uma abordagem diferente. */
+
+.about-us-image-box img {
+    width: 100%;
+    height: auto; /* Use 'auto' para manter a proporção original da imagem */
+    display: block;
+    border-radius: var(--border-radius-global);
+    object-fit: cover;
+    margin: 0; /* Garante que não haja margem interna */
+    padding: 0; /* Garante que não haja preenchimento interno */
+}
+
 
 /* Services Section */
 .services {
@@ -1450,9 +1472,9 @@ body {
 /* ===== MEDIA QUERIES: VERSÃO MOBILE ===== */
 /* ========================================= */
 @media (max-width: 768px) {
-    /* Container principal */
+    /* Container principal - define o espaçamento lateral para toda a página */
     .site-container {
-        padding: 0 1rem;
+        padding: 0 1.5rem;
         max-width: 100%;
         margin: 0 auto;
         box-sizing: border-box;
@@ -1474,7 +1496,7 @@ body {
 
     /* Navegação (Nav) */
     .navbar-inner {
-        padding: 0 1.5rem; /* Aumentado para afastar o botão hambúrguer da borda */
+        padding: 0 1.5rem;
     }
 
     .nav-links {
@@ -1535,7 +1557,7 @@ body {
 
     .hamburger-menu {
         display: flex;
-        margin-right: 1.5rem; /* Adicionado para afastar o botão da borda direita */
+        margin-right: 1.5rem;
     }
 
     body {
@@ -1556,11 +1578,11 @@ body {
 
     .hero-content {
         margin-top: 5vh;
-        padding: 0 1.5rem; /* Ajustado para alinhar com o .site-container */
+        padding: 0;
         text-align: center;
         width: 100%;
-        max-width: 100%; /* Garante consistência com outras seções */
-        box-sizing: border-box; /* Evita que o padding aumente a largura */
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .hero-content h1 {
@@ -1589,16 +1611,36 @@ body {
     .about-us-paragraph {
         font-size: 1em;
     }
-
+    
     .about-us-buttons {
         justify-content: center;
     }
 
-    .about-us-image-box {
-        max-width: 100%;
-        padding-bottom: 60%;
+    .about-us-image-stack {
+        gap: 0;
     }
 
+    .about-us-image-box {
+        max-width: 100%;
+        position: relative;
+        overflow: hidden;
+        border-radius: var(--border-radius-global);
+        margin: 0;
+        padding: 0;
+    }
+    
+    .about-us-image-box img {
+        width: 100%;
+        height: auto;
+        border-radius: var(--border-radius-global);
+        display: block;
+        max-height: 400px;
+        object-fit: cover;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* --- INÍCIO DA ATUALIZAÇÃO DA SEÇÃO SERVIÇOS --- */
     /* Services Section */
     .services h2 {
         font-size: 2em;
@@ -1607,11 +1649,27 @@ body {
     .service-cards {
         flex-direction: column;
         align-items: center;
+        padding: 0;
     }
 
     .service-card {
         max-width: 100%;
+        padding: 0;
     }
+    
+    /* Tamanhos corrigidos para mobile */
+    .service-card .service-icon {
+        font-size: 1.8em;
+    }
+
+    .service-card h3 {
+        font-size: 1.2em;
+    }
+
+    .service-card p {
+        font-size: 0.8em;
+    }
+    /* --- FIM DA ATUALIZAÇÃO DA SEÇÃO SERVIÇOS --- */
 
     /* Brands Section */
     .brands-section h2 {
@@ -1634,7 +1692,7 @@ body {
     /* Full Portfolio Section */
     .portfolio-full-item {
         flex-direction: column;
-        padding: 1.5em;
+        padding: 1.5em 0;
     }
 
     .portfolio-full-item.reverse-layout {
@@ -1688,11 +1746,13 @@ body {
     .contact-section .content-wrapper {
         flex-direction: column;
         gap: 1.5em;
+        padding: 0;
     }
 
     .text-content {
         max-width: 100%;
         text-align: center;
+        padding: 0;
     }
 
     .section-title {
@@ -1704,11 +1764,13 @@ body {
     }
 
     .section-buttons {
+        display: flex;
         justify-content: center;
     }
 
     .social-box {
         max-width: 100%;
+        padding: 0;
     }
 
     /* Final Phrase */
