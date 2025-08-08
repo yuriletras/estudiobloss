@@ -1497,6 +1497,9 @@ body {
     /* Navegação (Nav) */
     .navbar-inner {
         padding: 0 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
 
     .nav-links {
@@ -1529,25 +1532,46 @@ body {
 
     .nav-mobile-extras {
         display: flex;
-        flex-direction: column;
         align-items: center;
         gap: 0.75rem;
-        padding-top: 0.75rem;
-        border-top: 1px solid #eee;
-        margin-top: 0.75rem;
     }
 
     .nav-mobile-extras .social-icons {
         display: flex;
         gap: 0.9rem;
+        padding: 0.75rem 0;
+        border-top: 1px solid #eee;
+        margin-top: 0.75rem;
+        justify-content: center;
     }
 
-    .nav-mobile-extras a {
+    .nav-links .social-icons {
+        order: 999; /* Ensures social icons appear at the bottom of the nav-links */
+    }
+
+    .nav-mobile-extras a:not(.social-icons a) {
+        font-size: 1rem;
+        color: var(--color-dark-gray);
+        background: none;
+        border: 1px solid var(--color-dark-gray);
+        border-radius: 4px;
+        padding: 0.3rem 0.6rem;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+    }
+
+    .nav-mobile-extras a:not(.social-icons a):hover {
+        color: var(--color-brown);
+        border-color: var(--color-brown);
+    }
+
+    .nav-links .social-icons a {
         font-size: 1.2rem;
         color: var(--color-dark-gray);
     }
 
-    .nav-mobile-extras a:hover {
+    .nav-links .social-icons a:hover {
         color: var(--color-brown);
     }
 
@@ -1557,7 +1581,61 @@ body {
 
     .hamburger-menu {
         display: flex;
-        margin-right: 1.5rem;
+        width: 30px;
+        height: 24px;
+        position: relative;
+        background: none;
+        border: none;
+        cursor: pointer;
+        z-index: 1000;
+        margin-right: 0.5rem; /* Reduced to accommodate language button */
+        box-sizing: border-box;
+    }
+
+    .hamburger-menu span {
+        display: block;
+        position: absolute;
+        height: 3px;
+        width: 100%;
+        background: var(--color-dark-gray);
+        border-radius: 3px;
+        opacity: 1;
+        left: 0;
+        transform: rotate(0deg);
+        transition: all 0.3s ease;
+    }
+
+    .hamburger-menu span:nth-child(1) {
+        top: 0;
+    }
+
+    .hamburger-menu span:nth-child(2),
+    .hamburger-menu span:nth-child(3) {
+        top: 10px;
+    }
+
+    .hamburger-menu span:nth-child(4) {
+        top: 20px;
+    }
+
+    .hamburger-menu.open span:nth-child(1) {
+        top: 10px;
+        width: 0;
+        left: 50%;
+    }
+
+    .hamburger-menu.open span:nth-child(2) {
+        transform: rotate(45deg);
+    }
+
+    .hamburger-menu.open span:nth-child(3) {
+        transform: rotate(-45deg);
+    }
+
+    .hamburger-menu.open span:nth-child(4) {
+        top: 10px;
+        width: 0;
+        left: 50%;
     }
 
     body {
